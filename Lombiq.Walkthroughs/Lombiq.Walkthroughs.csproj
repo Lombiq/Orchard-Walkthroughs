@@ -9,7 +9,7 @@
     <Description>Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in a step by step guide.</Description>
     <PackageLicenseUrl>https://github.com/Lombiq/Orchard-Walkthroughs/blob/dev/License.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs</PackageProjectUrl>
-    <PackageTags>Orchard Core, Orchard CMS, walktroughs</PackageTags>
+    <PackageTags>Orchard Core, Orchard CMS, walkthroughs</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
   </PropertyGroup>
 
@@ -41,6 +41,10 @@
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
     <PackageReference Include="Lombiq.NodeJs.Extensions" Version="1.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" />
   </ItemGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="..\..\..\Utilities\Lombiq.NodeJs.Extensions\Lombiq.NodeJs.Extensions\Lombiq.NodeJs.Extensions.targets" />

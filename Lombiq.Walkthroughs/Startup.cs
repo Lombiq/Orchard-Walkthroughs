@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Modules;
 
-namespace Lombiq.Walktroughs;
+namespace Lombiq.Walkthroughs;
 
 public class Startup : StartupBase
 {

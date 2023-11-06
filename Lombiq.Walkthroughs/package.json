@@ -1,11 +1,30 @@
 {
   "private": true,
+  "dependencies": {
+    "shepherd.js": "^11.2.0"
+  },
   "scripts": {
     "build": "npm explore nodejs-extensions -- pnpm build",
     "clean": "npm explore nodejs-extensions -- pnpm clean",
     "watch": "npm explore nodejs-extensions -- pnpm watch"
   },
   "nodejsExtensions": {
+    "assetsToCopy": [
+      {
+        "sources": [
+          "node_modules/shepherd.js/dist/css"
+        ],
+        "pattern": "*",
+        "target": "wwwroot/shepherd.js/css"
+      },
+      {
+        "sources": [
+          "node_modules/shepherd.js/dist/js"
+        ],
+        "pattern": "*",
+        "target": "wwwroot/shepherd.js/js"
+      }
+    ],
     "styles": {
       "source": "Assets/Styles",
       "target": "wwwroot/css"
@@ -14,8 +33,5 @@
       "source": "Assets/Scripts",
       "target": "wwwroot/js"
     }
-  },
-  "dependencies": {
-    "shepherd.js": "^11.2.0"
   }
 }
