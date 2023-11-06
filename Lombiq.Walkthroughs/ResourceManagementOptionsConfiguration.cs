@@ -1,5 +1,7 @@
+using Lombiq.Walkthroughs.Constants;
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
+using static Lombiq.Walkthroughs.Constants.ResourceNames;
 
 namespace Lombiq.Walkthroughs;
 
@@ -7,12 +9,22 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
 {
     private static readonly ResourceManifest _manifest = new();
 
-    static ResourceManagementOptionsConfiguration() =>
+    static ResourceManagementOptionsConfiguration()
+    {
+        _manifest.DefineResource("$" + nameof(FeatureIds.Area), FeatureIds.Area);
+
         _manifest
-            .DefineScript("shepherd.js")
+            .DefineStyle(Shepherd)
             .SetUrl(
-                "~/Lombiq.Walkthroughs/css/lombiq-privacy-consent-banner.min.css",
-                "~/Lombiq.Walkthroughs/css/lombiq-privacy-consent-banner.css");
+                "~/" + FeatureIds.Area + "/shepherd.js/css/shepherd.min.css",
+                "~/" + FeatureIds.Area + "/shepherd.js/css/shepherd.css");
+
+        _manifest
+            .DefineScript(Shepherd)
+            .SetUrl(
+                "~/" + FeatureIds.Area + "/shepherd.js/js/shepherd.min.js",
+                "~/" + FeatureIds.Area + "/shepherd.js/js/shepherd.js");
+    }
 
     public void Configure(ResourceManagementOptions options) => options.ResourceManifests.Add(_manifest);
 }
