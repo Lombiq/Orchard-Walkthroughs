@@ -5,7 +5,6 @@
     "clean": "npm explore nodejs-extensions -- pnpm clean",
     "watch": "npm explore nodejs-extensions -- pnpm watch"
   },
-
   "nodejsExtensions": {
     "styles": {
       "source": "Assets/Styles",
@@ -15,5 +14,8 @@
       "source": "Assets/Scripts",
       "target": "wwwroot/js"
     }
+  },
+  "dependencies": {
+    "shepherd.js": "^11.2.0"
   }
 }
