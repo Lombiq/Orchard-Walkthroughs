@@ -1,5 +1,4 @@
 using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
-using System.Security.Policy;
 using static Lombiq.Walkthroughs.Constants.ResourceNames;
 
 namespace Lombiq.Walkthroughs.Services;
@@ -10,5 +9,6 @@ public class ResourceFilters : IResourceFilterProvider
     {
         builder.Always().RegisterStylesheet(Shepherd);
         builder.Always().RegisterFootScript(Shepherd);
+        builder.Always().RegisterFootScript("Tour");
     }
 }

@@ -24,6 +24,12 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
             .SetUrl(
                 "~/" + FeatureIds.Area + "/shepherd.js/js/shepherd.min.js",
                 "~/" + FeatureIds.Area + "/shepherd.js/js/shepherd.js");
+
+        _manifest
+            .DefineScript("Tour")
+            .SetUrl(
+                "~/" + FeatureIds.Area + "/js/tour.min.js",
+                "~/" + FeatureIds.Area + "/js/tour.js");
     }
 
     public void Configure(ResourceManagementOptions options) => options.ResourceManifests.Add(_manifest);
