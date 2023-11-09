@@ -1,4 +1,32 @@
+const backButton = {
+    action: function () {
+        return this.back();
+    },
+    classes: 'shepherd-button-secondary',
+    text: 'Back',
+};
+
+const nextButton = {
+    action: function () {
+        return this.next();
+    },
+    text: 'Next',
+};
+
 const orchardCoreAdminWalkthrough = new Shepherd.Tour({
+    // Tour id should be the same as the tour variable's name.
+    id: 'orchardCoreAdminWalkthrough',
+    useModalOverlay: true,
+    defaultStepOptions: {
+        cancelIcon: {
+            enabled: true,
+        },
+        when: {
+            show() {
+                addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+            },
+        },
+    },
     steps: [
         {
             title: 'Welcome in the Orchard Core Admin Walkthrough!',
@@ -7,10 +35,14 @@ const orchardCoreAdminWalkthrough = new Shepherd.Tour({
             buttons: [
                 {
                     action: function () {
-                        return this.next();
+                        removeShepherdQueryParams();
+                        orchardCoreAdminWalkthrough.complete();
+                        walkthroughSelector.start();
                     },
-                    text: 'Next',
+                    classes: 'shepherd-button-secondary',
+                    text: 'Back',
                 },
+                nextButton,
             ],
             id: 'welcome',
         },
@@ -24,19 +56,8 @@ const orchardCoreAdminWalkthrough = new Shepherd.Tour({
                 ' They are used to streamline the setup of an Orchard Core site, making it easier to create consistent site structures and content.' +
                 ' Recipes can be executed during the initial setup of a site or at any point to apply configurations or import content.',
             buttons: [
-                {
-                    action: function () {
-                        return this.next();
-                    },
-                    classes: 'shepherd-button-secondary',
-                    text: 'Back',
-                },
-                {
-                    action: function () {
-                        return this.next();
-                    },
-                    text: 'Next',
-                },
+                backButton,
+                nextButton,
             ],
             id: 'setup_recipe',
         },
@@ -46,57 +67,10 @@ const orchardCoreAdminWalkthrough = new Shepherd.Tour({
                 ' <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                 'setup screen</a>. You can also select there the before mentioned setup recipe.',
             buttons: [
-                {
-                    action: function () {
-                        return this.next();
-                    },
-                    classes: 'shepherd-button-secondary',
-                    text: 'Back',
-                },
-                {
-                    action: function () {
-                        return this.next();
-                    },
-                    text: 'Next',
-                },
+                backButton,
+                nextButton,
             ],
             id: 'site_setup',
         },
     ],
-    defaultStepOptions: {
-        cancelIcon: {
-            enabled: true,
-        },
-    },
-    useModalOverlay: true,
 });
-
-const walkthroughSelector = new Shepherd.Tour({
-    steps: [
-        {
-            title: 'Select walkthrough!',
-            text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walktroughs module</a>' +
-                ' module is active. This module includes various walkthroughs. Please select a walkthrough to start:',
-            buttons: [
-                {
-                    text: 'Orchard Core Admin Walkthrough',
-                    action: function () {
-                        orchardCoreAdminWalkthrough.start();
-                        walkthroughSelector.complete();
-                    },
-                    classes: 'shepherd-button shepherd-button-primary',
-                },
-                // Add new walktroughs here.
-            ],
-            id: 'walkthroughSelector',
-        },
-    ],
-    defaultStepOptions: {
-        cancelIcon: {
-            enabled: true,
-        },
-    },
-    useModalOverlay: true,
-});
-
-walkthroughSelector.start();

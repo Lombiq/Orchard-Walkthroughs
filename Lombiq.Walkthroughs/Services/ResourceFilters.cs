@@ -9,6 +9,8 @@ public class ResourceFilters : IResourceFilterProvider
     {
         builder.Always().RegisterStylesheet(Shepherd);
         builder.Always().RegisterFootScript(Shepherd);
-        builder.Always().RegisterFootScript("Tour");
+        builder.Always().RegisterFootScript("ShepherdQueryParameterHelpers");
+        builder.Always().RegisterFootScript("OrchardCoreAdminWalkthrough");
+        builder.Always().RegisterFootScript("Walkthroughs");
     }
 }

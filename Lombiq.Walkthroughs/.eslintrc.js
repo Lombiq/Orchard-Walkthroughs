@@ -7,6 +7,7 @@ module.exports = {
 
     globals: {
         Shepherd: 'readonly',
+        orchardCoreAdminWalkthrough: 'readonly',
     },
     // Add custom rules and overrides here.
     rules: {
