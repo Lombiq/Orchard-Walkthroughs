@@ -6,8 +6,8 @@ module.exports = {
     extends: '../../../Utilities/Lombiq.NodeJs.Extensions/Lombiq.NodeJs.Extensions/config/.eslintrc.lombiq-base.js',
 
     globals: {
+        // sheperd.js is loaded first, so it will be (and it needs to be) always available.
         Shepherd: 'readonly',
-        orchardCoreAdminWalkthrough: 'readonly',
     },
     // Add custom rules and overrides here.
     rules: {
