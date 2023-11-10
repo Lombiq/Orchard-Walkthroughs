@@ -72,5 +72,94 @@ const orchardCoreAdminWalkthrough = new Shepherd.Tour({
             ],
             id: 'site_setup',
         },
+        {
+            title: 'Log in',
+            attachTo: { element: '.nav-link', on: 'bottom' },
+            text: 'Let\'s log in! After clicking on the log in button, you will be redirected to the log in page.' +
+                'If you are already logged in, please log out and restart the tutorial.',
+            buttons: [
+                backButton,
+            ],
+            id: 'login_button',
+            when: {
+                show() {
+                    const loginATag = document.getElementsByClassName('nav-link')[0];
+                    const loginURL = new URL(loginATag.href);
+
+                    loginURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
+                    loginURL.searchParams.set('shepherdStep', 'login_page');
+                    loginATag.href = loginURL.toString();
+                    addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+                },
+            },
+        },
+        {
+            title: 'Log in page',
+            text: 'Here you can log in. You will need to input a username or email address and a password.',
+            buttons: [
+                {
+                    action: function () {
+                        const returnToHomePageURL = new URL(window.location.href.split('Login')[0]);
+                        returnToHomePageURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
+                        returnToHomePageURL.searchParams.set('shepherdStep', 'login_button');
+                        window.location.href = returnToHomePageURL.toString();
+                    },
+                    classes: 'shepherd-button-secondary',
+                    text: 'Back',
+                },
+                nextButton,
+            ],
+            id: 'login_page',
+        },
+        {
+            title: 'Username',
+            attachTo: { element: '#UserName', on: 'bottom' },
+            text: 'Input your username, for test sites the usually used username is <i>"admin"</i>.',
+            buttons: [
+                backButton,
+                nextButton,
+            ],
+            id: 'login_username',
+        },
+        {
+            title: 'Username',
+            attachTo: { element: '#Password', on: 'bottom' },
+            text: 'Input your password, for test sites the usually used password is <i>"Password1!"</i>.',
+            buttons: [
+                backButton,
+                nextButton,
+            ],
+            id: 'login_password',
+        },
+        {
+            title: 'Logging in',
+            attachTo: { element: 'button[type="Submit"]', on: 'bottom' },
+            text: 'Now you can log in!',
+            buttons: [
+                backButton,
+            ],
+            id: 'login_login',
+            when: {
+                show() {
+                    const loginButton = document.querySelectorAll('button[type="Submit"]')[0];
+                    loginButton.addEventListener('click', function redirectToNextStep() {
+                        const redirectToNextStepURL = new URL(window.location.href.split('Login')[0]);
+                        redirectToNextStepURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
+                        redirectToNextStepURL.searchParams.set('shepherdStep', 'login_logged_in');
+                        window.location.href = redirectToNextStepURL.toString();
+                    });
+
+                    addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+                },
+            },
+        },
+        {
+            title: 'Logged in',
+            text: 'Now you can log in!',
+            buttons: [
+                backButton,
+            ],
+            id: 'login_logged_in',
+        },
     ],
 });
