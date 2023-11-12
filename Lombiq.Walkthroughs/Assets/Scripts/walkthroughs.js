@@ -215,7 +215,7 @@ jQuery(($) => {
                                 // If the user typed a wrong URL don't go ahead.
                                 // The best way to check this, is to check for specific element(s). We don't want to
                                 // check the URL, since the case can vary and also, we can't account for the tenant.
-                                if ($(!'button[type="Submit"]').length) {
+                                if (!$('button[type="Submit"]').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;
@@ -337,7 +337,7 @@ jQuery(($) => {
                         when: {
                             show() {
                                 // If the user typed a wrong URL don't go ahead.
-                                if ($(!'button[type="Submit"]').length) {
+                                if (!$('h4:contains("Welcome to Orchard Core")').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;
@@ -351,6 +351,7 @@ jQuery(($) => {
             }),
 
         };
+
         const walkthroughSelector = new Shepherd.Tour({
             id: 'walkthroughSelector',
             useModalOverlay: true,
