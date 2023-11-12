@@ -84,6 +84,13 @@ jQuery(($) => {
             text: 'Next',
         };
 
+        function getBackToPreviousPage(currentPage, shepherdTour, shepherdStep) {
+            const returnToHomePageURL = new URL(window.location.href.split(currentPage)[0]);
+            returnToHomePageURL.searchParams.set('shepherdTour', shepherdTour);
+            returnToHomePageURL.searchParams.set('shepherdStep', shepherdStep);
+            window.location.href = returnToHomePageURL.toString();
+        }
+
         Shepherd.on('cancel', () => {
             removeShepherdQueryParams();
             deleteWalkthroughCookies();
@@ -110,7 +117,7 @@ jQuery(($) => {
                 },
                 steps: [
                     {
-                        title: 'Welcome in the Orchard Core Admin Walkthrough!',
+                        title: 'Welcome in the<br>Orchard Core Admin Walkthrough!',
                         text: 'This walkthrough covers key Orchard Core features, such as content management, user roles, ' +
                             'and theme selection, and points users to further learning resources.',
                         buttons: [
@@ -158,13 +165,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Log in',
-                        attachTo: { element: '.nav-link', on: 'bottom' },
-                        text: 'Let\'s log in! After clicking on the log in button, you will be redirected to the log in page.' +
-                            'If you are already logged in, please log out and restart the tutorial.',
+                        // We could link the login page, but if the site is on a subtenant, then we can't get the relative path.
+                        text: 'Let\'s log in! Please go to the following URL, by typing it into the search bar <i>"~/Login"</i>',
                         buttons: [
                             backButton,
                         ],
-                        id: 'login_button',
+                        id: 'logging_in',
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'login_page');
@@ -178,10 +184,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    const returnToHomePageURL = new URL(window.location.href.split('Login')[0]);
-                                    returnToHomePageURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
-                                    returnToHomePageURL.searchParams.set('shepherdStep', 'login_button');
-                                    window.location.href = returnToHomePageURL.toString();
+                                    getBackToPreviousPage('Login', Shepherd.activeTour.options.id, 'logging_in');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -270,27 +273,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        attachTo: { element: '.nav-link.dropdown-toggle', on: 'bottom' },
-                        text: 'Let\'s see the admin dashboard now. Please, click on the dropdown!',
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'admin_dashboard',
-                        when: {
-                            show() {
-                                const tour = this.tour;
-                                $('.nav-link.dropdown-toggle').on('click', function goToNextStep() {
-                                    tour.next();
-                                });
-
-                                addShepherdQueryParams();
-                            },
-                        },
-                    },
-                    {
-                        title: 'Admin dashboard',
-                        attachTo: { element: '.dropdown-item[href*="/Admin"]', on: 'bottom' },
-                        text: 'Now click on the <i>"Dashboard"</i> button!',
+                        // We could link the admin page, but if the site is on a subtenant, then we can't get the relative path.
+                        text: 'Let\'s see the admin dashboard now. Please go to the following URL, by typing it into' +
+                            ' the search bar <i>"~/Admin"</i>',
                         buttons: [
                             backButton,
                         ],
@@ -304,19 +289,18 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        attachTo: { element: '.dropdown-item[href*="/Admin"]', on: 'bottom' },
-                        text: 'Now click on the <i>"Dashboard"</i> button!',
+                        text: 'Welcome to the admin dashboard',
                         buttons: [
-                            backButton,
+                            {
+                                action: function () {
+                                    getBackToPreviousPage('Admin', Shepherd.activeTour.options.id, 'admin_dashboard_enter');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
                         ],
                         id: 'admin_dashboard_page',
-                        when: {
-                            show() {
-                                $('.nav-link.dropdown-toggle').on('click', function goToNextStep() { this.tour.next(); });
-
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                 ],
             }),

@@ -30,13 +30,14 @@ public class WalkthroughsButtonFilter : IAsyncResultFilter
         var actionRouteController = context.ActionDescriptor.RouteValues["Controller"];
         var actionRouteValue = context.ActionDescriptor.RouteValues["Action"];
 
-        if (actionRouteController.EqualsOrdinalIgnoreCase("Home") &&
-            actionRouteValue.EqualsOrdinalIgnoreCase("Index"))
+        // These are BlogTheme specific.
+        if (actionRouteController.EqualsOrdinalIgnoreCase("Item") &&
+            actionRouteValue.EqualsOrdinalIgnoreCase("Display"))
         {
             var layout = await _layoutAccessor.GetLayoutAsync();
             var contentZone = layout.Zones["Content"];
 
-            await contentZone.AddAsync(await _shapeFactory.CreateAsync("WalkthroughsButton"), "1");
+            await contentZone.AddAsync(await _shapeFactory.CreateAsync("WalkthroughsButton"), "0");
         }
 
         await next();
