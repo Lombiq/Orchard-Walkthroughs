@@ -1,4 +1,37 @@
 jQuery(($) => {
+    function deleteWalkthroughCookies() {
+        document.cookie = 'Walkthrough=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'WalkthroughStep=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+    function setWalkthroughCookies(walkthroughValue, stepValue) {
+        deleteWalkthroughCookies();
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getTime() + (1 * 60 * 60 * 1000));
+
+        const WalkthroughCookieString = encodeURIComponent('Walkthrough') + '=' + encodeURIComponent(walkthroughValue) +
+            '; expires=' + expirationDate.toUTCString() + '; path=/';
+        document.cookie = WalkthroughCookieString;
+
+        const WalkthroughStepCookieString = encodeURIComponent('WalkthroughStep') + '=' + encodeURIComponent(stepValue) +
+            '; expires=' + expirationDate.toUTCString() + '; path=/';
+        document.cookie = WalkthroughStepCookieString;
+    }
+
+    function getWalkthroughCookies() {
+        const getCookieValue = (cookieName) => {
+            const name = cookieName + '=';
+            const cookieArray = document.cookie.split(';').map((cookie) => cookie.trim());
+            const resultCookie = cookieArray.find((cookie) => cookie.startsWith(name));
+            return resultCookie ? decodeURIComponent(resultCookie.substring(name.length)) : null;
+        };
+
+        const walkthroughCookieValue = getCookieValue('Walkthrough');
+        const walkthroughStepCookieValue = getCookieValue('WalkthroughStep');
+
+        return { walkthroughCookieValue, walkthroughStepCookieValue };
+    }
+
     function removeShepherdQueryParams() {
         const urlObject = new URL(window.location.href);
 
@@ -7,11 +40,11 @@ jQuery(($) => {
         window.history.pushState(null, '', urlObject.toString());
     }
 
-    function addShepherdQueryParams(shepherdTourValue, shepherdStepValue) {
+    function addShepherdQueryParams() {
         const urlObject = new URL(window.location.href);
 
-        urlObject.searchParams.set('shepherdTour', shepherdTourValue);
-        urlObject.searchParams.set('shepherdStep', shepherdStepValue);
+        urlObject.searchParams.set('shepherdTour', Shepherd.activeTour.options.id);
+        urlObject.searchParams.set('shepherdStep', Shepherd.activeTour.getCurrentStep().id);
         window.history.pushState(null, '', urlObject.toString());
     }
 
@@ -32,7 +65,7 @@ jQuery(($) => {
             event.preventDefault();
         });
 
-        addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+        addShepherdQueryParams();
     }
 
     const backButton = {
@@ -66,7 +99,7 @@ jQuery(($) => {
                 },
                 when: {
                     show() {
-                        addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+                        addShepherdQueryParams();
                     },
                 },
             },
@@ -135,7 +168,7 @@ jQuery(($) => {
                             loginURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
                             loginURL.searchParams.set('shepherdStep', 'login_page');
                             loginATag.attr('href', loginURL.toString());
-                            addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+                            addShepherdQueryParams();
                         },
                     },
                 },
@@ -206,15 +239,11 @@ jQuery(($) => {
                         show() {
                             $('form').off('submit');
 
-                            //const loginButton = $('button[type="submit"]');
-                            //loginButton.addEventListener('click', function redirectToNextStep() {
-                            //    const redirectToNextStepURL = new URL(window.location.href.split('Login')[0]);
-                            //    redirectToNextStepURL.searchParams.set('shepherdTour', 'orchardCoreAdminWalkthrough');
-                            //    redirectToNextStepURL.searchParams.set('shepherdStep', 'login_logged_in');
-                            //    window.location.href = redirectToNextStepURL.toString();
-                            //});
+                            $('form').on('submit', function addWalkthroughCookieValue() {
+                                setWalkthroughCookies(Shepherd.activeTour.options.id, 'login_logged_in');
+                            });
 
-                            addShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
+                            addShepherdQueryParams();
                         },
                     },
                 },
@@ -222,12 +251,26 @@ jQuery(($) => {
                     title: 'Logged in',
                     text: 'Now you can log in!',
                     buttons: [
-                        backButton,
+                        // The user already logged in, there is no reason to go back to the login page.
+                        nextButton,
                     ],
                     id: 'login_logged_in',
+                    when: {
+                        show() {
+                            // If login is failed don't go ahead.
+                            if ($('.field-validation-error[data-valmsg-for="Password"]').length > 0 ||
+                                $('.field-validation-error[data-valmsg-for="UserName"]').length > 0) {
+                                deleteWalkthroughCookies();
+                                Shepherd.activeTour.back();
+                                return;
+                            }
+                            addShepherdQueryParams();
+                        },
+                    },
                 },
             ],
         }),
+
     };
     const walkthroughSelector = new Shepherd.Tour({
         id: 'walkthroughSelector',
@@ -242,8 +285,9 @@ jQuery(($) => {
             {
                 title: 'Select walkthrough!',
                 text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walktroughs module</a>' +
-                    ' module is active. This module includes various walkthroughs. You can get back here, by pressing' +
-                    ' the button on the homepage.Please select a walkthrough to start:',
+                    ' module is active. This module includes various walkthroughs. You can get back here, by ' +
+                    ' canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
+                    'the walkthroughs\' built in navigations! Please select a walkthrough to start:',
                 buttons: [
                     {
                         text: 'Orchard Core Admin Walkthrough',
@@ -261,6 +305,7 @@ jQuery(($) => {
     });
 
     const queryParams = getShepherdQueryParams();
+    const walkthroughCookies = getWalkthroughCookies();
 
     if (queryParams.shepherdTour !== null && queryParams.shepherdStep !== null) {
         const currentTour = walkthroughs[queryParams.shepherdTour];
@@ -268,11 +313,18 @@ jQuery(($) => {
         currentTour.show(queryParams.shepherdStep);
     }
 
+    if (walkthroughCookies.walkthroughCookieValue !== null && walkthroughCookies.walkthroughStepCookieValue) {
+        const currentTour = walkthroughs[walkthroughCookies.walkthroughCookieValue];
+        currentTour.start();
+        currentTour.show(walkthroughCookies.walkthroughStepCookieValue);
+        addShepherdQueryParams();
+        deleteWalkthroughCookies();
+    }
+
     const walkthroughSelectorButton = $('#walkthrough-selector-button');
 
     if (walkthroughSelectorButton !== null) {
         walkthroughSelectorButton.on('click', function startWalkthroughSelector() {
-            // Assuming walkthroughSelector is a function or an object with a start method
             walkthroughSelector.start();
         });
     }
