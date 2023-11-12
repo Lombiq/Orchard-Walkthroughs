@@ -84,11 +84,22 @@ jQuery(($) => {
             text: 'Next',
         };
 
-        function getBackToPreviousPage(currentPage, shepherdTour, shepherdStep) {
+        function getBackToHomePage(shepherdTour, shepherdStep) {
+            let currentPage = window.location.href;
+            currentPage = currentPage.substring(
+                currentPage.lastIndexOf('/') + 1,
+                currentPage.indexOf('?')
+            );
+
             const returnToHomePageURL = new URL(window.location.href.split(currentPage)[0]);
             returnToHomePageURL.searchParams.set('shepherdTour', shepherdTour);
             returnToHomePageURL.searchParams.set('shepherdStep', shepherdStep);
             window.location.href = returnToHomePageURL.toString();
+        }
+
+        function goToRelativePage(page) {
+            removeShepherdQueryParams();
+            window.location.href += page;
         }
 
         Shepherd.on('cancel', () => {
@@ -166,9 +177,16 @@ jQuery(($) => {
                     {
                         title: 'Log in',
                         // We could link the login page, but if the site is on a subtenant, then we can't get the relative path.
-                        text: 'Let\'s log in! Please go to the following URL, by typing it into the search bar <i>"~/Login"</i>',
+                        text: 'Let\'s log in! Please go to the following URL, by typing it into the search bar' +
+                            ' <i>"~/Login"</i>, or click on the <i>"Next"</i> button.',
                         buttons: [
                             backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage('Login');
+                                },
+                                text: 'Next',
+                            },
                         ],
                         id: 'logging_in',
                         when: {
@@ -184,7 +202,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    getBackToPreviousPage('Login', Shepherd.activeTour.options.id, 'logging_in');
+                                    getBackToHomePage(Shepherd.activeTour.options.id, 'logging_in');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -194,6 +212,15 @@ jQuery(($) => {
                         id: 'login_page',
                         when: {
                             show() {
+                                // If the user typed a wrong URL don't go ahead.
+                                // The best way to check this, is to check for specific element(s). We don't want to
+                                // check the URL, since the case can vary and also, we can't account for the tenant.
+                                if ($(!'button[type="Submit"]').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
                                 // If the user presses enter, the form will be submitted and the steps will be skipped.
                                 preventSubmit();
                             },
@@ -261,8 +288,8 @@ jQuery(($) => {
                         when: {
                             show() {
                                 // If login is failed don't go ahead.
-                                if ($('.field-validation-error[data-valmsg-for="Password"]').length > 0 ||
-                                    $('.field-validation-error[data-valmsg-for="UserName"]').length > 0) {
+                                if ($('.field-validation-error[data-valmsg-for="Password"]').length ||
+                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;
@@ -275,9 +302,15 @@ jQuery(($) => {
                         title: 'Admin dashboard',
                         // We could link the admin page, but if the site is on a subtenant, then we can't get the relative path.
                         text: 'Let\'s see the admin dashboard now. Please go to the following URL, by typing it into' +
-                            ' the search bar <i>"~/Admin"</i>',
+                            ' the search bar <i>"~/Admin"</i>, or click on the <i>"Next"</i> button.',
                         buttons: [
                             backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage('Admin');
+                                },
+                                text: 'Next',
+                            },
                         ],
                         id: 'admin_dashboard_enter',
                         when: {
@@ -293,7 +326,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    getBackToPreviousPage('Admin', Shepherd.activeTour.options.id, 'admin_dashboard_enter');
+                                    getBackToHomePage(Shepherd.activeTour.options.id, 'admin_dashboard_enter');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -301,6 +334,18 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'admin_dashboard_page',
+                        when: {
+                            show() {
+                                // If the user typed a wrong URL don't go ahead.
+                                if ($(!'button[type="Submit"]').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
+                                addShepherdQueryParams();
+                            },
+                        },
                     },
                 ],
             }),
