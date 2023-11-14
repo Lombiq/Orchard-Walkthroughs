@@ -102,12 +102,17 @@ jQuery(($) => {
             window.location.href += page;
         }
 
-        Shepherd.on('cancel', () => {
+        function enableOrDisableClickingOnElement(element, enableOrDisable) {
+            const enableOrDisableElementClick = typeof enableOrDisable === 'boolean' ? enableOrDisable : false;
+
+            element.css({
+                'pointer-events': enableOrDisableElementClick ? 'auto' : 'none',
+            });
+        }
+
+        Shepherd.on('cancel complete', () => {
             removeShepherdQueryParams();
             deleteWalkthroughCookies();
-
-            // Remove any form submit prevention.
-            $('form').off('submit');
         });
 
         // Add new walkthroughs here.
@@ -322,7 +327,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        text: 'Welcome to the admin dashboard',
+                        text: 'Welcome to the admin dashboard! The admin dashboard serves as the centralized ' +
+                            'control panel for managing and configuring various aspects of the Orchard Core ' +
+                            'application.',
                         buttons: [
                             {
                                 action: function () {
@@ -347,10 +354,106 @@ jQuery(($) => {
                             },
                         },
                     },
+                    {
+                        title: 'Side menu',
+                        text: 'This is the side menu, that organizes essential functionalities. This menu includes' +
+                            ' key sections such as content management, security settings, and other administrative' +
+                            ' options.',
+                        attachTo: { element: '#ta-left-sidebar', on: 'right' },
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    enableOrDisableClickingOnElement($('#left-nav'), true);
+                                    return this.next();
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'admin_dashboard_side_menu',
+                        when: {
+                            show() {
+                                // Making side navigation unclickable, so the user can't go somewhere else.
+                                enableOrDisableClickingOnElement($('#left-nav'));
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Top menu',
+                        text: 'This is the top menu. Here you can switch between dark and light mode, go to the' +
+                            ' homepage and log off or take a look at your profile.',
+                        attachTo: { element: '.nav.navbar.user-top-navbar', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
+                                    return this.next();
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'admin_dashboard_top_menu',
+                        when: {
+                            show() {
+                                // Making top navigation unclickable, so the user can't go somewhere else.
+                                enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'));
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new blog post',
+                        text: 'Let\'s create a new blog post. The blog post content type is already defined because' +
+                            ' the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
+                            'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
+                            'posts within the blog.',
+                        attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_blog_post',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_blog');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new blog post',
+                        text: 'Let\'s create a new blog post. The blog post content type is already defined because' +
+                            ' the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
+                            'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
+                            'posts within the blog.',
+                        attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_blog_post_blog',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'admin_dashboard_page');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
                 ],
             }),
 
         };
+
+        walkthroughs.orchardCoreAdminWalkthrough.on('cancel', () => {
+            // Remove any form submit prevention.
+            $('form').off('submit');
+
+            // Making side and top navigation clickable again, on the admin dashboard.
+            enableOrDisableClickingOnElement($('#left-nav'), true);
+            enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
+        });
 
         const walkthroughSelector = new Shepherd.Tour({
             id: 'walkthroughSelector',
