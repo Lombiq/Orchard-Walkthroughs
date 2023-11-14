@@ -431,15 +431,16 @@ jQuery(($) => {
                             'posts within the blog.',
                         attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
                         buttons: [
-                            backButton,
+                            {
+                                action: function () {
+                                    // Need -2 because of the addShepherdQueryParams() function.
+                                    window.history.go(-2);
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'creating_blog_post_blog',
-                        when: {
-                            show() {
-                                setWalkthroughCookies(this.tour.options.id, 'admin_dashboard_page');
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                 ],
             }),
