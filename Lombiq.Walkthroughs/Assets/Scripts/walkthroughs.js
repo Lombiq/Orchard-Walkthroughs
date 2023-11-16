@@ -110,10 +110,10 @@ jQuery(($) => {
             });
         }
 
-        Shepherd.on('cancel complete', () => {
+        ['complete', 'cancel'].forEach((event) => Shepherd.on(event, () => {
             removeShepherdQueryParams();
             deleteWalkthroughCookies();
-        });
+        }));
 
         // Add new walkthroughs here.
         const walkthroughs = {
@@ -424,12 +424,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new blog post',
-                        text: 'Let\'s create a new blog post. The blog post content type is already defined because' +
-                            ' the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
-                            'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
-                            'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
-                            'posts within the blog.',
-                        attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
+                        text: 'Here you can see the blog posts inside the blog. There is already an example one ' +
+                            'beacuse of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'Blog recipe</a>.',
+                        attachTo: { element: '#ci-sortable', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
@@ -439,22 +437,151 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
+                            nextButton,
                         ],
                         id: 'creating_blog_post_blog',
+                        when: {
+                            show() {
+                                // Making the blog posts unclickable, so the user can't go somewhere else.
+                                enableOrDisableClickingOnElement($('#ci-sortable'));
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new blog post',
+                        text: 'Click here to create a new blog post!',
+                        attachTo: { element: '.btn.btn-secondary[href*="BlogPost/Create"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_blog_post_create_button',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new blog post',
+                        text: 'Here you can create the blog post.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    // Need -2 because of the addShepherdQueryParams() function.
+                                    window.history.go(-2);
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_content_editor',
+                    },
+                    {
+                        title: 'Title',
+                        text: 'Let\'s give it a title!',
+                        attachTo: { element: '#TitlePart_Title', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_title',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Permalink',
+                        text: 'You can give it an URL, but you can leave it empty to auto-generate it!',
+                        attachTo: { element: '#AutoroutePart_Path', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_URL',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Markdown editor',
+                        text: 'This is a Markdown editor, the core of you blog post.' +
+                            ' <a href="https://www.markdownguide.org/basic-syntax/">Here is a guide for Markdown syntax</a>.' +
+                            ' The Markdown editor uses' +
+                            ' <a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor">EasyMDE</a>.',
+                        attachTo: { element: '.EasyMDEContainer', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_markdown_editor',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Subtitle',
+                        text: 'You can set the subtitle of you blog post.',
+                        attachTo: { element: '#BlogPost_Subtitle_Text', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_subtitle',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Banner image',
+                        text: 'You can set the subtitle of you blog post.',
+                        attachTo: { element: '#BlogPost_Image', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_banner_image',
+                        when: {
+                            show() {
+                                $('a.btn.btn-secondary.btn-sm:not(.disabled)').on('click', function moveOverlay() {
+                                    // 1050 is when the media library window is in front of the overlay, but everything
+                                    // else is under it.
+                                    $('.shepherd-modal-overlay-container').css('z-index', 1050);
+                                    $('div[data-shepherd-step-id="creating_blog_post_banner_image"]').css('z-index', 1050);
+                                });
+
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
                     },
                 ],
             }),
 
         };
 
-        walkthroughs.orchardCoreAdminWalkthrough.on('cancel', () => {
+        ['complete', 'cancel'].forEach((event) => walkthroughs.orchardCoreAdminWalkthrough.on(event, () => {
             // Remove any form submit prevention.
             $('form').off('submit');
 
-            // Making side and top navigation clickable again, on the admin dashboard.
+            // Making elements clickable again, on the admin dashboard.
             enableOrDisableClickingOnElement($('#left-nav'), true);
             enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
-        });
+            enableOrDisableClickingOnElement($('#ci-sortable'), true);
+        }));
 
         const walkthroughSelector = new Shepherd.Tour({
             id: 'walkthroughSelector',
