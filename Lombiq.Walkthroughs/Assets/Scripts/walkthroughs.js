@@ -38,7 +38,7 @@ jQuery(($) => {
 
             urlObject.searchParams.delete('shepherdTour');
             urlObject.searchParams.delete('shepherdStep');
-            window.history.pushState(null, '', urlObject.toString());
+            window.history.replaceState(null, '', urlObject.toString());
         }
 
         function addShepherdQueryParams() {
@@ -46,7 +46,7 @@ jQuery(($) => {
 
             urlObject.searchParams.set('shepherdTour', Shepherd.activeTour.options.id);
             urlObject.searchParams.set('shepherdStep', Shepherd.activeTour.getCurrentStep().id);
-            window.history.pushState(null, '', urlObject.toString());
+            window.history.replaceState(null, '', urlObject.toString());
         }
 
         function getShepherdQueryParams() {
@@ -460,6 +460,11 @@ jQuery(($) => {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
                                 addShepherdQueryParams();
+
+                                // We need this to avoid having a step in the return url.
+                                $('.btn.btn-secondary[href*="BlogPost/Create"]').on('click', function removeShepherdQueryParamsBeforePageSwitch() {
+                                    removeShepherdQueryParams();
+                                });
                             },
                         },
                     },
@@ -547,7 +552,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can set the subtitle of you blog post.',
+                        text: 'You can add an image for you blog post, if you want. Click on the <i>"+"</i> sign.',
                         attachTo: { element: '#BlogPost_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -568,6 +573,107 @@ jQuery(($) => {
                             },
                         },
                     },
+                    {
+                        title: 'Tags',
+                        text: 'You can add tags to your blog post.',
+                        attachTo: { element: '#BlogPost_Tags_TermContentItemIds_FieldWrapper', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_tags',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Category',
+                        text: 'You can also select the category of your blog post.',
+                        attachTo: { element: '#BlogPost_Category_TermEntries_FieldWrapper', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_category',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Preview',
+                        text: 'Before publishing your blog post, you can preview what would it look like on the ' +
+                            'frontend. You could click on the preview button, but since we are finished, let\'s just' +
+                            ' publish it.',
+                        attachTo: { element: '#previewButton', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_preview',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+
+                                // We don't want to go back and forth between the admin dashboard, so we won't allow the
+                                // user, to actually use the preview button, but we will let one know.
+                                enableOrDisableClickingOnElement($('#previewButton'));
+                            },
+                        },
+                    },
+                    {
+                        title: 'Publishing',
+                        text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_blog_post_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Blog post',
+                        text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
+                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    // Need -2 because of the addShepherdQueryParams() function.
+                                    window.history.go(-2);
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_blog_post_published',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
+                                enableOrDisableClickingOnElement($('#ci-sortable'), true);
+                            },
+                        },
+                    },
+                    {
+                        title: 'Blog post',
+                        text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
+                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_blog_post_inspecting',
+                    },
                 ],
             }),
 
@@ -581,6 +687,7 @@ jQuery(($) => {
             enableOrDisableClickingOnElement($('#left-nav'), true);
             enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
             enableOrDisableClickingOnElement($('#ci-sortable'), true);
+            enableOrDisableClickingOnElement($('#previewButton'), true);
         }));
 
         const walkthroughSelector = new Shepherd.Tour({
@@ -624,11 +731,16 @@ jQuery(($) => {
             currentTour.show(queryParams.shepherdStep);
         }
         else if (walkthroughCookies.walkthroughCookieValue !== null && walkthroughCookies.walkthroughStepCookieValue !== null) {
-            const currentTour = walkthroughs[walkthroughCookies.walkthroughCookieValue];
-            currentTour.start();
-            currentTour.show(walkthroughCookies.walkthroughStepCookieValue);
-            addShepherdQueryParams();
+            const walktrough = walkthroughCookies.walkthroughCookieValue;
+            const step = walkthroughCookies.walkthroughStepCookieValue;
+
             deleteWalkthroughCookies();
+
+            const currentTour = walkthroughs[walktrough];
+            currentTour.start();
+            currentTour.show(step);
+
+            addShepherdQueryParams();
         }
 
         const walkthroughSelectorButton = $('#walkthrough-selector-button');
