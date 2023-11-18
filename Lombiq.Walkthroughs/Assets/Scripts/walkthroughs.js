@@ -1,11 +1,13 @@
 jQuery(($) => {
     (function LoadShepherd(Shepherd) {
         function deleteWalkthroughCookies() {
-            document.cookie = 'Walkthrough=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            document.cookie = 'WalkthroughStep=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;';
+            document.cookie = 'Walkthrough' + expireCookie;
+            document.cookie = 'WalkthroughStep' + expireCookie;
+            document.cookie = 'IgnoreQueryStep' + expireCookie;
         }
 
-        function setWalkthroughCookies(walkthroughValue, stepValue) {
+        function setWalkthroughCookies(walkthroughValue, stepValue, ignoreQueryStepValue) {
             deleteWalkthroughCookies();
             const expirationDate = new Date();
             expirationDate.setDate(expirationDate.getTime() + (1 * 60 * 60 * 1000));
@@ -17,6 +19,12 @@ jQuery(($) => {
             const WalkthroughStepCookieString = encodeURIComponent('WalkthroughStep') + '=' + encodeURIComponent(stepValue) +
                 '; expires=' + expirationDate.toUTCString() + '; path=/';
             document.cookie = WalkthroughStepCookieString;
+
+            if (ignoreQueryStepValue !== null) {
+                const ignoreQueryStepString = encodeURIComponent('IgnoreQueryStep') + '=' + encodeURIComponent(ignoreQueryStepValue) +
+                    '; expires=' + expirationDate.toUTCString() + '; path=/';
+                document.cookie = ignoreQueryStepString;
+            }
         }
 
         function getWalkthroughCookies() {
@@ -29,8 +37,9 @@ jQuery(($) => {
 
             const walkthroughCookieValue = getCookieValue('Walkthrough');
             const walkthroughStepCookieValue = getCookieValue('WalkthroughStep');
+            const ignoreQueryStepCookieValue = getCookieValue('IgnoreQueryStep');
 
-            return { walkthroughCookieValue, walkthroughStepCookieValue };
+            return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
         function removeShepherdQueryParams() {
@@ -100,14 +109,6 @@ jQuery(($) => {
         function goToRelativePage(page) {
             removeShepherdQueryParams();
             window.location.href += page;
-        }
-
-        function enableOrDisableClickingOnElement(element, enableOrDisable) {
-            const enableOrDisableElementClick = typeof enableOrDisable === 'boolean' ? enableOrDisable : false;
-
-            element.css({
-                'pointer-events': enableOrDisableElementClick ? 'auto' : 'none',
-            });
         }
 
         ['complete', 'cancel'].forEach((event) => Shepherd.on(event, () => {
@@ -360,48 +361,28 @@ jQuery(($) => {
                             ' key sections such as content management, security settings, and other administrative' +
                             ' options.',
                         attachTo: { element: '#ta-left-sidebar', on: 'right' },
+
+                        // Making side navigation unclickable, so the user can't go somewhere else.
+                        canClickTarget: false,
                         buttons: [
                             backButton,
-                            {
-                                action: function () {
-                                    enableOrDisableClickingOnElement($('#left-nav'), true);
-                                    return this.next();
-                                },
-                                text: 'Next',
-                            },
+                            nextButton,
                         ],
                         id: 'admin_dashboard_side_menu',
-                        when: {
-                            show() {
-                                // Making side navigation unclickable, so the user can't go somewhere else.
-                                enableOrDisableClickingOnElement($('#left-nav'));
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                     {
                         title: 'Top menu',
                         text: 'This is the top menu. Here you can switch between dark and light mode, go to the' +
                             ' homepage and log off or take a look at your profile.',
                         attachTo: { element: '.nav.navbar.user-top-navbar', on: 'bottom' },
+
+                        // Making top navigation unclickable, so the user can't go somewhere else.
+                        canClickTarget: false,
                         buttons: [
                             backButton,
-                            {
-                                action: function () {
-                                    enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
-                                    return this.next();
-                                },
-                                text: 'Next',
-                            },
+                            nextButton,
                         ],
                         id: 'admin_dashboard_top_menu',
-                        when: {
-                            show() {
-                                // Making top navigation unclickable, so the user can't go somewhere else.
-                                enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'));
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                     {
                         title: 'Creating a new blog post',
@@ -428,6 +409,9 @@ jQuery(($) => {
                             'beacuse of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'Blog recipe</a>.',
                         attachTo: { element: '#ci-sortable', on: 'top' },
+
+                        // Making the blog posts unclickable, so the user can't go somewhere else.
+                        canClickTarget: false,
                         buttons: [
                             {
                                 action: function () {
@@ -440,13 +424,6 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'creating_blog_post_blog',
-                        when: {
-                            show() {
-                                // Making the blog posts unclickable, so the user can't go somewhere else.
-                                enableOrDisableClickingOnElement($('#ci-sortable'));
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                     {
                         title: 'Creating a new blog post',
@@ -460,11 +437,6 @@ jQuery(($) => {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
                                 addShepherdQueryParams();
-
-                                // We need this to avoid having a step in the return url.
-                                $('.btn.btn-secondary[href*="BlogPost/Create"]').on('click', function removeShepherdQueryParamsBeforePageSwitch() {
-                                    removeShepherdQueryParams();
-                                });
                             },
                         },
                     },
@@ -611,6 +583,10 @@ jQuery(($) => {
                             'frontend. You could click on the preview button, but since we are finished, let\'s just' +
                             ' publish it.',
                         attachTo: { element: '#previewButton', on: 'top' },
+
+                        // We don't want to go back and forth between the admin dashboard, so we won't allow the
+                        // user, to actually use the preview button, but we will let one know.
+                        canClickTarget: false,
                         buttons: [
                             backButton,
                             nextButton,
@@ -620,10 +596,6 @@ jQuery(($) => {
                             show() {
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
                                 preventSubmit();
-
-                                // We don't want to go back and forth between the admin dashboard, so we won't allow the
-                                // user, to actually use the preview button, but we will let one know.
-                                enableOrDisableClickingOnElement($('#previewButton'));
                             },
                         },
                     },
@@ -639,7 +611,10 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published');
+
+                                // The return URL would redirect us to the "creating_blog_post_create_button" step, so
+                                // we are ignoring the query parameter.
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published', 'creating_blog_post_create_button');
                             },
                         },
                     },
@@ -661,7 +636,6 @@ jQuery(($) => {
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
-                                enableOrDisableClickingOnElement($('#ci-sortable'), true);
                             },
                         },
                     },
@@ -673,6 +647,7 @@ jQuery(($) => {
                             backButton,
                         ],
                         id: 'creating_blog_post_inspecting',
+                        useModalOverlay: false,
                     },
                 ],
             }),
@@ -682,12 +657,6 @@ jQuery(($) => {
         ['complete', 'cancel'].forEach((event) => walkthroughs.orchardCoreAdminWalkthrough.on(event, () => {
             // Remove any form submit prevention.
             $('form').off('submit');
-
-            // Making elements clickable again, on the admin dashboard.
-            enableOrDisableClickingOnElement($('#left-nav'), true);
-            enableOrDisableClickingOnElement($('.nav.navbar.user-top-navbar'), true);
-            enableOrDisableClickingOnElement($('#ci-sortable'), true);
-            enableOrDisableClickingOnElement($('#previewButton'), true);
         }));
 
         const walkthroughSelector = new Shepherd.Tour({
@@ -725,7 +694,9 @@ jQuery(($) => {
         const queryParams = getShepherdQueryParams();
         const walkthroughCookies = getWalkthroughCookies();
 
-        if (queryParams.shepherdTour !== null && queryParams.shepherdStep !== null) {
+        if (queryParams.shepherdTour !== null &&
+            queryParams.shepherdStep !== null &&
+            walkthroughCookies.ignoreQueryStepCookieValue !== queryParams.shepherdStep) {
             const currentTour = walkthroughs[queryParams.shepherdTour];
             currentTour.start();
             currentTour.show(queryParams.shepherdStep);
