@@ -648,9 +648,9 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Blog post',
+                        title: 'Viewing the blog post',
                         text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
-                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
                                 action: function () {

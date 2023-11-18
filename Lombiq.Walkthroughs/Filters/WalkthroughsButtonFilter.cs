@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
 using System;
@@ -32,7 +34,9 @@ public class WalkthroughsButtonFilter : IAsyncResultFilter
 
         // These are BlogTheme specific.
         if (actionRouteController.EqualsOrdinalIgnoreCase("Item") &&
-            actionRouteValue.EqualsOrdinalIgnoreCase("Display"))
+            actionRouteValue.EqualsOrdinalIgnoreCase("Display") &&
+            context.Result is ViewResult viewResult &&
+            ((string)(viewResult.Model as dynamic)?.ContentItem?.ContentType).EqualsOrdinalIgnoreCase("Blog"))
         {
             var layout = await _layoutAccessor.GetLayoutAsync();
             var contentZone = layout.Zones["Content"];
