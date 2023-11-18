@@ -1,5 +1,12 @@
 jQuery(($) => {
     (function LoadShepherd(Shepherd) {
+        function getCookieValue(cookieName) {
+            const name = cookieName + '=';
+            const cookieArray = document.cookie.split(';').map((cookie) => cookie.trim());
+            const resultCookie = cookieArray.find((cookie) => cookie.startsWith(name));
+            return resultCookie ? decodeURIComponent(resultCookie.substring(name.length)) : null;
+        }
+
         function deleteWalkthroughCookies() {
             const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;';
             document.cookie = 'Walkthrough' + expireCookie;
@@ -20,21 +27,12 @@ jQuery(($) => {
                 '; expires=' + expirationDate.toUTCString() + '; path=/';
             document.cookie = WalkthroughStepCookieString;
 
-            if (ignoreQueryStepValue !== null) {
-                const ignoreQueryStepString = encodeURIComponent('IgnoreQueryStep') + '=' + encodeURIComponent(ignoreQueryStepValue) +
-                    '; expires=' + expirationDate.toUTCString() + '; path=/';
-                document.cookie = ignoreQueryStepString;
-            }
+            const ignoreQueryStepString = encodeURIComponent('IgnoreQueryStep') + '=' + encodeURIComponent(ignoreQueryStepValue) +
+                '; expires=' + expirationDate.toUTCString() + '; path=/';
+            document.cookie = ignoreQueryStepString;
         }
 
         function getWalkthroughCookies() {
-            const getCookieValue = (cookieName) => {
-                const name = cookieName + '=';
-                const cookieArray = document.cookie.split(';').map((cookie) => cookie.trim());
-                const resultCookie = cookieArray.find((cookie) => cookie.startsWith(name));
-                return resultCookie ? decodeURIComponent(resultCookie.substring(name.length)) : null;
-            };
-
             const walkthroughCookieValue = getCookieValue('Walkthrough');
             const walkthroughStepCookieValue = getCookieValue('WalkthroughStep');
             const ignoreQueryStepCookieValue = getCookieValue('IgnoreQueryStep');
@@ -42,12 +40,31 @@ jQuery(($) => {
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
+        // Unfortunately there are cases where, we can't go back with  "goToRelativePage()". For example the blog's
+        // content item id is random and it's in the URL. So we can't hard code it in "goToRelativePage()". So we are
+        // storing the URL in the cookie, before the next "Back" button. The drawback of this, is that if you call
+        // "goToStoredStepUrl()" before the step that stored the URL (e.g. you went to the step not with the buttons,
+        // but by typing it in the query parameters and jumping right to it), then it can break the walkthrough. So by
+        // default "goToRelativePage()" is used and we are only using this function when there is no other choice.
+        function setStoredStepUrlCookie() {
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getTime() + (1 * 60 * 60 * 1000));
+
+            const storedStepUrlValueString = encodeURIComponent('StoredStepUrl') + '=' + encodeURIComponent(window.location.href) +
+                '; expires=' + expirationDate.toUTCString() + '; path=/';
+            document.cookie = storedStepUrlValueString;
+        }
+
+        function goToStoredStepUrl() {
+            window.location.href = getCookieValue('StoredStepUrl');
+        }
+
         function removeShepherdQueryParams() {
             const urlObject = new URL(window.location.href);
 
             urlObject.searchParams.delete('shepherdTour');
             urlObject.searchParams.delete('shepherdStep');
-            window.history.replaceState(null, '', urlObject.toString());
+            window.history.pushState(null, '', urlObject.toString());
         }
 
         function addShepherdQueryParams() {
@@ -55,7 +72,7 @@ jQuery(($) => {
 
             urlObject.searchParams.set('shepherdTour', Shepherd.activeTour.options.id);
             urlObject.searchParams.set('shepherdStep', Shepherd.activeTour.getCurrentStep().id);
-            window.history.replaceState(null, '', urlObject.toString());
+            window.history.pushState(null, '', urlObject.toString());
         }
 
         function getShepherdQueryParams() {
@@ -93,22 +110,24 @@ jQuery(($) => {
             text: 'Next',
         };
 
-        function getBackToHomePage(shepherdTour, shepherdStep) {
-            let currentPage = window.location.href;
-            currentPage = currentPage.substring(
-                currentPage.lastIndexOf('/') + 1,
-                currentPage.indexOf('?')
-            );
+        // First part of current page means, what's after the first "/", from the relative URL. So if we have a tenant
+        // which prefix is "test" and we have this URL:
+        // https://localhost:44335/test/Admin/Contents/ContentItems/something, then it will be "Admin".
+        function goToRelativePage(shepherdTour, shepherdStep, firstPartOfCurrentPage, nextPage) {
+            let splitString = firstPartOfCurrentPage;
 
-            const returnToHomePageURL = new URL(window.location.href.split(currentPage)[0]);
-            returnToHomePageURL.searchParams.set('shepherdTour', shepherdTour);
-            returnToHomePageURL.searchParams.set('shepherdStep', shepherdStep);
-            window.location.href = returnToHomePageURL.toString();
-        }
+            if (!splitString) {
+                splitString = '?';
+            }
+            else {
+                splitString = new RegExp(splitString, 'i');
+            }
 
-        function goToRelativePage(page) {
-            removeShepherdQueryParams();
-            window.location.href += page;
+            const goToRelativePageURL = new URL(
+                window.location.href.split(splitString)[0] + (nextPage ?? ''));
+            goToRelativePageURL.searchParams.set('shepherdTour', shepherdTour);
+            goToRelativePageURL.searchParams.set('shepherdStep', shepherdStep);
+            window.location.href = goToRelativePageURL.toString();
         }
 
         ['complete', 'cancel'].forEach((event) => Shepherd.on(event, () => {
@@ -189,18 +208,12 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    goToRelativePage('Login');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'login_page', null, 'Login');
                                 },
                                 text: 'Next',
                             },
                         ],
                         id: 'logging_in',
-                        when: {
-                            show() {
-                                setWalkthroughCookies(this.tour.options.id, 'login_page');
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                     {
                         title: 'Log in page',
@@ -208,7 +221,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    getBackToHomePage(Shepherd.activeTour.options.id, 'logging_in');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'logging_in', 'Login');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -313,18 +326,12 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    goToRelativePage('Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'admin_dashboard_page', null, 'Admin');
                                 },
                                 text: 'Next',
                             },
                         ],
                         id: 'admin_dashboard_enter',
-                        when: {
-                            show() {
-                                setWalkthroughCookies(this.tour.options.id, 'admin_dashboard_page');
-                                addShepherdQueryParams();
-                            },
-                        },
                     },
                     {
                         title: 'Admin dashboard',
@@ -334,7 +341,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    getBackToHomePage(Shepherd.activeTour.options.id, 'admin_dashboard_enter');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'admin_dashboard_enter', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -415,8 +422,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    // Need -2 because of the addShepherdQueryParams() function.
-                                    window.history.go(-2);
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -435,8 +441,9 @@ jQuery(($) => {
                         id: 'creating_blog_post_create_button',
                         when: {
                             show() {
-                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
                                 addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
                             },
                         },
                     },
@@ -446,8 +453,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    // Need -2 because of the addShepherdQueryParams() function.
-                                    window.history.go(-2);
+                                    goToStoredStepUrl();
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -611,10 +617,33 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
+                                setStoredStepUrlCookie();
 
                                 // The return URL would redirect us to the "creating_blog_post_create_button" step, so
                                 // we are ignoring the query parameter.
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published', 'creating_blog_post_create_button');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Viewing the blog post',
+                        text: 'The blog post is published. Click on the <i>"View"</i> button to see it.',
+                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_blog_post_published',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -625,26 +654,11 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    // Need -2 because of the addShepherdQueryParams() function.
-                                    window.history.go(-2);
+                                    goToStoredStepUrl();
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
-                        ],
-                        id: 'creating_blog_post_published',
-                        when: {
-                            show() {
-                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Blog post',
-                        text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
-                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
-                        buttons: [
-                            backButton,
                         ],
                         id: 'creating_blog_post_inspecting',
                         useModalOverlay: false,
@@ -694,14 +708,14 @@ jQuery(($) => {
         const queryParams = getShepherdQueryParams();
         const walkthroughCookies = getWalkthroughCookies();
 
-        if (queryParams.shepherdTour !== null &&
-            queryParams.shepherdStep !== null &&
+        if (queryParams.shepherdTour &&
+            queryParams.shepherdStep &&
             walkthroughCookies.ignoreQueryStepCookieValue !== queryParams.shepherdStep) {
             const currentTour = walkthroughs[queryParams.shepherdTour];
             currentTour.start();
             currentTour.show(queryParams.shepherdStep);
         }
-        else if (walkthroughCookies.walkthroughCookieValue !== null && walkthroughCookies.walkthroughStepCookieValue !== null) {
+        else if (walkthroughCookies.walkthroughCookieValue && walkthroughCookies.walkthroughStepCookieValue) {
             const walktrough = walkthroughCookies.walkthroughCookieValue;
             const step = walkthroughCookies.walkthroughStepCookieValue;
 
@@ -716,7 +730,7 @@ jQuery(($) => {
 
         const walkthroughSelectorButton = $('#walkthrough-selector-button');
 
-        if (walkthroughSelectorButton !== null) {
+        if (walkthroughSelectorButton) {
             walkthroughSelectorButton.on('click', function startWalkthroughSelector() {
                 walkthroughSelector.start();
             });
