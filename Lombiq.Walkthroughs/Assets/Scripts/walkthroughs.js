@@ -679,7 +679,6 @@ jQuery(($) => {
                         id: 'creating_article_intro',
                         when: {
                             show() {
-                                setWalkthroughCookies(this.tour.options.id, 'creating_article_dashboard');
                                 addShepherdQueryParams();
                                 setStoredStepUrlCookie();
                             },
@@ -1012,6 +1011,273 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'creating_article_inspecting',
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'As you can see, the sample article that was created from the recipe is in the menu.' +
+                            'Click on <i>"About"</i>.',
+                        attachTo: { element: 'a[href*="about"', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_article_to_menu_intro',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_about');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'As you can see, you can access easily to itm through the menu. Let\'s add the' +
+                            ' article that we are created too. Go to the admin dashboard by clicking on the' +
+                            ' <i>"Next"</i> button.',
+                        attachTo: { element: 'body', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'about', 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'adding_article_to_menu_about',
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Click on the <i>"Main Menu"</i> button.',
+                        attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_about', 'Admin', 'about');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'adding_article_to_menu_dashboard',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_main_menu');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Here you can see all the menu items.',
+                        attachTo: { element: '.edit-body', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_main_menu',
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Let\'s add the new article that we created. Click on the <i>"Add Menu Item"</i> button.',
+                        attachTo: { element: 'button[data-bs-target="#modalMenuItems"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_article_to_menu_add_menu_item_button',
+                        advanceOn: { selector: 'button[data-bs-target="#modalMenuItems"]', event: 'click' },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'You can choose between mutliple menu items. Read the description too see how they' +
+                            ' are different.',
+                        attachTo: { element: '.modal-body', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    if ($('#modalMenuItems').attr('aria-hidden') !== 'true') {
+                                        $('button[data-bs-target="#modalMenuItems"]').click();
+                                    }
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_add_menu_item_selecting',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                const modal = $('#modalMenuItems');
+
+                                if (!modal || modal.attr('aria-hidden') === 'true') {
+                                    $('button[data-bs-target="#modalMenuItems"]').click();
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'For now let\'s go with the, Link Menu Item one. Click on the <i>"Add"</i> button.',
+                        attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_article_to_menu_link_menu_item',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_link_menu_item_name');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                const modal = $('#modalMenuItems');
+
+                                if (!modal || modal.attr('aria-hidden') === 'true') {
+                                    $('button[data-bs-target="#modalMenuItems"]').click();
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Let\'s give it a name.',
+                        attachTo: { element: '#LinkMenuItemPart_Name', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_link_menu_item_name',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Let\'s give it your article\'s URL. Make sure to include the relative path <i>"~"</i>.',
+                        attachTo: { element: '#LinkMenuItemPart_Url', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_link_menu_item_url',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'We are ready, let\'s publish the link menu item. Click on the publish button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_article_to_menu_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'You can reorder menu items by dragging them.',
+                        attachTo: { element: '#menu', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_published',
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'You will also need to publish the menu itself too, click on the publish button!',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_article_to_menu_publishing2',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published2');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Your article is now available from the menu. Let\'s see it, click on the' +
+                            ' <i>"Next"</i> button to go to the home page.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_inspecting', 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'adding_article_to_menu_published2',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding article to menu',
+                        text: 'Your article is now available from the menu. Let\'s see it, click on the' +
+                            ' <i>"Next"</i> button to go to the home page.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_article_to_menu_inspecting',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                            },
+                        },
                     },
                 ],
             }),
