@@ -201,9 +201,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Log in',
-                        // We could link the login page, but if the site is on a subtenant, then we can't get the relative path.
-                        text: 'Let\'s log in! Please go to the following URL, by typing it into the search bar' +
-                            ' <i>"~/Login"</i>, or click on the <i>"Next"</i> button.',
+                        text: 'Let\'s log in! Please go to the following URL <i>"~/Login"</i>, by clicking on the' +
+                            ' <i>"Next"</i> button.',
                         buttons: [
                             backButton,
                             {
@@ -319,9 +318,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        // We could link the admin page, but if the site is on a subtenant, then we can't get the relative path.
-                        text: 'Let\'s see the admin dashboard now. Please go to the following URL, by typing it into' +
-                            ' the search bar <i>"~/Admin"</i>, or click on the <i>"Next"</i> button.',
+                        text: 'Let\'s see the admin dashboard now. Please go to the following URL <i>"~/Admin"</i>, ' +
+                            'by clicking on the <i>"Next"</i> button.',
                         buttons: [
                             backButton,
                             {
@@ -485,7 +483,7 @@ jQuery(($) => {
                             backButton,
                             nextButton,
                         ],
-                        id: 'creating_blog_post_URL',
+                        id: 'creating_blog_post_permalink',
                         when: {
                             show() {
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
@@ -495,7 +493,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Markdown editor',
-                        text: 'This is a Markdown editor, the core of you blog post.' +
+                        text: 'This is a Markdown editor, the core of your blog post.' +
                             ' <a href="https://www.markdownguide.org/basic-syntax/">Here is a guide for Markdown syntax</a>.' +
                             ' The Markdown editor uses' +
                             ' <a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor">EasyMDE</a>.',
@@ -514,7 +512,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Subtitle',
-                        text: 'You can set the subtitle of you blog post.',
+                        text: 'You can set the subtitle of your blog post.',
                         attachTo: { element: '#BlogPost_Subtitle_Text', on: 'top' },
                         buttons: [
                             backButton,
@@ -530,7 +528,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can add an image for you blog post, if you want. Click on the <i>"+"</i> sign.',
+                        text: 'You can add an image for your blog post, if you want. Click on the <i>"+"</i> sign.',
                         attachTo: { element: '#BlogPost_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -649,7 +647,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the blog post',
-                        text: 'We are ready, let\'s publish the blog post. Click on the publish button.',
+                        text: 'Here is you published blog post.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -659,9 +657,361 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
+                            nextButton,
                         ],
                         id: 'creating_blog_post_inspecting',
-                        useModalOverlay: false,
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Now let\'s create an article. Just as the blog post content type, article is already' +
+                            ' defined and it comes from the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
+                            'by clicking on the <i>"Next"</i> button.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_dashboard', 'blog', 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'creating_article_intro',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_dashboard');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        attachTo: { element: '#content', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_article_dashboard',
+                        advanceOn: { selector: '#content', event: 'click' },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Now click on the <i>"Content Types"</i> dropdown to see what type of content items you' +
+                            ' can create.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('[title="Content Types"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('[data-title="Content"]').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_article_content_types',
+                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
+                        // function for that, so we are adding an event listener.
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                const element = this.options.savedElement;
+
+                                if (element.getAttribute('listener') !== 'true') {
+                                    element.addEventListener('click', function advanceToNextStep() {
+                                        element.setAttribute('listener', 'true');
+                                        Shepherd.activeTour.next();
+                                    });
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Here we have the article content type. Click on it.',
+                        attachTo: { element: 'a[href*= "Article"]', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('[data-title="Content Types"]').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_article_content_types_article',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_articles');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Here you can see all the articles. As you can see, there is already one.',
+                        attachTo: { element: '.list-group.with-checkbox', on: 'top' },
+                        // Making the list unclickable, so the user can't go somewhere else.
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_content_types_article', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'creating_article_articles',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_create_button');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Click here to create a new article.',
+                        attachTo: { element: '.btn.btn-secondary[href*="Article/Create"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_article_create_button',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_editor');
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Here you can create the article.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'creating_article_editor',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Title',
+                        text: 'Let\'s give it a title.',
+                        attachTo: { element: '#TitlePart_Title', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_title',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Permalink',
+                        text: 'You can give it an URL, but you can leave it empty to auto-generate it!',
+                        attachTo: { element: '#AutoroutePart_Path', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_permalink',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Set as homepage',
+                        text: 'You can set this article as the homepage, but let\'s not do that now.',
+                        attachTo: { element: '#AutoroutePart_SetHomepage', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_set_as_homepage',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'HTML Body',
+                        text: 'This is the HTML Body, the core of an article. The HTML Body editor in Orchard Core' +
+                            ' enables direct input of HTML code with rich formatting options and multimedia ' +
+                            'embedding, offering extensive control over layout and styling.In contrast, the Markdown' +
+                            ' editor for Blog Post simplifies content creation using text- based Markdown syntax, ' +
+                            'promoting ease of use and consistency but with fewer advanced formatting choices' +
+                            ' compared to HTML.',
+                        attachTo: { element: '.content-part-wrapper.content-part-wrapper-html-body-part', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_html_body',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Subtitle',
+                        text: 'You can set the subtitle of your article.',
+                        attachTo: { element: '#Article_Subtitle_Text', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_subtitle',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Banner image',
+                        text: 'You can add an image for your article, if you want. Click on the <i>"+"</i> sign.',
+                        attachTo: { element: '#Article_Image', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_article_banner_image',
+                        when: {
+                            show() {
+                                $('a.btn.btn-secondary.btn-sm:not(.disabled)').on('click', function moveOverlay() {
+                                    // 1050 is when the media library window is in front of the overlay, but everything
+                                    // else is under it.
+                                    $('.shepherd-modal-overlay-container').css('z-index', 1050);
+                                    $('div[data-shepherd-step-id="creating_article_banner_image"]').css('z-index', 1050);
+                                });
+
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Preview',
+                        text: 'Before publishing your article, you can preview what would it look like on the ' +
+                            'frontend (as with the blog post). You could click on the preview button, but since we' +
+                            ' are finished, let\'s just publish it.',
+                        attachTo: { element: '#previewButton', on: 'top' },
+
+                        // We don't want to go back and forth between the admin dashboard, so we won't allow the
+                        // user, to actually use the preview button, but we will let one know.
+                        canClickTarget: false,
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'creating_blog_post_preview',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Publishing',
+                        text: 'We are ready, let\'s publish the article. Click on the publish button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'creating_article_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+
+                                // The return URL would redirect us to the "creating_article_create_button" step, so
+                                // we are ignoring the query parameter.
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_published', 'creating_article_create_button');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Viewing the article',
+                        text: 'The article is published. Click on the <i>"View"</i> button to see it.',
+                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'creating_article_published',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_inspecting');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Viewing the article',
+                        text: 'Here is you published article.',
+                        attachTo: { element: 'body', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'creating_article_inspecting',
                     },
                 ],
             }),
