@@ -1273,11 +1273,89 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_inspecting',
+                    },
+                    {
+                        title: 'Content list',
+                        text: 'Now let\'s go back to the admin dashboard. Click on the <i>"Next</i> button.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_dashboard', null, 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'content_list_intro',
                         when: {
                             show() {
                                 addShepherdQueryParams();
+                                setStoredStepUrlCookie();
                             },
                         },
+                    },
+                    {
+                        title: 'Content list',
+                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        attachTo: { element: '#content', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToStoredStepUrl();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_list_admin_dashboard',
+                        advanceOn: { selector: '#content', event: 'click' },
+                    },
+                    {
+                        title: 'Content list',
+                        text: 'Now click on the <i>"Content Items"</i> button.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('[title="Content Items"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentItemsButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('[data-title="Content"]').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_list_admin_content_items_menu',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_list_admin_content_items');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content list',
+                        text: 'Notice how we can see (and filter for) all the content items (articles, blog' +
+                            ' posts etc.). Previously we accessed these from various menu shortcuts.',
+                        attachTo: { element: '#items-form', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_content_items_menu', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_list_admin_content_items',
                     },
                 ],
             }),
