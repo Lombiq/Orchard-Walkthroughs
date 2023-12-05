@@ -103,6 +103,14 @@ jQuery(($) => {
             text: 'Back',
         };
 
+        const goToStoredStepBackButton = {
+            action: function () {
+                goToStoredStepUrl();
+            },
+            classes: 'shepherd-button-secondary',
+            text: 'Back',
+        };
+
         const nextButton = {
             action: function () {
                 return this.next();
@@ -449,13 +457,7 @@ jQuery(($) => {
                         title: 'Creating a new blog post',
                         text: 'Here you can create the blog post.',
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'creating_blog_post_content_editor',
@@ -628,13 +630,7 @@ jQuery(($) => {
                         text: 'The blog post is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                         ],
                         id: 'creating_blog_post_published',
                         when: {
@@ -650,52 +646,51 @@ jQuery(($) => {
                         text: 'Here is you published blog post.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'creating_blog_post_inspecting',
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now let\'s create an article. Just as the blog post content type, article is already' +
-                            ' defined and it comes from the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                        text: 'Now let\'s create an article. First go to the homepage.',
+                        attachTo: { element: '.navbar-brand', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                setWalkthroughCookies(this.tour.options.id, 'creating_article_intro');
+                            },
+                        },
+                        id: 'creating_article_intermediate_step',
+                    },
+                    {
+                        title: 'Creating a new article',
+                        text: 'Just as the blog post content type, article is already defined and it comes from the' +
+                            '  <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
                             'by clicking on the <i>"Next"</i> button.',
                         buttons: [
-                            backButton,
+                            goToStoredStepBackButton,
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_dashboard', 'blog', 'Admin');
+                                    setStoredStepUrlCookie();
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_dashboard', '', 'Admin');
                                 },
                                 text: 'Next',
                             },
                         ],
                         id: 'creating_article_intro',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setStoredStepUrlCookie();
-                            },
-                        },
                     },
                     {
                         title: 'Creating a new article',
                         text: 'Click on the <i>"Content"</i> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                         ],
                         id: 'creating_article_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
@@ -807,13 +802,7 @@ jQuery(($) => {
                         title: 'Creating a new article',
                         text: 'Here you can create the article.',
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'creating_article_editor',
@@ -979,13 +968,7 @@ jQuery(($) => {
                         text: 'The article is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                         ],
                         id: 'creating_article_published',
                         when: {
@@ -1001,13 +984,7 @@ jQuery(($) => {
                         text: 'Here is you published article.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'creating_article_inspecting',
@@ -1037,13 +1014,7 @@ jQuery(($) => {
                             ' <i>"Next"</i> button.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'about', 'Admin');
@@ -1158,13 +1129,7 @@ jQuery(($) => {
                         text: 'Let\'s give it a name.',
                         attachTo: { element: '#LinkMenuItemPart_Name', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_link_menu_item_name',
@@ -1211,13 +1176,7 @@ jQuery(($) => {
                         text: 'You can reorder menu items by dragging them.',
                         attachTo: { element: '#menu', on: 'top' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_published',
@@ -1245,31 +1204,21 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
+                                    setStoredStepUrlCookie();
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_inspecting', 'Admin');
                                 },
                                 text: 'Next',
                             },
                         ],
                         id: 'adding_article_to_menu_published2',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setStoredStepUrlCookie();
-                            },
-                        },
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'Your article is now available from the menu. Let\'s see it, click on the' +
-                            ' <i>"Next"</i> button to go to the home page.',
+                        text: 'The new menu item should appear up here.',
+                        attachTo: { element: '#navbarResponsive', on: 'bottom' },
+                        canClickTarget: false,
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_inspecting',
@@ -1281,31 +1230,20 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
+                                    setStoredStepUrlCookie();
                                     goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_dashboard', null, 'Admin');
                                 },
                                 text: 'Next',
                             },
                         ],
                         id: 'content_list_intro',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setStoredStepUrlCookie();
-                            },
-                        },
                     },
                     {
                         title: 'Content list',
                         text: 'Click on the <i>"Content"</i> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
-                            {
-                                action: function () {
-                                    goToStoredStepUrl();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            goToStoredStepBackButton,
                         ],
                         id: 'content_list_admin_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
@@ -1346,6 +1284,7 @@ jQuery(($) => {
                         text: 'Notice how we can see (and filter for) all the content items (articles, blog' +
                             ' posts etc.). Previously we accessed these from various menu shortcuts.',
                         attachTo: { element: '#items-form', on: 'top' },
+                        canClickTarget: false,
                         buttons: [
                             {
                                 action: function () {
@@ -1354,12 +1293,196 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
+                            nextButton,
                         ],
                         id: 'content_list_admin_content_items',
                     },
+                    {
+                        title: 'Taxonomies',
+                        text: 'The Taxonomies feature is turned on. This module provides the Taxonomy content type' +
+                            ' that is used to define managed vocabularies (categories) of any type. Taxonomy content' +
+                            ' items are made of terms organized as a hierarchy. Using the Taxonomy Field allows any' +
+                            ' content item to be associated with one or many terms of a taxonomy.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    setStoredStepUrlCookie();
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'taxonomies_intro2',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'taxonomies_intro',
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'You can access this page, by going to the content types, then filtering for <i>"Taxonomy"</i>.' +
+                            'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
+                        attachTo: { element: '.list-group.with-checkbox', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            goToStoredStepBackButton,
+                            nextButton,
+                        ],
+                        id: 'taxonomies_intro2',
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'Click on the <i>"Edit"</i> button.',
+                        attachTo: { element: '.btn-sm.btn-primary.edit', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'taxonomies_categories',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_categories_edit');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'taxonomies_categories',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'taxonomies_categories_edit',
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'You can add a category by clicking here.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'taxonomies_categories_edit',
+                        when: {
+                            show() {
+                                setStoredStepUrlCookie();
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_adding_category');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'You can add a category by clicking here.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                        ],
+                        id: 'taxonomies_adding_category',
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'You can name your category.',
+                        attachTo: { element: '#TitlePart_Title', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'taxonomies_category_title',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'You can set an icon for the category. (You need to pick an icon otherwise you can\'t' +
+                            ' publish your category.)',
+                        attachTo: { element: '.btn-toolbar', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'taxonomies_category_icon',
+                        when: {
+                            show() {
+                                $('#Category_Icon').on('click', function moveOverlay() {
+                                    $('.shepherd-modal-overlay-container').css('z-index', 1100);
+                                    $('.iconpicker-container').css('z-index', 1101);
+                                });
+
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'And you can set a permalink for it.',
+                        attachTo: { element: '#AutoroutePart_Path', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'taxonomies_category_permalink',
+                        when: {
+                            show() {
+                                // Needs to be added to other steps in this page, so a reload doesn't break it.
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'Let\'s publish the new category. Click on the <i>"Publish"</i> button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'taxonomies_category_publishing',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_category_published');
+                                $('form').off('submit');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Taxonomies',
+                        text: 'Your category is published. Next time you are editing blog post, you will be able to ' +
+                            'set this new category.',
+                        buttons: [
+                            goToStoredStepBackButton,
+                            nextButton,
+                        ],
+                        id: 'taxonomies_category_published',
+                        when: {
+                            show() {
+                                // If publishing is failed (no icon was set) don't go ahead.
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
                 ],
             }),
-
         };
 
         ['complete', 'cancel'].forEach((event) => walkthroughs.orchardCoreAdminWalkthrough.on(event, () => {
