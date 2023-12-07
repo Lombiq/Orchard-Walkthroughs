@@ -149,6 +149,7 @@ jQuery(($) => {
                 // Tour id should be the same as the tour variable's name.
                 id: 'orchardCoreAdminWalkthrough',
                 useModalOverlay: true,
+                scrollTo: true,
                 defaultStepOptions: {
                     cancelIcon: {
                         enabled: true,
@@ -1462,8 +1463,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'Your category is published. Next time you are editing blog post, you will be able to ' +
-                            'set this new category.',
+                        text: 'Your category is published. Next time when you are editing blog post, you will be ' +
+                            'able to set this new category.',
                         buttons: [
                             goToStoredStepBackButton,
                             nextButton,
@@ -1480,6 +1481,163 @@ jQuery(($) => {
                                 addShepherdQueryParams();
                             },
                         },
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'Let\'s see media management. Click on the <i>"Next"</i> button.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    setStoredStepUrlCookie();
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'media_management_intro',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'Click on the <i>"Media Library"</i> button.',
+                        scrollTo: true,
+                        attachTo: { element: 'a[href*="Media"]', on: 'top' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                        ],
+                        id: 'media_management_menu',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'media_management_media_library');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'This is the media library, here you can see all the uploaded media, including images ' +
+                            'and other files.',
+                        attachTo: { element: '#mediaContainer', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'media_management_media_library',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'You can edit the file names\', delete and view the files. Hover here.',
+                        canClickTarget: false,
+                        attachTo: { element: '.buttons-container', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'media_management_file_buttons',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'You can see the different folders here, and you can also add new ones.',
+                        attachTo: { element: '#folder-tree', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'media_management_folders',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'You can filter for the files here.',
+                        attachTo: { element: '.media-filter', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'media_management_filtering',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'You can upload files here.',
+                        attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'media_management_upload_button',
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'If you uploaded any file, you can see it here.',
+                        attachTo: { element: '#mediaContainer', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'media_management_upload_button',
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        attachTo: { element: '#content', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_content',
+                        advanceOn: { selector: '#content', event: 'click' },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Now click on the <i>"Content Items"</i> button.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('[title="Content Items"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('[data-title="Content"]').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'flow_parts_content_items',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_content_items_new');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        attachTo: { element: '#content', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'flow_parts_content_items', 'Admin', 'Admin/Media');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'flow_parts_content_items_new',
                     },
                 ],
             }),
