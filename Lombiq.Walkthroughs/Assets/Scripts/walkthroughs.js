@@ -149,7 +149,6 @@ jQuery(($) => {
                 // Tour id should be the same as the tour variable's name.
                 id: 'orchardCoreAdminWalkthrough',
                 useModalOverlay: true,
-                scrollTo: true,
                 defaultStepOptions: {
                     cancelIcon: {
                         enabled: true,
