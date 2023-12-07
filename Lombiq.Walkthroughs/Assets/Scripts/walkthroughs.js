@@ -2104,7 +2104,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Click on the <i>"Content"</i> dropdown. <b>Then scroll down.</b>',
+                        text: 'Click on the <i>"Content"</i> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -2146,15 +2146,13 @@ jQuery(($) => {
                         // function for that, so we are adding an event listener.
                         when: {
                             show() {
-                                // Removing overlay, because scrollTo is not working in the side menu.
-                                $('.shepherd-modal-overlay-container').css('z-index', 0);
                                 addShepherdQueryParams();
                                 const element = this.options.savedElement;
+                                $('[data-title="Content Definition"]').removeClass('show');
 
                                 if (element.getAttribute('listener') !== 'true') {
                                     element.addEventListener('click', function advanceToNextStep() {
                                         element.setAttribute('listener', 'true');
-                                        $('.shepherd-modal-overlay-container').css('z-index', 'revert-layer');
                                         Shepherd.activeTour.next();
                                     });
                                 }
@@ -2166,14 +2164,7 @@ jQuery(($) => {
                         text: 'Click on the <i>"Content Types"</i> button.',
                         attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('[data-title="Content Definition"]').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'content_type_editor_content_types_button',
                         when: {
@@ -2182,6 +2173,244 @@ jQuery(($) => {
                                 setWalkthroughCookies(this.tour.options.id, 'content_type_editor_content_types');
                             },
                         },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Here you can see and edit all the content types.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'content_type_editor_content', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_content_types',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Let\'s edit the blog post content type. Click here.',
+                        attachTo: { element: 'a[role="btn-edit-BlogPost"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'content_type_editor_content_types_blog_post',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_edit');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Here you can see the content type editor. All the options are explained here. But' +
+                            ' what if you want to add a new field, like a text field?',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_content_types_blog_post',
+                                        'Admin',
+                                        'Admin/ContentTypes/List');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_edit',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'You can add a new field by clicking here.',
+                        scrollTo: true,
+                        attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'content_type_editor_blog_post_add_field',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_adding_field');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Set a display name (the technical name will be auto generated).',
+                        attachTo: { element: '#DisplayName', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_blog_post_add_field',
+                                        'Admin',
+                                        'Admin/ContentTypes/Edit/BlogPost');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_adding_field',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Select text field.',
+                        attachTo: { element: 'input[value="TextField"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_adding_text_field',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Okay, now save it.',
+                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'content_type_editor_blog_post_save_text_field',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_edit_text_field');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Now let\'s edit the text field.',
+                        scrollTo: true,
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('.btn.btn-primary.btn-sm').get(1),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'top',
+                        },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_blog_post_save_text_field',
+                                        'Admin',
+                                        'Admin/ContentTypes/AddFieldsTo/BlogPost');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_type_editor_blog_post_edit_text_field',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_editing_text_field');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Most of the options are well explained.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_blog_post_edit_text_field',
+                                        'Admin',
+                                        'Admin/ContentTypes/Edit/BlogPost');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_editing_text_field',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'You can select the editor type here, so while on the admin dashboard editing a' +
+                            ' blog post, this text field\'s editor would look and act different, based on the selected option.',
+                        attachTo: { element: '#field-editor-select', on: 'right' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_content_types_blog_post_text_field_editor',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'You can select the display mode here. This will affect how the text will appear on the frontend.',
+                        attachTo: { element: '#field-display-select', on: 'right' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_text_field_display_mode',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Okay, now save it.',
+                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'content_type_editor_blog_post_text_field_edit_save',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(
+                                    this.tour.options.id,
+                                    'content_type_editor_blog_post_text_field_edit_saved',
+                                    'content_type_editor_blog_post_edit_text_field');
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'The text field is now saved. You will also have to save the blog post content type.',
+                        scrollTo: true,
+                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                        ],
+                        id: 'content_type_editor_blog_post_text_field_edit_saved',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_edit_saved');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Now if you edit a blog post the new text field should appear and after creating a' +
+                            ' new blog post, your new field\'s content will be visible on the frontend.',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'content_type_editor_blog_post_edit_saved',
                     },
                 ],
             }),
