@@ -1624,8 +1624,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'Click on the <i>"Content"</i> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
+                        text: 'Click on the <i>"New"</i> button.',
+                        attachTo: { element: '#new-dropdown', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
@@ -1634,9 +1634,554 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
-                            nextButton,
                         ],
                         id: 'flow_parts_content_items_new',
+                        advanceOn: { selector: '#new-dropdown', event: 'click' },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Click on <i>"Page"</i> to create a new page.',
+                        attachTo: { element: 'a.dropdown-item[href*="Page"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_content_items_new_page',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_title');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'You can give it a title, just like for a blog post or for an article.',
+                        attachTo: { element: '#TitlePart_Title', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'flow_parts_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_title',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'You can give it an URL, but you can leave it empty to auto-generate it!',
+                        attachTo: { element: '#AutoroutePart_Path', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_permalink',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'The page has a part called <i>"Flow part"</i>, this allows you to add different' +
+                            ' widgets to your page. If you want a simple <i>"page"</i>, with only HTML content, it\'s' +
+                            ' better to create an article. However if you want something more complex, and perhaps' +
+                            ' you created your own widget and you want to add that, then it\'s better to use a page.' +
+                            ' Click on the <i>"+"</i> icon.',
+                        attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_flow_part',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph' +
+                            ' and Raw Html is self explanatory. Container is just a container for widgets,' +
+                            ' so you can divide them up more. If you created another widget, or turned on a feature' +
+                            ' that adds a widget, it should also appear here.',
+                        attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_page_flow_part_widgets',
+                        advanceOn: { selector: 'button[title="Add Widget"]', event: 'click' },
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Let\'s add a blockquote for example.',
+                        attachTo: { element: 'a[data-widget-type="Blockquote"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_page_flow_part_blockquote',
+                        advanceOn: { selector: 'a[data-widget-type="Blockquote"]', event: 'click' },
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Now you added the blockquote to your page.',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_flow_part_blockquote2',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'Click on the dropdown to edit it!',
+                        attachTo: {
+                            element: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
+                            on: 'top',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_page_flow_part_blockquote_dropdown',
+                        advanceOn: {
+                            selector: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
+                            event: 'click',
+                        },
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'You can write here the text you want.',
+                        attachTo: {
+                            element: '#FlowPart-0_Blockquote_Quote_Text',
+                            on: 'top',
+                        },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_flow_part_blockquote_edit',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'We are ready, let\'s publish the page. Click on the publish button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_page_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+
+                                // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
+                                // we are ignoring the query parameter.
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new_page');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Flow parts',
+                        text: 'We are ready, let\'s publish the page. Click on the publish button.',
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'flow_parts_page_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+
+                                // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
+                                // we are ignoring the query parameter.
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new_page');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Viewing the page',
+                        text: 'The page is published. Click on the <i>"View"</i> button to see it.',
+                        attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                        ],
+                        id: 'flow_parts_page_published',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_inspecting');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Viewing the page',
+                        text: 'Here is you published page with the blockquote.',
+                        attachTo: { element: 'body', on: 'top' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                            nextButton,
+                        ],
+                        id: 'flow_parts_page_inspecting',
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'You can also add widgets to the layout itself. Go to homepage by clicking here.',
+                        attachTo: { element: '.navbar-brand', on: 'bottom' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout:intro',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_admin');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Go to the admin dashboard by clicking on the <i>"Next"</i> button.',
+                        buttons: [
+                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_design', '', 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'adding_widgets_to_the_layout_admin',
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Click on the <i>"Design"</i> dropdown.',
+                        attachTo: { element: '#themes', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_admin', 'Admin', '');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'adding_widgets_to_the_layout_design',
+                        advanceOn: { selector: '#themes', event: 'click' },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Now click on the <i>"Widgets"</i> button.',
+                        attachTo: { element: 'a[href*=Layers]', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('#themes').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'adding_widgets_to_the_layout_widgets',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_zones');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'These are the zones, one page is divided into multiple zones. Currently we have' +
+                            ' <i>"Content"</i> and <i>"Footer"</i>. You can add new zones by going into' +
+                            ' <i>Design → Settings → Zones</i>.',
+                        attachTo: { element: '.col-md-8', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_design', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_zones',
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'These are the layer, you can add new ones, then edit them and define rules for them.' +
+                            ' You can set the layer of the widget, so you can configure when the widget appears. ' +
+                            'E.g. if you put a widget on the <i>"Homepage"</i> layer, it will only appear on the homepage.',
+                        attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_layers',
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Let\'s add a widget to the content zone. Click on <i>"Add widget"</i>.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm.dropdown-toggle', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_add_widget',
+                        advanceOn: { selector: '.btn.btn-primary.btn-sm.dropdown-toggle', event: 'click' },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Now click on <i>"Paragraph"</i>.',
+                        attachTo: { element: 'a[data-widget-type="Paragraph"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph',
+                        when: {
+                            show() {
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_title');
+                                addShepherdQueryParams();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Give it a title.',
+                        attachTo: { element: '#LayerMetadata_Title', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_add_widget', 'Admin', 'Admin/Layers');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph_title',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Give it some content.',
+                        attachTo: { element: '.edit-item-parts', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_add_widget', 'Admin', 'Admin/Layers');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph_content',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'We are ready, let\'s publish it. Click on the publish button.',
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setStoredStepUrlCookie();
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'Your paragraph widget is now published. Let\'s go to the homepage to see it.',
+                        attachTo: { element: 'a[data-bs-original-title="Visit Site"]', on: 'bottom' },
+                        buttons: [
+                            goToStoredStepBackButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph_published',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_inspecting');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Adding widgets to the layout',
+                        text: 'You should see your paragraph if you scroll down.',
+                        attachTo: { element: 'body', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_add_widget', null, 'Admin/Layers');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_paragraph_inspecting',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Go to the admin editor by clicking on the <i>"Next"</i> button.',
+                        buttons: [
+                            backButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_type_editor_content', null, 'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'content_type_editor_intro',
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Click on the <i>"Content"</i> dropdown. <b>Then scroll down.</b>',
+                        attachTo: { element: '#content', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', '');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_type_editor_content',
+                        advanceOn: { selector: '#content', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('[data-title="Content"]').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Now click on the <i>"Content Definition"</i> dropdown.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('[title="Content Definition"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'content_type_editor_content_deifintion',
+                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
+                        // function for that, so we are adding an event listener.
+                        when: {
+                            show() {
+                                // Removing overlay, because scrollTo is not working in the side menu.
+                                $('.shepherd-modal-overlay-container').css('z-index', 0);
+                                addShepherdQueryParams();
+                                const element = this.options.savedElement;
+
+                                if (element.getAttribute('listener') !== 'true') {
+                                    element.addEventListener('click', function advanceToNextStep() {
+                                        element.setAttribute('listener', 'true');
+                                        $('.shepherd-modal-overlay-container').css('z-index', 'revert-layer');
+                                        Shepherd.activeTour.next();
+                                    });
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Content type editor',
+                        text: 'Click on the <i>"Content Types"</i> button.',
+                        attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    $('[data-title="Content Definition"]').removeClass('show');
+                                    this.back();
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'content_type_editor_content_types_button',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_content_types');
+                            },
+                        },
                     },
                 ],
             }),
