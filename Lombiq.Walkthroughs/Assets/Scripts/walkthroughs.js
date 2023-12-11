@@ -2408,9 +2408,110 @@ jQuery(($) => {
                             ' new blog post, your new field\'s content will be visible on the frontend.',
                         buttons: [
                             backButton,
-                            nextButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                text: 'Next',
+                            },
                         ],
                         id: 'content_type_editor_blog_post_edit_saved',
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'The Audit Trail module provides an immutable (for users, even administrators but not' +
+                            ' for developers), auditable log of certain changes and events in the system. This ' +
+                            'includes e.g. creation or deletion of content items, and events like user login ' +
+                            'failures. For content items, previous versions and deleted items can be restored, and' +
+                            ' changes can be tracked. <br> It was turned on and configured by the setup recipe. Let\'s' +
+                            ' take a look.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_blog_post_edit_saved',
+                                        'Admin',
+                                        'Admin/ContentTypes/Edit/BlogPost');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'audit_trail_intro',
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click on <i>"Configuration"</i>.',
+                        attachTo: { element: '#configuration', on: 'right' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_configuration',
+                        advanceOn: { selector: '#configuration', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('[data-title="Configuration"]').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click on <i>"Settings"</i>.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a function.
+                        savedElement: $('[data-title="Configuration"]')
+                            .find('[title="Settings"]')
+                            .first()
+                            .parent()
+                            .get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_settings',
+                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
+                        // function for that, so we are adding an event listener.
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                const element = this.options.savedElement;
+                                $('[data-title="Settings"]').removeClass('show');
+
+                                if (element.getAttribute('listener') !== 'true') {
+                                    element.addEventListener('click', function advanceToNextStep() {
+                                        element.setAttribute('listener', 'true');
+                                        Shepherd.activeTour.next();
+                                    });
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click on <i>"Audit Trail"</i>.',
+                        attachTo: { element: '#audittrailSettings', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_audit_trail',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                            },
+                        },
                     },
                 ],
             }),
