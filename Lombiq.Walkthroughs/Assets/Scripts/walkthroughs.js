@@ -40,25 +40,6 @@ jQuery(($) => {
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
-        // Unfortunately there are cases where, we can't go back with  "goToRelativePage()". For example the blog's
-        // content item id is random and it's in the URL. So we can't hard code it in "goToRelativePage()". So we are
-        // storing the URL in the cookie, before the next "Back" button. The drawback of this, is that if you call
-        // "goToStoredStepUrl()" before the step that stored the URL (e.g. you went to the step not with the buttons,
-        // but by typing it in the query parameters and jumping right to it), then it can break the walkthrough. So by
-        // default "goToRelativePage()" is used and we are only using this function when there is no other choice.
-        function setStoredStepUrlCookie() {
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getTime() + (1 * 60 * 60 * 1000));
-
-            const storedStepUrlValueString = encodeURIComponent('StoredStepUrl') + '=' + encodeURIComponent(window.location.href) +
-                '; expires=' + expirationDate.toUTCString() + '; path=/';
-            document.cookie = storedStepUrlValueString;
-        }
-
-        function goToStoredStepUrl() {
-            window.location.href = getCookieValue('StoredStepUrl');
-        }
-
         function removeShepherdQueryParams() {
             const urlObject = new URL(window.location.href);
 
@@ -103,14 +84,6 @@ jQuery(($) => {
             text: 'Back',
         };
 
-        const goToStoredStepBackButton = {
-            action: function () {
-                goToStoredStepUrl();
-            },
-            classes: 'shepherd-button-secondary',
-            text: 'Back',
-        };
-
         const nextButton = {
             action: function () {
                 return this.next();
@@ -123,16 +96,22 @@ jQuery(($) => {
         // https://localhost:44335/test/Admin/Contents/ContentItems/something, then it will be "Admin".
         function goToRelativePage(shepherdTour, shepherdStep, firstPartOfCurrentPage, nextPage) {
             let splitString = firstPartOfCurrentPage;
+            let goToRelativePageString;
 
             if (!splitString) {
                 splitString = '?';
             }
+            else if (splitString === '/') {
+                goToRelativePageString = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            }
             else {
                 splitString = new RegExp(splitString, 'i');
+
+                // eslint-disable-next-line prefer-destructuring
+                goToRelativePageString = window.location.href.split(splitString)[0];
             }
 
-            const goToRelativePageURL = new URL(
-                window.location.href.split(splitString)[0] + (nextPage ?? ''));
+            const goToRelativePageURL = new URL(goToRelativePageString + (nextPage ?? ''));
             goToRelativePageURL.searchParams.set('shepherdTour', shepherdTour);
             goToRelativePageURL.searchParams.set('shepherdStep', shepherdStep);
             window.location.href = goToRelativePageURL.toString();
@@ -448,7 +427,6 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_content_editor');
                             },
                         },
@@ -457,7 +435,13 @@ jQuery(($) => {
                         title: 'Creating a new blog post',
                         text: 'Here you can create the blog post.',
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'creating_blog_post_content_editor',
@@ -617,8 +601,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
-
                                 // The return URL would redirect us to the "creating_blog_post_create_button" step, so
                                 // we are ignoring the query parameter.
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published', 'creating_blog_post_create_button');
@@ -630,14 +612,19 @@ jQuery(($) => {
                         text: 'The blog post is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'creating_blog_post_published',
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -646,7 +633,13 @@ jQuery(($) => {
                         text: 'Here is you published blog post.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'blog', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'creating_blog_post_inspecting',
@@ -661,7 +654,6 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_intro');
                             },
                         },
@@ -674,10 +666,15 @@ jQuery(($) => {
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
                             'by clicking on the <i>"Next"</i> button.',
                         buttons: [
-                            goToStoredStepBackButton,
                             {
                                 action: function () {
-                                    setStoredStepUrlCookie();
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            {
+                                action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_dashboard', '', 'Admin');
                                 },
                                 text: 'Next',
@@ -690,7 +687,13 @@ jQuery(($) => {
                         text: 'Click on the <i>"Content"</i> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'creating_article_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
@@ -794,7 +797,6 @@ jQuery(($) => {
                             show() {
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_editor');
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -802,7 +804,17 @@ jQuery(($) => {
                         title: 'Creating a new article',
                         text: 'Here you can create the article.',
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'creating_article_create_button',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems/Article');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'creating_article_editor',
@@ -955,7 +967,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
 
                                 // The return URL would redirect us to the "creating_article_create_button" step, so
                                 // we are ignoring the query parameter.
@@ -968,14 +979,23 @@ jQuery(($) => {
                         text: 'The article is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'creating_article_create_button',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems/Article');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'creating_article_published',
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_inspecting');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -984,7 +1004,17 @@ jQuery(($) => {
                         text: 'Here is you published article.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'creating_article_published',
+                                        '/',
+                                        'Admin/Contents/ContentItems/Article');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'creating_article_inspecting',
@@ -1002,7 +1032,6 @@ jQuery(($) => {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_about');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                             },
                         },
 
@@ -1014,7 +1043,17 @@ jQuery(($) => {
                             ' <i>"Next"</i> button.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'creating_article_published',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems/Article');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'about', 'Admin');
@@ -1115,7 +1154,7 @@ jQuery(($) => {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_link_menu_item_name');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
+
                                 const modal = $('#modalMenuItems');
 
                                 if (!modal || modal.attr('aria-hidden') === 'true') {
@@ -1129,7 +1168,13 @@ jQuery(($) => {
                         text: 'Let\'s give it a name.',
                         attachTo: { element: '#LinkMenuItemPart_Name', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_link_menu_item_name',
@@ -1166,7 +1211,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                                 setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published');
                             },
                         },
@@ -1176,7 +1220,13 @@ jQuery(($) => {
                         text: 'You can reorder menu items by dragging them.',
                         attachTo: { element: '#menu', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_published',
@@ -1204,7 +1254,6 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    setStoredStepUrlCookie();
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_inspecting', 'Admin');
                                 },
                                 text: 'Next',
@@ -1218,7 +1267,13 @@ jQuery(($) => {
                         attachTo: { element: '#navbarResponsive', on: 'bottom' },
                         canClickTarget: false,
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'adding_article_to_menu_inspecting',
@@ -1230,7 +1285,6 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    setStoredStepUrlCookie();
                                     goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_dashboard', null, 'Admin');
                                 },
                                 text: 'Next',
@@ -1243,7 +1297,13 @@ jQuery(($) => {
                         text: 'Click on the <i>"Content"</i> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', '');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'content_list_admin_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
@@ -1293,7 +1353,12 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
-                            nextButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'taxonomies_intro', 'Admin', 'Admin');
+                                },
+                                text: 'Next',
+                            },
                         ],
                         id: 'content_list_admin_content_items',
                     },
@@ -1304,10 +1369,15 @@ jQuery(($) => {
                             ' items are made of terms organized as a hierarchy. Using the Taxonomy Field allows any' +
                             ' content item to be associated with one or many terms of a taxonomy.',
                         buttons: [
-                            backButton,
                             {
                                 action: function () {
-                                    setStoredStepUrlCookie();
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_content_items_menu', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            {
+                                action: function () {
                                     goToRelativePage(
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_intro2',
@@ -1326,7 +1396,13 @@ jQuery(($) => {
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         canClickTarget: false,
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'taxonomies_intro', 'Admin', 'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'taxonomies_intro2',
@@ -1375,7 +1451,6 @@ jQuery(($) => {
                         id: 'taxonomies_categories_edit',
                         when: {
                             show() {
-                                setStoredStepUrlCookie();
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'taxonomies_adding_category');
                             },
@@ -1386,7 +1461,17 @@ jQuery(($) => {
                         text: 'You can add a category by clicking here.',
                         attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'taxonomies_categories',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'taxonomies_adding_category',
                     },
@@ -1454,7 +1539,6 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                                 setWalkthroughCookies(this.tour.options.id, 'taxonomies_category_published');
                                 $('form').off('submit');
                             },
@@ -1465,7 +1549,17 @@ jQuery(($) => {
                         text: 'Your category is published. Next time when you are editing blog post, you will be ' +
                             'able to set this new category.',
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'taxonomies_categories',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'taxonomies_category_published',
@@ -1488,7 +1582,6 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    setStoredStepUrlCookie();
                                     goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
                                 },
                                 text: 'Next',
@@ -1502,7 +1595,17 @@ jQuery(($) => {
                         scrollTo: true,
                         attachTo: { element: 'a[href*="Media"]', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'taxonomies_categories',
+                                        'Admin',
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'media_management_menu',
                         when: {
@@ -1808,7 +1911,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
 
                                 // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
                                 // we are ignoring the query parameter.
@@ -1827,8 +1929,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
-
                                 // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
                                 // we are ignoring the query parameter.
                                 setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new_page');
@@ -1840,14 +1940,20 @@ jQuery(($) => {
                         text: 'The page is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'flow_parts_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'flow_parts_page_published',
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_inspecting');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -1856,7 +1962,14 @@ jQuery(($) => {
                         text: 'Here is you published page with the blockquote.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'flow_parts_page_published', '/', 'Admin/Contents/ContentItems');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             nextButton,
                         ],
                         id: 'flow_parts_page_inspecting',
@@ -1868,12 +1981,11 @@ jQuery(($) => {
                         buttons: [
                             backButton,
                         ],
-                        id: 'adding_widgets_to_the_layout:intro',
+                        id: 'adding_widgets_to_the_layout_intro',
                         when: {
                             show() {
                                 setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_admin');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -1881,7 +1993,14 @@ jQuery(($) => {
                         title: 'Adding widgets to the layout',
                         text: 'Go to the admin dashboard by clicking on the <i>"Next"</i> button.',
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'flow_parts_page_published', '', 'Admin/Contents/ContentItems');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                             {
                                 action: function () {
                                     goToRelativePage(
@@ -2045,7 +2164,6 @@ jQuery(($) => {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
-                                setStoredStepUrlCookie();
                                 setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
                             },
                         },
@@ -2055,7 +2173,14 @@ jQuery(($) => {
                         text: 'Your paragraph widget is now published. Let\'s go to the homepage to see it.',
                         attachTo: { element: 'a[data-bs-original-title="Visit Site"]', on: 'bottom' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_add_widget', 'Admin', 'Admin/Layers');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'adding_widgets_to_the_layout_paragraph_published',
                         when: {
@@ -2382,7 +2507,6 @@ jQuery(($) => {
                                     this.tour.options.id,
                                     'content_type_editor_blog_post_text_field_edit_saved',
                                     'content_type_editor_blog_post_edit_text_field');
-                                setStoredStepUrlCookie();
                             },
                         },
                     },
@@ -2392,7 +2516,17 @@ jQuery(($) => {
                         scrollTo: true,
                         attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
                         buttons: [
-                            goToStoredStepBackButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'content_type_editor_blog_post_edit_text_field',
+                                        'Admin',
+                                        'Admin/ContentTypes/Edit/BlogPost');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
                         ],
                         id: 'content_type_editor_blog_post_text_field_edit_saved',
                         when: {
