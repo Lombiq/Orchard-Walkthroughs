@@ -2644,8 +2644,481 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'audit_trail_settings_page');
                             },
                         },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Here you can see and modify all the events that we are tracking.',
+                        attachTo: { element: '.edit-item', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'audit_trail_settings_page',
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click here to see the trimming settings.',
+                        attachTo: { element: 'a[href="#tab-trimming"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_trimming_tab_button',
+                        advanceOn: { selector: 'a[href="#tab-trimming"]', event: 'click' },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Here you can see the trimming settings.',
+                        attachTo: { element: '.edit-item', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_settings_page',
+                                        'Admin',
+                                        'Admin/Settings/AuditTrail');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'audit_trail_trimming_tab',
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click here to see the types of content whose events are recorded',
+                        attachTo: { element: 'a[href="#tab-content"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_content_tab_button',
+                        advanceOn: { selector: 'a[href="#tab-content"]', event: 'click' },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click here to see the types of content whose events are recorded',
+                        attachTo: { element: '.edit-item', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_settings_page',
+                                        'Admin',
+                                        'Admin/Settings/AuditTrail');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'audit_trail_content_tab',
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Now let\'s see how we can watch the recorded events. Click on the ' +
+                            '<i>"Audit Trail"</i> button.',
+                        attachTo: { element: '#audittrail', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_recorded_events',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'audit_trail_log');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Here you can see all the recorded events.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_settings_page',
+                                        'Admin',
+                                        'Admin/Settings/AuditTrail');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'user_management_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                text: 'Next',
+                            },
+                        ],
+                        id: 'audit_trail_log',
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Let\'s take a look at user management. Click on the <i>"Security"</i> dropdown.',
+                        attachTo: { element: '#security', on: 'right' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'audit_trail_log',
+                                        'Admin',
+                                        'Admin/AuditTrail');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'user_management_intro',
+                        advanceOn: { selector: '#security', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('[data-title="Security"]').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Now click on <i>"Users"</i>.',
+                        attachTo: { element: '.users', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'user_management_users_button',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'user_management_users');
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Here you can see all the users, including yourself the admin.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'user_management_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'user_management_users',
+                    },
+                    {
+                        title: 'User management',
+                        text: 'You can edit the users, but also add new ones. Click here to add a new user.',
+                        attachTo: { element: 'a[href*="Users/Create"', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'user_management_adding_user',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'user_management_create_user_user_name');
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Enter a user name.',
+                        attachTo: { element: '#User_UserName', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'user_management_adding_user',
+                                        'Admin',
+                                        'Admin/Users/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_user_name',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Enter an email.',
+                        attachTo: { element: '#User_Email', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_email',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'You can enter a phone number, but it\'s optional.',
+                        attachTo: { element: '#User_PhoneNumber', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_phone_number',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'You can disable the user, this is also available for existing users. If the user is' +
+                            ' disabled then they will not be able to log in.',
+                        attachTo: { element: '#User_IsEnabled', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_is_enabled',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'You can enter a password, but it could be also generated.',
+                        attachTo: { element: '.password-generator-wrapper', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_password',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'Finally, you can select the role(s) for the user. Each role gives different' +
+                            ' permissions for the users. We will take a look at that later.',
+                        savedElement: $('#User_Roles_0__Role').parent().parent().get()[0],
+                        attachTo: {
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'top',
+                        },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_roles',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'We are ready, let\'s publish the user. Click on the publish button.',
+                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'user_management_create_user_publishing',
+                        when: {
+                            show() {
+                                $('form').off('submit');
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'user_management_create_user_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'User management',
+                        text: 'You should see the newly created user here.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'user_management_adding_user',
+                                        'Admin',
+                                        'Admin/Users/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'user_management_create_user_published',
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'Let\'s see the roles now. Click on the <i>"Security"</i> dropdown.',
+                        attachTo: { element: '#security', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'roles_intro',
+                        advanceOn: { selector: '#security', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('[data-title="Security"]').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'Now click on <i>"Roles"</i>.',
+                        attachTo: { element: '.roles', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'roles_roles_button',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'roles_roles_page');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'Here you can see all the roles and edit their permissions.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'user_management_create_user_published',
+                                        'Admin',
+                                        'Admin/Users/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'roles_roles_page',
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'Let\'s see one. Click on the <i>"Edit"</i> button.',
+                        attachTo: { element: '.edit.btn.btn-primary.btn-sm', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'roles_edit_button',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'roles_edit');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'You can see and edit all the permissions here.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'roles_edit_button',
+                                        'Admin',
+                                        'Admin/Roles/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'roles_edit',
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'After you finished, click on the <i>"Save"</i> button.',
+                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'top' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'roles_publishing',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'roles_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Roles',
+                        text: 'After you finished, click on the <i>"Save"</i> button.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'roles_edit_button',
+                                        'Admin',
+                                        'Admin/Roles/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'roles_published',
                     },
                 ],
             }),
