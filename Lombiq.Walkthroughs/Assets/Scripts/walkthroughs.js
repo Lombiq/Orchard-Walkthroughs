@@ -98,14 +98,16 @@ jQuery(($) => {
             let splitString = firstPartOfCurrentPage;
             let goToRelativePageString;
 
-            if (!splitString) {
-                splitString = '?';
-            }
-            else if (splitString === '/') {
+            if (splitString === '/') {
                 goToRelativePageString = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
             }
             else {
-                splitString = new RegExp(splitString, 'i');
+                if (!splitString) {
+                    splitString = '?';
+                }
+                else {
+                    splitString = new RegExp(splitString, 'i');
+                }
 
                 // eslint-disable-next-line prefer-destructuring
                 goToRelativePageString = window.location.href.split(splitString)[0];
@@ -2944,7 +2946,7 @@ jQuery(($) => {
                         title: 'User management',
                         text: 'Finally, you can select the role(s) for the user. Each role gives different' +
                             ' permissions for the users. We will take a look at that later.',
-                        savedElement: $('#User_Roles_0__Role').parent().parent().get()[0],
+                        savedElement: $('#User_Roles_0__Role').parent().parent().get(0),
                         attachTo: {
                             element: function getContentTypesButton() {
                                 return this.options.savedElement;
@@ -3103,7 +3105,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'After you finished, click on the <i>"Save"</i> button.',
+                        text: 'Now if you changed the permissions, every user with that role will lose or gain' +
+                            ' those permissions, depending on what you did.',
                         buttons: [
                             {
                                 action: function () {
@@ -3116,9 +3119,249 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
-                            nextButton,
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                text: 'Next',
+                            },
                         ],
                         id: 'roles_published',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Let\'s take a look at exporting and importing, deployment and deployment plans.',
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'roles_published',
+                                        'Admin',
+                                        'Admin/Roles/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_intro',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Configuration"</i>.',
+                        attachTo: { element: '#configuration', on: 'right' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_configuration',
+                        advanceOn: { selector: '#configuration', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Import/Export"</i>.',
+                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_import_export',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                const element = this.options.savedElement;
+                                $('[data-title="Import/Export"]').removeClass('show');
+
+                                if (element.getAttribute('listener') !== 'true') {
+                                    element.addEventListener('click', function advanceToNextStep() {
+                                        element.setAttribute('listener', 'true');
+                                        Shepherd.activeTour.next();
+                                    });
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Deployment Plans"</i>.',
+                        attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_deployment_plan',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_deployment_plans');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Here you would see the deployment plans, but we currently have none. A deployment' +
+                            ' plan refers to a set of configurations, steps, or actions that define how an' +
+                            ' Orchard Core application is deployed. The result will be a downloadable recipe.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_intro',
+                                        'Admin',
+                                        'Admin');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_deployment_plans',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Let\'s create a deployment plan. Click here.',
+                        attachTo: { element: '.btn.btn-secondary.create', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_add_deployment_plan',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_creating_deployment_plan');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Give it a name.',
+                        attachTo: { element: '#Name', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'deployment_creating_deployment_plan',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Now click on the <i>"Create"</i> button.',
+                        attachTo: { element: '.btn.btn-primary.create', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_deployment_plan_publishing',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_deployment_plan_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps. Click on the ' +
+                            '<i>"Manage Steps"</i> button.',
+                        attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_add_deployment_plan',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'deployment_deployment_plan_published',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_manage_steps');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on the <i>"Add Step"</i> button.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_deployment_plan_published',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                        ],
+                        id: 'deployment_manage_steps',
+                        advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Here you can see all the steps that you can add.',
+                        attachTo: { element: '.modal-body', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_deployment_plan_published',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_manage_steps',
+                        advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Let\'s filter for <i>"Update Content Definitions"</i>.',
+                        attachTo: { element: '#search-box', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'deployment_filter_steps',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Explain what is update content definitions</i>.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm[href*="ContentDefinitionDeploymentStep"]', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_update_content_definitions',
                     },
                 ],
             }),
