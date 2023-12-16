@@ -3348,6 +3348,7 @@ jQuery(($) => {
                         title: 'Import/export, deployment, <br> deployment plan',
                         text: 'Let\'s filter for <i>"Update Content Definitions"</i>.',
                         attachTo: { element: '#search-box', on: 'top' },
+                        scrollTo: true,
                         buttons: [
                             backButton,
                             nextButton,
@@ -3356,12 +3357,210 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Explain what is update content definitions</i>.',
+                        text: '<i>"Update Content Definitions"</i> exports the choosen content types and parts (you' +
+                            ' can configure it later which ones). After running the deployment plan, each step will' +
+                            ' add its own things to the final <i>"recipe.json"</i> file, which you can later download.' +
+                            'You can then import this file for maybe another Orchard Core site and it will add all the' +
+                            ' things that you exported. Click on <i>"Add"</i>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ContentDefinitionDeploymentStep"]', on: 'top' },
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_update_content_definitions',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_update_content_definitions_edit');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Here you can select which content types and parts you want to include.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_deployment_plan_published',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_update_content_definitions_edit',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'If you finished click on the <i>"Create"</i> button.',
+                        attachTo: { element: '.btn.btn-primary.create', on: 'top' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_update_content_definitions_publishing',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_update_content_definitions_published');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'As you can see you added the step to the deployment plan. You could add more steps' +
+                            ' e.g. <i>"All Content"</i> which would export all the <b>content items</b>.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_deployment_plan_published',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_update_content_definitions_published',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'When you finished adding the steps, you can click on <i>"Execute"</i> to run the' +
+                            ' deployment.',
+                        attachTo: { element: '.btn.btn-success.btn-sm', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_execute',
+                        advanceOn: { selector: '.btn.btn-success.btn-sm', event: 'click' },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Here you can use <i>"File Download"</i> so the exported <i>recipe.json</i> file will ' +
+                            'be downloaded (inside a zip file).',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_file_download',
+                        advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Configuration"</i>.',
+                        attachTo: { element: '#configuration', on: 'right' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_import_configuration',
+                        advanceOn: { selector: '#configuration', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Import/Export"</i>.',
+                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        attachTo: {
+
+                            element: function getContentTypesButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_import_import_export',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                const element = this.options.savedElement;
+                                $('[data-title="Import/Export"]').removeClass('show');
+
+                                if (element.getAttribute('listener') !== 'true') {
+                                    element.addEventListener('click', function advanceToNextStep() {
+                                        element.setAttribute('listener', 'true');
+                                        Shepherd.activeTour.next();
+                                    });
+                                }
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Click on <i>"Package Import"</i>.',
+                        attachTo: { element: 'a[href*="DeploymentPlan/Import/Index"]', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_import_package_import',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_import_package_import_choose_file');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'Here you can import your exported deployment plan (in json or zip).',
+                        attachTo: { element: '#file', on: 'top' },
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'deployment_deployment_plan_published',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'deployment_import_package_import_choose_file',
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'After you selected the file, click on <i>"Import"</i> to import it. This will add' +
+                            ', delete, or change everything that is in the deployment plan, to/on the website.',
+                        attachTo: { element: '.btn.btn-primary.import', on: 'top' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'deployment_import_package_import_import',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_import_package_import_imported');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Import/export, deployment, <br> deployment plan',
+                        text: 'You can also import raw JSON, if you want. It\'s under the same <i>"Import/Export"</i>' +
+                            ' dropdown called <i>"JSON import"</i>.',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'deployment_import_package_import_imported',
                     },
                 ],
             }),
