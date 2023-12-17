@@ -3447,12 +3447,12 @@ jQuery(($) => {
                         title: 'Import/export, deployment, <br> deployment plan',
                         text: 'Here you can use <i>"File Download"</i> so the exported <i>recipe.json</i> file will ' +
                             'be downloaded (inside a zip file).',
-                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
+                        attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'top' },
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_file_download',
-                        advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
+                        advanceOn: { selector: '.btn.btn-primary.btn-sm[href*="ExportFile"]', event: 'click' },
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
@@ -3513,6 +3513,8 @@ jQuery(($) => {
                             show() {
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'deployment_import_package_import_choose_file');
+                                // scrollTo: true doesn't work here.
+                                setTimeout(() => { $('#adminMenu').get(0).scrollTo(0, 9999); }, 200);
                             },
                         },
                     },
@@ -3561,6 +3563,93 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'deployment_import_package_import_imported',
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Now take a look at themes. Themes in Orchard Core dictate how a website looks and ' +
+                            'feels by controlling its visual presentation—managing layouts, styles, and design ' +
+                            'elements without altering the site\'s core functionality.They enable easy customization' +
+                            ' and allow users to switch the appearance of their websites swiftly.',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'features_and_themes_themes_intro',
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Click on <i>"Design"</i>.',
+                        attachTo: { element: '#themes', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'features_and_themes_design',
+                        advanceOn: { selector: '#themes', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Click on <i>"Themes"</i>.',
+                        attachTo: { element: 'a[href*="Admin/Themes"]', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'features_and_themes_themes',
+                        advanceOn: { selector: 'a[href*="Admin/Themes"]', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'features_and_themes_themes_page');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Here you can see and change the themes. Currently the site is using the blog theme.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'features_and_themes_themes_intro',
+                                        'Admin',
+                                        'Admin/DeploymentPlan/Import/Index');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'features_and_themes_themes_page',
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Take a look at features. Features in Orchard Core are modular components that add' +
+                            ' specific functionalities to a website, providing a way to extend the system by' +
+                            ' enabling or disabling distinct capabilities',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'features_and_themes_features_intro',
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Take a look at features. Features in Orchard Core are modular components that add' +
+                            ' specific functionalities to a website, providing a way to extend the system by' +
+                            ' enabling or disabling distinct capabilities',
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'features_and_themes_features_intro',
                     },
                 ],
             }),
