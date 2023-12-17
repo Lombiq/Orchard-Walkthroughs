@@ -3642,14 +3642,66 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Take a look at features. Features in Orchard Core are modular components that add' +
-                            ' specific functionalities to a website, providing a way to extend the system by' +
-                            ' enabling or disabling distinct capabilities',
+                        text: 'Click on <i>"Configuration"</i>.',
+                        attachTo: { element: '#configuration', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'features_and_themes_features_configuration',
+                        advanceOn: { selector: '#configuration', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Click on <i>"Features"</i>.',
+                        attachTo: { element: 'a[href*="Admin/Features"]', on: 'right' },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'features_and_themes_features_features',
+                        advanceOn: { selector: 'a[href*="Admin/Features"]', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'features_and_themes_features_features_page');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Features and themes',
+                        text: 'Here you can see all the features and you can turn them on or off.',
+                        attachTo: { element: '.ta-content', on: 'top' },
+                        canClickTarget: false,
+                        buttons: [
+                            {
+                                action: function () {
+                                    goToRelativePage(
+                                        Shepherd.activeTour.options.id,
+                                        'features_and_themes_features_intro',
+                                        'Admin',
+                                        'Admin/Themes');
+                                },
+                                classes: 'shepherd-button-secondary',
+                                text: 'Back',
+                            },
+                            nextButton,
+                        ],
+                        id: 'features_and_themes_features_features_page',
+                    },
+                    {
+                        title: 'Walkthrough completed',
+                        text: 'Congratulations! You completed the walkthrough. For further learning points, you can' +
+                            ' watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
                         buttons: [
                             backButton,
                             nextButton,
                         ],
-                        id: 'features_and_themes_features_intro',
+                        id: 'outro',
                     },
                 ],
             }),
