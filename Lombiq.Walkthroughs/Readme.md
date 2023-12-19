@@ -1,17 +1,25 @@
-# Lombiq Training Demo for Orchard Core
+# Lombiq Walkthroughs for Orchard Core
+
+# Add NuGet here after PR is accepted.
 
 ## About
 
-## How to start
+Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in step by step guides.
 
+The module uses [shepherd.js](https://shepherdjs.dev/), to create the walkthroughs.
 
-## Learning Orchard Core with this module
+Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects! You can use the setup recipe called *Walkthroughs* to enable the feature.
+
+## Walkthroughs
+
+- Orchard Core Admin Walkthrough: This walkthrough covers key Orchard Core features, such as content management, user roles, and theme selection, and points users to further learning resources.
 
 ## Dependencies
 
 This module has the following dependencies:
 
 - [Lombiq Node.js Extensions](https://gihub.com/Lombiq/NodeJs-Extensions)
+- [Lombiq.HelpfulLibraries](https://github.com/Lombiq/Helpful-Libraries)
 
 ## Contributing and support
 

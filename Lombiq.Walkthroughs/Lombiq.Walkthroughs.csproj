@@ -6,7 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <Title>Lombiq Walkthroughs for Orchard Core</Title>
-    <Description>Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in a step by step guide.</Description>
+    <Description>Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in step by step guides.</Description>
     <PackageLicenseUrl>https://github.com/Lombiq/Orchard-Walkthroughs/blob/dev/License.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs</PackageProjectUrl>
     <PackageTags>Orchard Core, Orchard CMS, walkthroughs</PackageTags>
@@ -45,10 +45,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="..\..\..\Utilities\Lombiq.NodeJs.Extensions\Lombiq.NodeJs.Extensions\Lombiq.NodeJs.Extensions.targets" />
