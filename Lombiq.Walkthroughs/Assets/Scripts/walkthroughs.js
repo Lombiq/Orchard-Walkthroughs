@@ -625,6 +625,12 @@ jQuery(($) => {
                         id: 'creating_blog_post_published',
                         when: {
                             show() {
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
                                 setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_inspecting');
                                 addShepherdQueryParams();
                             },
@@ -989,6 +995,12 @@ jQuery(($) => {
                         id: 'creating_article_published',
                         when: {
                             show() {
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_inspecting');
                                 addShepherdQueryParams();
                             },
@@ -1884,23 +1896,6 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
-                        text: 'We are ready, let\'s publish the page. Click on the publish button.',
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'flow_parts_page_publishing',
-                        when: {
-                            show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new_page');
-                            },
-                        },
-                    },
-                    {
                         title: 'Viewing the page',
                         text: 'The page is published. Click on the <i>"View"</i> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
@@ -1917,6 +1912,12 @@ jQuery(($) => {
                         id: 'flow_parts_page_published',
                         when: {
                             show() {
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
                                 setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_inspecting');
                                 addShepherdQueryParams();
                             },
@@ -2959,6 +2960,17 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'user_management_create_user_published',
+                        when: {
+                            show() {
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
+                                addShepherdQueryParams();
+                            },
+                        },
                     },
                     {
                         title: 'Roles',
@@ -3256,6 +3268,12 @@ jQuery(($) => {
                         id: 'deployment_deployment_plan_published',
                         when: {
                             show() {
+                                if ($('.validation-summary-errors').length) {
+                                    deleteWalkthroughCookies();
+                                    Shepherd.activeTour.back();
+                                    return;
+                                }
+
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'deployment_manage_steps');
                             },
