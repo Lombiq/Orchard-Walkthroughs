@@ -691,7 +691,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_blog_post', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_intro', 'Admin', '');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -699,6 +699,12 @@ jQuery(($) => {
                         ],
                         id: 'creating_article_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
                     },
                     {
                         title: 'Creating a new article',
@@ -715,14 +721,7 @@ jQuery(($) => {
                             on: 'right',
                         },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('[data-title="Content"]').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'creating_article_content_types',
                         // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
@@ -731,6 +730,7 @@ jQuery(($) => {
                             show() {
                                 addShepherdQueryParams();
                                 const element = this.options.savedElement;
+                                $('ul.show').removeClass('show');
 
                                 if (element.getAttribute('listener') !== 'true') {
                                     element.addEventListener('click', function advanceToNextStep() {
@@ -746,14 +746,7 @@ jQuery(($) => {
                         text: 'Here we have the article content type. Click on it.',
                         attachTo: { element: 'a[href*= "Article"]', on: 'right' },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('[data-title="Content Types"]').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'creating_article_content_types_article',
                         when: {
@@ -772,7 +765,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_content_types_article', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_content_types', 'Admin', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1023,7 +1016,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'As you can see, the sample article that was created from the recipe is in the menu.' +
+                        text: 'As you can see, the sample article that was created from the recipe is in the menu. ' +
                             'Click on <i>"About"</i>.',
                         attachTo: { element: 'a[href*="about"', on: 'bottom' },
                         buttons: [
@@ -1050,7 +1043,7 @@ jQuery(($) => {
                                     goToRelativePage(
                                         Shepherd.activeTour.options.id,
                                         'creating_article_published',
-                                        'Admin',
+                                        'about',
                                         'Admin/Contents/ContentItems/Article');
                                 },
                                 classes: 'shepherd-button-secondary',
@@ -1271,7 +1264,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', '', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1309,6 +1302,12 @@ jQuery(($) => {
                         ],
                         id: 'content_list_admin_dashboard',
                         advanceOn: { selector: '#content', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
                     },
                     {
                         title: 'Content list',
@@ -1324,14 +1323,7 @@ jQuery(($) => {
                             on: 'right',
                         },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('[data-title="Content"]').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'content_list_admin_content_items_menu',
                         when: {
@@ -1350,7 +1342,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_content_items_menu', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_dashboard', 'Admin', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1420,40 +1412,6 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_categories_edit');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Taxonomies',
-                        text: 'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(
-                                        Shepherd.activeTour.options.id,
-                                        'taxonomies_categories',
-                                        'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                            nextButton,
-                        ],
-                        id: 'taxonomies_categories_edit',
-                    },
-                    {
-                        title: 'Taxonomies',
-                        text: 'You can add a category by clicking here.',
-                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'taxonomies_categories_edit',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'taxonomies_adding_category');
                             },
                         },
@@ -1476,6 +1434,12 @@ jQuery(($) => {
                             },
                         ],
                         id: 'taxonomies_adding_category',
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_category_title');
+                            },
+                        },
                     },
                     {
                         title: 'Taxonomies',
@@ -1695,6 +1659,12 @@ jQuery(($) => {
                         ],
                         id: 'flow_parts_content',
                         advanceOn: { selector: '#content', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
                     },
                     {
                         title: 'Flow parts',
@@ -1710,14 +1680,7 @@ jQuery(($) => {
                             on: 'right',
                         },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('[data-title="Content"]').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'flow_parts_content_items',
                         when: {
@@ -1734,7 +1697,7 @@ jQuery(($) => {
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'flow_parts_content_items', 'Admin', 'Admin/Media');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'flow_parts_content', 'Admin', 'Admin/Media');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1916,7 +1879,7 @@ jQuery(($) => {
 
                                 // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
                                 // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new_page');
+                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new');
                             },
                         },
                     },
@@ -2029,20 +1992,19 @@ jQuery(($) => {
                         ],
                         id: 'adding_widgets_to_the_layout_design',
                         advanceOn: { selector: '#themes', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
                     },
                     {
                         title: 'Adding widgets to the layout',
                         text: 'Now click on the <i>"Widgets"</i> button.',
                         attachTo: { element: 'a[href*=Layers]', on: 'right' },
                         buttons: [
-                            {
-                                action: function () {
-                                    $('#themes').removeClass('show');
-                                    this.back();
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
+                            backButton,
                         ],
                         id: 'adding_widgets_to_the_layout_widgets',
                         when: {
@@ -2200,7 +2162,7 @@ jQuery(($) => {
                             {
                                 action: function () {
                                     goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_add_widget', null, 'Admin/Layers');
+                                        Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_paragraph_published', null, 'Admin/Layers');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -2208,12 +2170,6 @@ jQuery(($) => {
                             nextButton,
                         ],
                         id: 'adding_widgets_to_the_layout_paragraph_inspecting',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
-                            },
-                        },
                     },
                     {
                         title: 'Content type editor',
@@ -2248,7 +2204,7 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                $('[data-title="Content"]').removeClass('show');
+                                $('ul.show').removeClass('show');
                             },
                         },
                     },
@@ -2413,7 +2369,10 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_blog_post_edit_text_field');
+                                setWalkthroughCookies(
+                                    this.tour.options.id,
+                                    'content_type_editor_blog_post_edit_text_field',
+                                    'content_type_editor_blog_post_add_field');
                             },
                         },
                     },
@@ -2594,7 +2553,7 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                $('[data-title="Configuration"]').removeClass('show');
+                                $('ul.show').removeClass('show');
                             },
                         },
                     },
@@ -2801,7 +2760,7 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                $('[data-title="Security"]').removeClass('show');
+                                $('ul.show').removeClass('show');
                             },
                         },
                     },
@@ -3013,7 +2972,7 @@ jQuery(($) => {
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                $('[data-title="Security"]').removeClass('show');
+                                $('ul.show').removeClass('show');
                             },
                         },
                     },
