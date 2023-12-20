@@ -8,7 +8,7 @@ jQuery(($) => {
         }
 
         function deleteWalkthroughCookies() {
-            const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;';
+            const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;'; // #spell-check-ignore-line
             document.cookie = 'Walkthrough' + expireCookie;
             document.cookie = 'WalkthroughStep' + expireCookie;
             document.cookie = 'IgnoreQueryStep' + expireCookie;
@@ -180,7 +180,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Site setup',
-                        text: 'To get to this same point (a set up site), first you will need to get trhough the' +
+                        text: 'To get to this same point (a set up site), first you will need to get through the' +
                             ' <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'setup screen</a>. You can also select there the before mentioned setup recipe.',
                         buttons: [
@@ -297,8 +297,8 @@ jQuery(($) => {
                         when: {
                             show() {
                                 // If login is failed don't go ahead.
-                                if ($('.field-validation-error[data-valmsg-for="Password"]').length ||
-                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) {
+                                if ($('.field-validation-error[data-valmsg-for="Password"]').length || // #spell-check-ignore-line
+                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) { // #spell-check-ignore-line
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;
@@ -403,7 +403,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new blog post',
                         text: 'Here you can see the blog posts inside the blog. There is already an example one ' +
-                            'beacuse of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'because of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'Blog recipe</a>.',
                         attachTo: { element: '#ci-sortable', on: 'top' },
 
@@ -1049,7 +1049,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'As you can see, you can access easily to itm through the menu. Let\'s add the' +
+                        text: 'As you can see, you can access easily to it through the menu. Let\'s add the' +
                             ' article that we are created too. Go to the admin dashboard by clicking on the' +
                             ' <i>"Next"</i> button.',
                         attachTo: { element: 'body', on: 'top' },
@@ -1078,7 +1078,7 @@ jQuery(($) => {
                     {
                         title: 'Adding article to menu',
                         text: 'Click on the <i>"Main Menu"</i> button.',
-                        attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'top' },
+                        attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'top' }, // #spell-check-ignore-line
                         buttons: [
                             {
                                 action: function () {
@@ -1125,7 +1125,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'You can choose between mutliple menu items. Read the description too see how they' +
+                        text: 'You can choose between multiple menu items. Read the description too see how they' +
                             ' are different.',
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
@@ -1396,7 +1396,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_intro2',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
                                 },
                                 classes: 'shepherd-button-primary',
                                 text: 'Next',
@@ -1448,7 +1448,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1491,7 +1491,7 @@ jQuery(($) => {
                             show() {
                                 $('#Category_Icon').on('click', function moveOverlay() {
                                     $('.shepherd-modal-overlay-container').css('z-index', 1100);
-                                    $('.iconpicker-container').css('z-index', 1101);
+                                    $('.iconpicker-container').css('z-index', 1101); // #spell-check-ignore-line
                                 });
 
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
@@ -1542,7 +1542,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1589,7 +1589,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1655,7 +1655,7 @@ jQuery(($) => {
                     {
                         title: 'Media management',
                         text: 'You can upload files here.',
-                        attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' },
+                        attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
                             nextButton,
