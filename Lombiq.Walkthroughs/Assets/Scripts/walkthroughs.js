@@ -164,7 +164,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walktroughs module</a>' +
+                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
                             '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">Blog recipe</a>' +
                             ' as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
                             'is a json file that defines a set of instructions for setting up and configuring an' +
@@ -2237,7 +2237,7 @@ jQuery(($) => {
                         buttons: [
                             backButton,
                         ],
-                        id: 'content_type_editor_content_deifintion',
+                        id: 'content_type_editor_content_definition',
                         // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
                         // function for that, so we are adding an event listener.
                         when: {
@@ -2611,7 +2611,7 @@ jQuery(($) => {
                     {
                         title: 'Audit Trail',
                         text: 'Click on <i>"Audit Trail"</i>.',
-                        attachTo: { element: '#audittrailSettings', on: 'right' },
+                        attachTo: { element: '#audittrailSettings', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
                         ],
@@ -2710,7 +2710,7 @@ jQuery(($) => {
                         title: 'Audit Trail',
                         text: 'Now let\'s see how we can watch the recorded events. Click on the ' +
                             '<i>"Audit Trail"</i> button.',
-                        attachTo: { element: '#audittrail', on: 'right' },
+                        attachTo: { element: '#audittrail', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
                         ],
@@ -3349,7 +3349,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: '<i>"Update Content Definitions"</i> exports the choosen content types and parts (you' +
+                        text: '<i>"Update Content Definitions"</i> exports the chosen content types and parts (you' +
                             ' can configure it later which ones). After running the deployment plan, each step will' +
                             ' add its own things to the final <i>"recipe.json"</i> file, which you can later download.' +
                             'You can then import this file for maybe another Orchard Core site and it will add all the' +
@@ -3693,7 +3693,7 @@ jQuery(($) => {
                             backButton,
                             nextButton,
                         ],
-                        id: 'outro',
+                        id: 'outro', // #spell-check-ignore-line
                     },
                 ],
             }),
@@ -3716,7 +3716,7 @@ jQuery(($) => {
             steps: [
                 {
                     title: 'Select walkthrough!',
-                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walktroughs module</a>' +
+                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
                         ' module is active. This module includes various walkthroughs. You can get back here, by ' +
                         ' canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
                         'the walkthroughs\' built in navigations! Please select a walkthrough to start:',
@@ -3747,12 +3747,12 @@ jQuery(($) => {
             currentTour.show(queryParams.shepherdStep);
         }
         else if (walkthroughCookies.walkthroughCookieValue && walkthroughCookies.walkthroughStepCookieValue) {
-            const walktrough = walkthroughCookies.walkthroughCookieValue;
+            const walkthrough = walkthroughCookies.walkthroughCookieValue;
             const step = walkthroughCookies.walkthroughStepCookieValue;
 
             deleteWalkthroughCookies();
 
-            const currentTour = walkthroughs[walktrough];
+            const currentTour = walkthroughs[walkthrough];
             currentTour.start();
             currentTour.show(step);
 
