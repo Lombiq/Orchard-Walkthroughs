@@ -1,4 +1,4 @@
-﻿namespace Lombiq.Walkthroughs.Constants;
+namespace Lombiq.Walkthroughs.Constants;
 
 public static class FeatureIds
 {
