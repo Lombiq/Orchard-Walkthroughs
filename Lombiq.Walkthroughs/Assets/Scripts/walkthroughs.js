@@ -88,6 +88,7 @@ jQuery(($) => {
             action: function () {
                 return this.next();
             },
+            classes: 'shepherd-button-primary',
             text: 'Next',
         };
 
@@ -198,6 +199,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'login_page', null, 'Login');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -315,6 +317,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'admin_dashboard_page', null, 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -685,6 +688,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_dashboard', '', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1065,6 +1069,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_dashboard', 'about', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1263,6 +1268,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'adding_article_to_menu_inspecting', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1294,6 +1300,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'content_list_admin_dashboard', null, 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1363,6 +1370,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'taxonomies_intro', 'Admin', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1390,6 +1398,7 @@ jQuery(($) => {
                                         'Admin',
                                         'Admin/Contents/ContentItems?q=type%3ATaxonomy');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1562,6 +1571,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -1972,6 +1982,7 @@ jQuery(($) => {
                                     goToRelativePage(
                                         Shepherd.activeTour.options.id, 'adding_widgets_to_the_layout_design', '', 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -2181,6 +2192,7 @@ jQuery(($) => {
                                 action: function () {
                                     goToRelativePage(Shepherd.activeTour.options.id, 'content_type_editor_content', null, 'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -2512,6 +2524,7 @@ jQuery(($) => {
                                         'Admin',
                                         'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -2734,6 +2747,7 @@ jQuery(($) => {
                                         'Admin',
                                         'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -3098,6 +3112,7 @@ jQuery(($) => {
                                         'Admin',
                                         'Admin');
                                 },
+                                classes: 'shepherd-button-primary',
                                 text: 'Next',
                             },
                         ],
@@ -3712,7 +3727,7 @@ jQuery(($) => {
                                 walkthroughSelector.complete();
                                 walkthroughs.orchardCoreAdminWalkthrough.start();
                             },
-                            classes: 'shepherd-button shepherd-button-primary',
+                            classes: 'shepherd-button-primary',
                         },
                         // Add new walkthroughs here.
                     ],

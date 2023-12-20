@@ -1,9 +1,9 @@
 using Atata;
 using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
-using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using Shouldly;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
@@ -13,6 +13,7 @@ public static class TestCaseUITestContextExtensions
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
         const string welcomeStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=welcome";
+        const string adminTopMenuStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_top_menu";
 
         await context.EnableJsonEditorFeatureAsync();
 
@@ -36,11 +37,21 @@ public static class TestCaseUITestContextExtensions
 
         await context.SignInDirectlyAndGoToDashboardAsync();
 
-        await context.GoToRelativeUrlAsync("admin?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_dashboard");
+        await context.GoToRelativeUrlAsync("admin?" + adminTopMenuStepQueryParameters);
+        context.WalkthroughWindowsShouldExist();
+
+        await context.ClickOnNextButtonAsync();
+        context.WalkthroughWindowsShouldExist();
+        context.UriShouldContain("shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_blog_post");
+
+        await context.ClickOnBackButtonAsync();
+        context.WalkthroughWindowsShouldExist();
+
+        context.UriShouldContain(adminTopMenuStepQueryParameters);
     }
 
     private static Task ClickOnNextButtonAsync(this UITestContext context) =>
-        context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-primary')]"));
+        context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]"));
 
     private static Task ClickOnBackButtonAsync(this UITestContext context) =>
         context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-secondary')]"));
@@ -50,5 +61,4 @@ public static class TestCaseUITestContextExtensions
 
     private static void UriShouldContain(this UITestContext context, string shouldContain) =>
         context.GetCurrentUri().ToString().ShouldContain(shouldContain);
-
 }
