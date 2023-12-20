@@ -3,7 +3,6 @@ using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using OpenQA.Selenium;
 using Shouldly;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
