@@ -371,7 +371,7 @@ jQuery(($) => {
                         title: 'Top menu',
                         text: 'This is the top menu. Here you can switch between dark and light mode, go to the' +
                             ' homepage and log off or take a look at your profile.',
-                        attachTo: { element: '.nav.navbar.user-top-navbar', on: 'bottom' },
+                        attachTo: { element: '.user-top-navbar', on: 'bottom' },
 
                         // Making top navigation unclickable, so the user can't go somewhere else.
                         canClickTarget: false,
