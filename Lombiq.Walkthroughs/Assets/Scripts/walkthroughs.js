@@ -3719,7 +3719,7 @@ jQuery(($) => {
                     text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
                         ' module is active. This module includes various walkthroughs. You can get back here, by ' +
                         ' canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
-                        'the walkthroughs\' built in navigations! Please select a walkthrough to start:',
+                        'the walkthroughs\' built-in navigations! Please select a walkthrough to start:',
                     buttons: [
                         {
                             text: 'Orchard Core Admin Walkthrough',
