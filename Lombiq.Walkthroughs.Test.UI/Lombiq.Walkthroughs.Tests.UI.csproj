@@ -10,7 +10,7 @@
     <Copyright>Copyright © 2023, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Walkthroughs for Orchard Core - UI Test Extensions: Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
-    <PackageTags>OrchardCore;Lombiq;AspNetCore;walkthroughs</PackageTags>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs/tree/dev/Lombiq.Walkthroughs.Tests.UI</PackageProjectUrl>
     <PackageLicenseFile>License.md</PackageLicenseFile>
