@@ -180,7 +180,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Site setup',
-                        text: 'To get to this same point (a set up site), first you will need to get through the' +
+                        text: 'To get to this point (a set up site), first you will need to get through the' +
                             ' <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'setup screen</a>. Where you can decide which setup recipe you\'d like to use. Currently, we are using the Walkthroughs recipe.',
                         buttons: [
