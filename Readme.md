@@ -2,7 +2,7 @@
 
 ## About
 
-Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in step by step guides.
+Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding through the user in step by step guides.
 
 The module uses [shepherd.js](https://shepherdjs.dev/), for the walkthroughs.
 
