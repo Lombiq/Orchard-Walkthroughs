@@ -169,7 +169,7 @@ jQuery(($) => {
                             ' as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
                             'is a json file that defines a set of instructions for setting up and configuring an' +
                             ' Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other' +
-                            'configurations.They are used to streamline the setup of an Orchard Core site, making it easier ' +
+                            'configurations. They are used to streamline the setup of an Orchard Core site, making it easier ' +
                             '  to create consistent site structures and content. Recipes can be executed during the initial' +
                             ' setup of a site or at any point to apply configurations or import content.',
                         buttons: [
