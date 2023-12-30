@@ -254,7 +254,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#Password', on: 'bottom' },
-                        text: 'Input your password, for test sites the usually used password is <i>"Password1!"</i>.',
+                        text: 'Input your password, for this test site the password is <i>"Password1!"</i>.',
                         buttons: [
                             backButton,
                             nextButton,
