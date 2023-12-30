@@ -6,7 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <Title>Lombiq Walkthroughs for Orchard Core</Title>
-    <Description>Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding trough the user in step by step guides.</Description>
+    <Description>Orchard Core Walkthroughs module for teaching Orchard Core fundamentals by guiding through the user in step by step guides.</Description>
     <PackageTags>Orchard Core, Orchard CMS, walkthroughs</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
