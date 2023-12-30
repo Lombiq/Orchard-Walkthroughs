@@ -16,7 +16,7 @@ Do you want to quickly try out this project and see it in action? Check it out i
 
 This module has the following dependencies:
 
-- [Lombiq Node.js Extensions](https://gihub.com/Lombiq/NodeJs-Extensions)
+- [Lombiq Node.js Extensions](https://github.com/Lombiq/NodeJs-Extensions)
 - [Lombiq.HelpfulLibraries](https://github.com/Lombiq/Helpful-Libraries)
 
 ## Contributing and support
