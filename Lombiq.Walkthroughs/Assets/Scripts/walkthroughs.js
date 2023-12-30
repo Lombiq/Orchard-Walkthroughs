@@ -167,7 +167,7 @@ jQuery(($) => {
                         text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
                             '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">Blog recipe</a>' +
                             ' as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
-                            'is a json file that defines a set of instructions for setting up and configuring an' +
+                            'is a JSON file that defines a set of instructions for setting up and configuring an' +
                             ' Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other' +
                             'configurations. They are used to streamline the setup of an Orchard Core site, making it easier ' +
                             '  to create consistent site structures and content. Recipes can be executed during the initial' +
