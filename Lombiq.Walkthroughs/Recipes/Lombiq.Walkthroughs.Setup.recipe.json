@@ -1,0 +1,167 @@
+{
+  "name": "Lombiq.Walkthroughs",
+  "displayName": "Walkthroughs",
+  "description": "Orchard Core site using the Blog setup recipe, with the Lombiq.Walkthroughs module enabled.",
+  "author": "Lombiq",
+  "website": "https://github.com/Lombiq/Orchard-Walkthroughs",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [ "walkthroughs" ],
+  "tags": [ "walkthroughs" ],
+
+  "steps": [
+    {
+      "name": "recipes",
+      "Values": [
+        {
+          "executionid": "Lombiq.OSOCE.Web",
+          "name": "Blog"
+        }
+      ]
+    },
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.AuditTrail",
+        "OrchardCore.Users.AuditTrail",
+        "Lombiq.Walkthroughs",
+
+        // Themes
+        "TheBlogTheme",
+        "TheAdmin",
+        "SafeMode"
+      ]
+    },
+    {
+      "name": "themes",
+      "admin": "TheAdmin",
+      "site": "TheBlogTheme"
+    },
+    {
+      "name": "settings",
+      "AuditTrailSettings": {
+        "Categories": [
+          {
+            "Name": "Content",
+            "Events": [
+              {
+                "Name": "Created",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Saved",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Published",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Unpublished",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Removed",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Cloned",
+                "Category": "Content",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Restored",
+                "Category": "Content",
+                "IsEnabled": true
+              }
+            ]
+          },
+          {
+            "Name": "User",
+            "Events": [
+              {
+                "Name": "PasswordReset",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "PasswordRecovered",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Registered",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "LoggedIn",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "LogInFailed",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "LogInIsLockedOut",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Enabled",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Disabled",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Created",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Updated",
+                "Category": "User",
+                "IsEnabled": true
+              },
+              {
+                "Name": "Deleted",
+                "Category": "User",
+                "IsEnabled": true
+              }
+            ]
+          }
+        ],
+        "ClientIpAddressAllowed": false
+      },
+      "AuditTrailTrimmingSettings": {
+        "RetentionDays": 90,
+        "LastRunUtc": null,
+        "Disabled": false
+      },
+      "ContentAuditTrailSettings": {
+        "AllowedContentTypes": [
+          "Blog",
+          "BlogPost",
+          "Article"
+        ]
+      }
+    },
+    {
+      "name": "Command",
+      "Commands": [
+        "createUser /UserName:testuser /Password:Password1! /Email:testuser@mytestorg.com /Roles:Administrator"
+      ]
+    }
+  ]
+}
