@@ -156,6 +156,12 @@
           "Article"
         ]
       }
+    },
+    {
+      "name": "Command",
+      "Commands": [
+        "createUser /UserName:testuser /Password:Password1! /Email:testuser@mytestorg.com /Roles:Administrator"
+      ]
     }
   ]
 }

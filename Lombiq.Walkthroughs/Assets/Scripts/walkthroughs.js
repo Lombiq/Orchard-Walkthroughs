@@ -181,8 +181,7 @@ jQuery(($) => {
                     {
                         title: 'Site setup',
                         text: 'To get to this point (a set up site), first you will need to get through the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
-                            'setup screen</a>. Where you can decide which setup recipe you\'d like to use. Currently, ' +
+                            'setup screen. Where you can decide which setup recipe you\'d like to use. Currently, ' +
                             'we are using the Walkthroughs recipe.',
                         buttons: [
                             backButton,
@@ -239,7 +238,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#UserName', on: 'bottom' },
-                        text: 'Input your username, for test sites the usually used username is <i>"admin"</i>.',
+                        text: 'Input your username, this recipe included a user. The username is <i>"testuser"</i>.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -255,7 +254,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#Password', on: 'bottom' },
-                        text: 'Input your password, for this test site the password is <i>"Password1!"</i>.',
+                        text: 'Input your password, the password for the test user is <i>"Password1!"</i>.',
                         buttons: [
                             backButton,
                             nextButton,
