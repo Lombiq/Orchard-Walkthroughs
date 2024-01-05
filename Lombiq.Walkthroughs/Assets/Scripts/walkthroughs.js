@@ -238,7 +238,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#UserName', on: 'bottom' },
-                        text: 'Input your username, this recipe included a user. The username is <i>"testuser"</i>.',
+                        text: 'Input your username, this recipe included a user. The username is <i>"testuser"</i>.', // #spell-check-ignore-line
                         buttons: [
                             backButton,
                             nextButton,
