@@ -164,14 +164,14 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
-                            ' (named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">Blog recipe</a>' +
-                            ' as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
-                            'is a JSON file that defines a set of instructions for setting up and configuring an' +
-                            ' Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other' +
+                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a> ' +
+                            '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">Blog recipe</a> ' +
+                            'as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
+                            'is a JSON file that defines a set of instructions for setting up and configuring an ' +
+                            'Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other ' +
                             'configurations. They are used to streamline the setup of an Orchard Core site, making it easier ' +
-                            '  to create consistent site structures and content. Recipes can be executed during the initial' +
-                            ' setup of a site or at any point to apply configurations or import content.',
+                            'to create consistent site structures and content. Recipes can be executed during the initial ' +
+                            'setup of a site or at any point to apply configurations or import content.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -180,9 +180,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Site setup',
-                        text: 'To get to this point (a set up site), first you will need to get through the' +
-                            ' <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
-                            'setup screen</a>. Where you can decide which setup recipe you\'d like to use. Currently, we are using the Walkthroughs recipe.',
+                        text: 'To get to this point (a set up site), first you will need to get through the ' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'setup screen</a>. Where you can decide which setup recipe you\'d like to use. Currently, ' +
+                            'we are using the Walkthroughs recipe.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -354,9 +355,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Side menu',
-                        text: 'This is the side menu, that organizes essential functionalities. This menu includes' +
-                            ' key sections such as content management, security settings, and other administrative' +
-                            ' options.',
+                        text: 'This is the side menu, that organizes essential functionalities. This menu includes ' +
+                            'key sections such as content management, security settings, and other administrative ' +
+                            'options.',
                         attachTo: { element: '#ta-left-sidebar', on: 'right' },
 
                         // Making side navigation unclickable, so the user can't go somewhere else.
@@ -369,8 +370,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Top menu',
-                        text: 'This is the top menu. Here you can switch between dark and light mode, go to the' +
-                            ' homepage and log off or take a look at your profile.',
+                        text: 'This is the top menu. Here you can switch between dark and light mode, go to the ' +
+                            'homepage and log off or take a look at your profile.',
                         attachTo: { element: '.user-top-navbar', on: 'bottom' },
 
                         // Making top navigation unclickable, so the user can't go somewhere else.
@@ -383,8 +384,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new blog post',
-                        text: 'Let\'s create a new blog post. The blog post content type is already defined because' +
-                            ' the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                        text: 'Let\'s create a new blog post. The blog post content type is already defined because ' +
+                            'the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
                             'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
                             'posts within the blog.',
@@ -484,10 +485,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Markdown editor',
-                        text: 'This is a Markdown editor, the core of your blog post.' +
-                            ' <a href="https://www.markdownguide.org/basic-syntax/">Here is a guide for Markdown syntax</a>.' +
-                            ' The Markdown editor uses' +
-                            ' <a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor">EasyMDE</a>.',
+                        text: 'This is a Markdown editor, the core of your blog post. ' +
+                            '<a href="https://www.markdownguide.org/basic-syntax/">Here is a guide for Markdown syntax</a>. ' +
+                            'The Markdown editor uses ' +
+                            '<a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor">EasyMDE</a>.',
                         attachTo: { element: '.EasyMDEContainer', on: 'top' },
                         buttons: [
                             backButton,
@@ -575,8 +576,8 @@ jQuery(($) => {
                     {
                         title: 'Preview',
                         text: 'Before publishing your blog post, you can preview what would it look like on the ' +
-                            'frontend. You could click on the preview button, but since we are finished, let\'s just' +
-                            ' publish it.',
+                            'frontend. You could click on the preview button, but since we are finished, let\'s just ' +
+                            'publish it.',
                         attachTo: { element: '#previewButton', on: 'top' },
 
                         // We don't want to go back and forth between the admin dashboard, so we won't allow the
@@ -672,8 +673,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Just as the blog post content type, article is already defined and it comes from the' +
-                            '  <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                        text: 'Just as the blog post content type, article is already defined and it comes from the ' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
                             'by clicking on the <i>"Next"</i> button.',
                         buttons: [
@@ -718,8 +719,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now click on the <i>"Content Types"</i> dropdown to see what type of content items you' +
-                            ' can create.',
+                        text: 'Now click on the <i>"Content Types"</i> dropdown to see what type of content items you ' +
+                            'can create.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
                         savedElement: $('[title="Content Types"]').parent().get(0),
@@ -880,12 +881,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'HTML Body',
-                        text: 'This is the HTML Body, the core of an article. The HTML Body editor in Orchard Core' +
-                            ' enables direct input of HTML code with rich formatting options and multimedia ' +
-                            'embedding, offering extensive control over layout and styling.In contrast, the Markdown' +
-                            ' editor for Blog Post simplifies content creation using text- based Markdown syntax, ' +
-                            'promoting ease of use and consistency but with fewer advanced formatting choices' +
-                            ' compared to HTML.',
+                        text: 'This is the HTML Body, the core of an article. The HTML Body editor in Orchard Core ' +
+                            'enables direct input of HTML code with rich formatting options and multimedia ' +
+                            'embedding, offering extensive control over layout and styling.In contrast, the Markdown ' +
+                            'editor for Blog Post simplifies content creation using text- based Markdown syntax, ' +
+                            'promoting ease of use and consistency but with fewer advanced formatting choices ' +
+                            'compared to HTML.',
                         attachTo: { element: '.content-part-wrapper.content-part-wrapper-html-body-part', on: 'top' },
                         buttons: [
                             backButton,
@@ -941,8 +942,8 @@ jQuery(($) => {
                     {
                         title: 'Preview',
                         text: 'Before publishing your article, you can preview what would it look like on the ' +
-                            'frontend (as with the blog post). You could click on the preview button, but since we' +
-                            ' are finished, let\'s just publish it.',
+                            'frontend (as with the blog post). You could click on the preview button, but since we ' +
+                            'are finished, let\'s just publish it.',
                         attachTo: { element: '#previewButton', on: 'top' },
 
                         // We don't want to go back and forth between the admin dashboard, so we won't allow the
@@ -1049,9 +1050,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'As you can see, you can access easily to it through the menu. Let\'s add the' +
-                            ' article that we are created too. Go to the admin dashboard by clicking on the' +
-                            ' <i>"Next"</i> button.',
+                        text: 'As you can see, you can access easily to it through the menu. Let\'s add the ' +
+                            'article that we are created too. Go to the admin dashboard by clicking on the ' +
+                            '<i>"Next"</i> button.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -1125,8 +1126,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'You can choose between multiple menu items. Read the description too see how they' +
-                            ' are different.',
+                        text: 'You can choose between multiple menu items. Read the description too see how they ' +
+                            'are different.',
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1260,8 +1261,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'Your article is now available from the menu. Let\'s see it, click on the' +
-                            ' <i>"Next"</i> button to go to the home page.',
+                        text: 'Your article is now available from the menu. Let\'s see it, click on the ' +
+                            '<i>"Next"</i> button to go to the home page.',
                         buttons: [
                             backButton,
                             {
@@ -1354,8 +1355,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content list',
-                        text: 'Notice how we can see (and filter for) all the content items (articles, blog' +
-                            ' posts etc.). Previously we accessed these from various menu shortcuts.',
+                        text: 'Notice how we can see (and filter for) all the content items (articles, blog ' +
+                            'posts etc.). Previously we accessed these from various menu shortcuts.',
                         attachTo: { element: '#items-form', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1378,10 +1379,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'The Taxonomies feature is turned on. This module provides the Taxonomy content type' +
-                            ' that is used to define managed vocabularies (categories) of any type. Taxonomy content' +
-                            ' items are made of terms organized as a hierarchy. Using the Taxonomy Field allows any' +
-                            ' content item to be associated with one or many terms of a taxonomy.',
+                        text: 'The Taxonomies feature is turned on. This module provides the Taxonomy content type ' +
+                            'that is used to define managed vocabularies (categories) of any type. Taxonomy content ' +
+                            'items are made of terms organized as a hierarchy. Using the Taxonomy Field allows any ' +
+                            'content item to be associated with one or many terms of a taxonomy.',
                         buttons: [
                             {
                                 action: function () {
@@ -1406,7 +1407,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can access this page, by going to the content types, then filtering for <i>"Taxonomy"</i>.' +
+                        text: 'You can access this page, by going to the content types, then filtering for <i>"Taxonomy"</i>. ' +
                             'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         canClickTarget: false,
@@ -1479,8 +1480,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can set an icon for the category. (You need to pick an icon otherwise you can\'t' +
-                            ' publish your category.)',
+                        text: 'You can set an icon for the category. (You need to pick an icon otherwise you can\'t ' +
+                            'publish your category.)',
                         attachTo: { element: '.btn-toolbar', on: 'top' },
                         buttons: [
                             backButton,
@@ -1782,11 +1783,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'The page has a part called <i>"Flow part"</i>, this allows you to add different' +
-                            ' widgets to your page. If you want a simple <i>"page"</i>, with only HTML content, it\'s' +
-                            ' better to create an article. However if you want something more complex, and perhaps' +
-                            ' you created your own widget and you want to add that, then it\'s better to use a page.' +
-                            ' Click on the <i>"+"</i> icon.',
+                        text: 'The page has a part called <i>"Flow part"</i>, this allows you to add different ' +
+                            'widgets to your page. If you want a simple <i>"page"</i>, with only HTML content, it\'s ' +
+                            'better to create an article. However if you want something more complex, and perhaps ' +
+                            'you created your own widget and you want to add that, then it\'s better to use a page. ' +
+                            'Click on the <i>"+"</i> icon.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1802,10 +1803,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph' +
-                            ' and Raw Html is self explanatory. Container is just a container for widgets,' +
-                            ' so you can divide them up more. If you created another widget, or turned on a feature' +
-                            ' that adds a widget, it should also appear here.',
+                        text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph ' +
+                            'and Raw Html is self explanatory. Container is just a container for widgets, ' +
+                            'so you can divide them up more. If you created another widget, or turned on a feature ' +
+                            'that adds a widget, it should also appear here.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2028,9 +2029,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'These are the zones, one page is divided into multiple zones. Currently we have' +
-                            ' <i>"Content"</i> and <i>"Footer"</i>. You can add new zones by going into' +
-                            ' <i>Design → Settings → Zones</i>.',
+                        text: 'These are the zones, one page is divided into multiple zones. Currently we have ' +
+                            '<i>"Content"</i> and <i>"Footer"</i>. You can add new zones by going into ' +
+                            '<i>Design → Settings → Zones</i>.',
                         attachTo: { element: '.col-md-8', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2048,8 +2049,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'These are the layer, you can add new ones, then edit them and define rules for them.' +
-                            ' You can set the layer of the widget, so you can configure when the widget appears. ' +
+                        text: 'These are the layer, you can add new ones, then edit them and define rules for them. ' +
+                            'You can set the layer of the widget, so you can configure when the widget appears. ' +
                             'E.g. if you put a widget on the <i>"Homepage"</i> layer, it will only appear on the homepage.',
                         attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
                         canClickTarget: false,
@@ -2305,8 +2306,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Here you can see the content type editor. All the options are explained here. But' +
-                            ' what if you want to add a new field, like a text field?',
+                        text: 'Here you can see the content type editor. All the options are explained here. But ' +
+                            'what if you want to add a new field, like a text field?',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2512,8 +2513,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Now if you edit a blog post the new text field should appear and after creating a' +
-                            ' new blog post, your new field\'s content will be visible on the frontend.',
+                        text: 'Now if you edit a blog post the new text field should appear and after creating a ' +
+                            'new blog post, your new field\'s content will be visible on the frontend.',
                         buttons: [
                             backButton,
                             {
@@ -2532,12 +2533,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'The Audit Trail module provides an immutable (for users, even administrators but not' +
-                            ' for developers), auditable log of certain changes and events in the system. This ' +
+                        text: 'The Audit Trail module provides an immutable (for users, even administrators but not ' +
+                            'for developers), auditable log of certain changes and events in the system. This ' +
                             'includes e.g. creation or deletion of content items, and events like user login ' +
-                            'failures. For content items, previous versions and deleted items can be restored, and' +
-                            ' changes can be tracked. <br> It was turned on and configured by the setup recipe. Let\'s' +
-                            ' take a look.',
+                            'failures. For content items, previous versions and deleted items can be restored, and ' +
+                            'changes can be tracked. <br> It was turned on and configured by the setup recipe. Let\'s ' +
+                            'take a look.',
                         buttons: [
                             {
                                 action: function () {
@@ -2887,8 +2888,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'You can disable the user, this is also available for existing users. If the user is' +
-                            ' disabled then they will not be able to log in.',
+                        text: 'You can disable the user, this is also available for existing users. If the user is ' +
+                            'disabled then they will not be able to log in.',
                         attachTo: { element: '#User_IsEnabled', on: 'top' },
                         buttons: [
                             backButton,
@@ -2918,8 +2919,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Finally, you can select the role(s) for the user. Each role gives different' +
-                            ' permissions for the users. We will take a look at that later.',
+                        text: 'Finally, you can select the role(s) for the user. Each role gives different ' +
+                            'permissions for the users. We will take a look at that later.',
                         savedElement: $('#User_Roles_0__Role').parent().parent().get(0),
                         attachTo: {
                             element: function getContentTypesButton() {
@@ -3090,8 +3091,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Now if you changed the permissions, every user with that role will lose or gain' +
-                            ' those permissions, depending on what you did.',
+                        text: 'Now if you changed the permissions, every user with that role will lose or gain ' +
+                            'those permissions, depending on what you did.',
                         buttons: [
                             {
                                 action: function () {
@@ -3201,9 +3202,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Here you would see the deployment plans, but we currently have none. A deployment' +
-                            ' plan refers to a set of configurations, steps, or actions that define how an' +
-                            ' Orchard Core application is deployed. The result will be a downloadable recipe.',
+                        text: 'Here you would see the deployment plans, but we currently have none. A deployment ' +
+                            'plan refers to a set of configurations, steps, or actions that define how an ' +
+                            'Orchard Core application is deployed. The result will be a downloadable recipe.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3349,11 +3350,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: '<i>"Update Content Definitions"</i> exports the chosen content types and parts (you' +
-                            ' can configure it later which ones). After running the deployment plan, each step will' +
-                            ' add its own things to the final <i>"recipe.json"</i> file, which you can later download.' +
-                            'You can then import this file for maybe another Orchard Core site and it will add all the' +
-                            ' things that you exported. Click on <i>"Add"</i>.',
+                        text: '<i>"Update Content Definitions"</i> exports the chosen content types and parts (you ' +
+                            'can configure it later which ones). After running the deployment plan, each step will ' +
+                            'add its own things to the final <i>"recipe.json"</i> file, which you can later download. ' +
+                            'You can then import this file for maybe another Orchard Core site and it will add all the ' +
+                            'things that you exported. Click on <i>"Add"</i>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ContentDefinitionDeploymentStep"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -3404,8 +3405,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'As you can see you added the step to the deployment plan. You could add more steps' +
-                            ' e.g. <i>"All Content"</i> which would export all the <b>content items</b>.',
+                        text: 'As you can see you added the step to the deployment plan. You could add more steps ' +
+                            'e.g. <i>"All Content"</i> which would export all the <b>content items</b>.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3532,8 +3533,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'After you selected the file, click on <i>"Import"</i> to import it. This will add' +
-                            ', delete, or change everything that is in the deployment plan, to/on the website.',
+                        text: 'After you selected the file, click on <i>"Import"</i> to import it. This will add, ' +
+                            'delete, or change everything that is in the deployment plan, to/on the website.',
                         attachTo: { element: '.btn.btn-primary.import', on: 'top' },
                         buttons: [
                             backButton,
@@ -3560,8 +3561,8 @@ jQuery(($) => {
                         title: 'Features and themes',
                         text: 'Now take a look at themes. Themes in Orchard Core dictate how a website looks and ' +
                             'feels by controlling its visual presentation—managing layouts, styles, and design ' +
-                            'elements without altering the site\'s core functionality.They enable easy customization' +
-                            ' and allow users to switch the appearance of their websites swiftly.',
+                            'elements without altering the site\'s core functionality.They enable easy customization ' +
+                            'and allow users to switch the appearance of their websites swiftly.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -3623,9 +3624,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Take a look at features. Features in Orchard Core are modular components that add' +
-                            ' specific functionalities to a website, providing a way to extend the system by' +
-                            ' enabling or disabling distinct capabilities',
+                        text: 'Take a look at features. Features in Orchard Core are modular components that add ' +
+                            'specific functionalities to a website, providing a way to extend the system by ' +
+                            'enabling or disabling distinct capabilities',
                         buttons: [
                             backButton,
                             nextButton,
@@ -3687,8 +3688,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Walkthrough completed',
-                        text: 'Congratulations! You completed the walkthrough. For further learning points, you can' +
-                            ' watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
+                        text: 'Congratulations! You completed the walkthrough. For further learning points, you can ' +
+                            'watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
                         buttons: [
                             backButton,
                             nextButton,
@@ -3716,9 +3717,9 @@ jQuery(($) => {
             steps: [
                 {
                     title: 'Select walkthrough!',
-                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a>' +
-                        ' module is active. This module includes various walkthroughs. You can get back here, by ' +
-                        ' canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
+                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a> ' +
+                        'is active. This module includes various walkthroughs. You can get back here, by ' +
+                        'canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
                         'the walkthroughs\' built-in navigations! Please select a walkthrough to start:',
                     buttons: [
                         {
