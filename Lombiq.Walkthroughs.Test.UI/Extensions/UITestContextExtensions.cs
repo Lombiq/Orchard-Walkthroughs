@@ -6,6 +6,6 @@ namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 
 public static class UITestContextExtensions
 {
-    public static Task EnableJsonEditorFeatureAsync(this UITestContext context) =>
+    public static Task EnableWalkthroughsFeatureAsync(this UITestContext context) =>
         context.EnableFeatureDirectlyAsync("Lombiq.Walkthroughs");
 }
