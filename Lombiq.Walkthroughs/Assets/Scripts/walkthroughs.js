@@ -164,9 +164,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a> ' +
-                            '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">Blog recipe</a> ' +
-                            'as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/">recipe</a> ' +
+                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">Lombiq.Walkthroughs module</a> ' +
+                            '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">Blog recipe</a> ' +
+                            'as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">recipe</a> ' +
                             'is a JSON file that defines a set of instructions for setting up and configuring an ' +
                             'Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other ' +
                             'configurations. They are used to streamline the setup of an Orchard Core site, making it easier ' +
@@ -384,7 +384,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new blog post',
                         text: 'Let\'s create a new blog post. The blog post content type is already defined because ' +
-                            'the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
                             'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
                             'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
                             'posts within the blog.',
@@ -403,7 +403,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new blog post',
                         text: 'Here you can see the blog posts inside the blog. There is already an example one ' +
-                            'because of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            'because of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
                             'Blog recipe</a>.',
                         attachTo: { element: '#ci-sortable', on: 'top' },
 
@@ -485,9 +485,9 @@ jQuery(($) => {
                     {
                         title: 'Markdown editor',
                         text: 'This is a Markdown editor, the core of your blog post. ' +
-                            '<a href="https://www.markdownguide.org/basic-syntax/">Here is a guide for Markdown syntax</a>. ' +
+                            '<a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Here is a guide for Markdown syntax</a>. ' +
                             'The Markdown editor uses ' +
-                            '<a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor">EasyMDE</a>.',
+                            '<a href="https://github.com/Ionaru/easy-markdown-editor#easymde---markdown-editor" target="_blank">EasyMDE</a>.',
                         attachTo: { element: '.EasyMDEContainer', on: 'top' },
                         buttons: [
                             backButton,
@@ -551,6 +551,10 @@ jQuery(($) => {
                         id: 'creating_blog_post_tags',
                         when: {
                             show() {
+                                // We need to remove this custom attribute, because it's buggy with the taxonomy
+                                // dropdown.
+                                $('div[data-shepherd-step-id="creating_blog_post_tags"]').removeAttr('tabindex');
+
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
                                 preventSubmit();
                             },
@@ -578,10 +582,6 @@ jQuery(($) => {
                             'frontend. You could click on the preview button, but since we are finished, let\'s just ' +
                             'publish it.',
                         attachTo: { element: '#previewButton', on: 'top' },
-
-                        // We don't want to go back and forth between the admin dashboard, so we won't allow the
-                        // user, to actually use the preview button, but we will let one know.
-                        canClickTarget: false,
                         buttons: [
                             backButton,
                             nextButton,
@@ -673,7 +673,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: 'Just as the blog post content type, article is already defined and it comes from the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json">' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json"> target="_blank"' +
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
                             'by clicking on the <i>"Next"</i> button.',
                         buttons: [
@@ -1785,8 +1785,7 @@ jQuery(($) => {
                         text: 'The page has a part called <i>"Flow part"</i>, this allows you to add different ' +
                             'widgets to your page. If you want a simple <i>"page"</i>, with only HTML content, it\'s ' +
                             'better to create an article. However if you want something more complex, and perhaps ' +
-                            'you created your own widget and you want to add that, then it\'s better to use a page. ' +
-                            'Click on the <i>"+"</i> icon.',
+                            'you created your own widget and you want to add that, then it\'s better to use a page.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1805,7 +1804,7 @@ jQuery(($) => {
                         text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph ' +
                             'and Raw Html is self explanatory. Container is just a container for widgets, ' +
                             'so you can divide them up more. If you created another widget, or turned on a feature ' +
-                            'that adds a widget, it should also appear here.',
+                            'that adds a widget, it should also appear here. Click on the <i>"+"</i> icon.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2687,7 +2686,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click here to see the types of content whose events are recorded',
+                        text: 'These are currently the types of content whose events are recorded.',
                         attachTo: { element: '.edit-item', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3338,12 +3337,22 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Let\'s filter for <i>"Update Content Definitions"</i>.',
+                        text: 'Let\'s filter for <i>"Update Content Definitions"</i> (Click on the <i>"Next"</i> button).',
                         attachTo: { element: '#search-box', on: 'top' },
+                        canClickTarget: false,
                         scrollTo: true,
                         buttons: [
                             backButton,
-                            nextButton,
+                            {
+                                action: function () {
+                                    const searchBox = $('#search-box');
+                                    searchBox.val('Update Content Definitions');
+                                    searchBox.trigger('keyup');
+                                    return this.next();
+                                },
+                                classes: 'shepherd-button-primary',
+                                text: 'Next',
+                            },
                         ],
                         id: 'deployment_filter_steps',
                     },
@@ -3625,7 +3634,7 @@ jQuery(($) => {
                         title: 'Features and themes',
                         text: 'Take a look at features. Features in Orchard Core are modular components that add ' +
                             'specific functionalities to a website, providing a way to extend the system by ' +
-                            'enabling or disabling distinct capabilities',
+                            'enabling or disabling distinct capabilities.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -3688,10 +3697,16 @@ jQuery(($) => {
                     {
                         title: 'Walkthrough completed',
                         text: 'Congratulations! You completed the walkthrough. For further learning points, you can ' +
-                            'watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
+                            'watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13" target="_blank">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14" target="_blank">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15" target="_blank">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
                         buttons: [
                             backButton,
-                            nextButton,
+                            {
+                                action: function () {
+                                    return this.next();
+                                },
+                                classes: 'shepherd-button-primary',
+                                text: 'End',
+                            },
                         ],
                         id: 'outro', // #spell-check-ignore-line
                     },
@@ -3716,7 +3731,7 @@ jQuery(($) => {
             steps: [
                 {
                     title: 'Select walkthrough!',
-                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs">Lombiq.Walkthroughs module</a> ' +
+                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">Lombiq.Walkthroughs module</a> ' +
                         'is active. This module includes various walkthroughs. You can get back here, by ' +
                         'canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
                         'the walkthroughs\' built-in navigations! Please select a walkthrough to start:',
@@ -3738,6 +3753,7 @@ jQuery(($) => {
 
         const queryParams = getShepherdQueryParams();
         const walkthroughCookies = getWalkthroughCookies();
+        const walkthroughSelectorButton = $('#walkthrough-selector-button');
 
         if (queryParams.shepherdTour &&
             queryParams.shepherdStep &&
@@ -3757,10 +3773,14 @@ jQuery(($) => {
             currentTour.show(step);
 
             addShepherdQueryParams();
+
+            // Auto-start the walkthrough if we are on the homepage and not in the walkthrough yet.
+        }
+        else if (walkthroughSelectorButton.length) {
+            walkthroughSelector.start();
         }
 
-        const walkthroughSelectorButton = $('#walkthrough-selector-button');
-
+        // The walkthrough will automatically start, but there is still a way to manually start it.
         if (walkthroughSelectorButton) {
             walkthroughSelectorButton.on('click', function startWalkthroughSelector() {
                 walkthroughSelector.start();
