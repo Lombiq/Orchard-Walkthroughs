@@ -2677,7 +2677,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click here to see the types of content whose events are recorded',
+                        text: 'Click here to see the types of content whose events are recorded.',
                         attachTo: { element: 'a[href="#tab-content"]', on: 'top' },
                         buttons: [
                             backButton,
