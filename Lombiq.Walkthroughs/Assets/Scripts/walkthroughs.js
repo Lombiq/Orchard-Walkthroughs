@@ -3347,7 +3347,7 @@ jQuery(($) => {
                                 action: function () {
                                     const searchBox = $('#search-box');
                                     searchBox.val('Update Content Definitions');
-                                    searchBox.trigger('keyup');
+                                    searchBox.trigger('keyup'); // #spell-check-ignore-line
                                     return this.next();
                                 },
                                 classes: 'shepherd-button-primary',
