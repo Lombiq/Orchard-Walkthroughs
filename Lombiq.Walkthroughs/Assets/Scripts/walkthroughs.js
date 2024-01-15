@@ -2798,7 +2798,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Here you can see all the users, including yourself the testuser.',
+                        text: 'Here you can see all the users, including yourself the testuser.', // #spell-check-ignore-line
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
