@@ -2795,7 +2795,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Here you can see all the users, including yourself the admin.',
+                        text: 'Here you can see all the users, including yourself the testuser.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
