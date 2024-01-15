@@ -673,7 +673,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: 'Just as the blog post content type, article is already defined and it comes from the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json"> target="_blank"' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
                             'by clicking on the <i>"Next"</i> button.',
                         buttons: [
