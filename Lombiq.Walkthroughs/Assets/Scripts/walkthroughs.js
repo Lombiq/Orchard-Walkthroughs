@@ -555,6 +555,9 @@ jQuery(($) => {
                                 // dropdown.
                                 $('div[data-shepherd-step-id="creating_blog_post_tags"]').removeAttr('tabindex');
 
+                                // Overlay is in the way, so we have to set the position to relative.
+                                $('.multiselect__content-wrapper').css('position', 'relative');
+
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
                                 preventSubmit();
                             },
