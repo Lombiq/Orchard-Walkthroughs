@@ -3569,7 +3569,7 @@ jQuery(($) => {
                         title: 'Features and themes',
                         text: 'Now take a look at themes. Themes in Orchard Core dictate how a website looks and ' +
                             'feels by controlling its visual presentation—managing layouts, styles, and design ' +
-                            'elements without altering the site\'s core functionality.They enable easy customization ' +
+                            'elements without altering the site\'s core functionality. They enable easy customization ' +
                             'and allow users to switch the appearance of their websites swiftly.',
                         buttons: [
                             backButton,
