@@ -16,7 +16,6 @@ public static class TestCaseUITestContextExtensions
 
         await context.EnableWalkthroughsFeatureAsync();
 
-        await context.ClickReliablyOnAsync(By.Id("walkthrough-selector-button"));
         context.WalkthroughWindowsShouldExist();
 
         await context.ClickOnNextButtonAsync();
