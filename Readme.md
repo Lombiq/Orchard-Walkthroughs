@@ -1,4 +1,8 @@
+
 # Lombiq Walkthroughs for Orchard Core
+
+[![Lombiq.Walkthroughs NuGet](https://img.shields.io/nuget/v/Lombiq.Walkthroughs)](https://www.nuget.org/packages/Lombiq.Walkthroughs/)
+
 
 ## About
 

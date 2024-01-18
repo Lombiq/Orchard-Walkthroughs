@@ -3,7 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.Walkthroughs", "Lombiq.Walkthroughs\Lombiq.Walkthroughs.csproj", "{655C35E9-CF87-49FF-9510-0FB5F9D6625E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.Walkthroughs.Tests.UI", "Lombiq.Walkthroughs.Test.UI\Lombiq.Walkthroughs.Tests.UI.csproj", "{3A89ACC2-86EE-4F04-B674-0514E0FDB066}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D483B00D-4262-49CA-B22D-3655A7BF2AF8}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.github\workflows\create-jira-issues-for-community-activities.yml = .github\workflows\create-jira-issues-for-community-activities.yml
+		License.md = License.md
+		.github\workflows\publish-nuget.yml = .github\workflows\publish-nuget.yml
+		Readme.md = Readme.md
+		.github\workflows\validate-pull-request.yml = .github\workflows\validate-pull-request.yml
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{655C35E9-CF87-49FF-9510-0FB5F9D6625E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655C35E9-CF87-49FF-9510-0FB5F9D6625E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655C35E9-CF87-49FF-9510-0FB5F9D6625E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655C35E9-CF87-49FF-9510-0FB5F9D6625E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A89ACC2-86EE-4F04-B674-0514E0FDB066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A89ACC2-86EE-4F04-B674-0514E0FDB066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A89ACC2-86EE-4F04-B674-0514E0FDB066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A89ACC2-86EE-4F04-B674-0514E0FDB066}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
