@@ -14,9 +14,9 @@ using static Lombiq.Walkthroughs.Constants.FeatureIds;
     Name = "Lombiq Walkthroughs",
     Category = "Content",
     Description = "Module for enabling the walkthroughs.",
-    Dependencies = new[]
-    {
+    Dependencies =
+    [
         "OrchardCore.Contents",
         "OrchardCore.ResourceManagement",
-    }
+    ]
 )]
