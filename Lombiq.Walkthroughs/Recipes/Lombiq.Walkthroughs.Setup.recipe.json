@@ -1,7 +1,7 @@
 {
-  "name": "Lombiq.Walkthroughs",
+  "name": "Lombiq.Walkthroughs.Setup",
   "displayName": "Walkthroughs",
-  "description": "Orchard Core site using the Blog setup recipe, with the Lombiq.Walkthroughs module enabled.",
+  "description": "Sets up the site using the Blog setup recipe, and then provides you with walkthroughs of Orchard Core features using interactive tooltips.",
   "author": "Lombiq",
   "website": "https://github.com/Lombiq/Orchard-Walkthroughs",
   "version": "1.0.0",
