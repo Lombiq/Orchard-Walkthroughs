@@ -3737,9 +3737,12 @@ jQuery(($) => {
                     title: 'Select walkthrough!',
                     text: '<p>Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">' +
                         'Lombiq.Walkthroughs module</a> is active. This module includes various walkthroughs that ' +
-                        'provide hands-on tutorials guided by interactive tooltips.</p><p>You can get back here by ' +
-                        'canceling the current walkthrough and pressing the below button on the homepage. Please ' +
-                        'only use the walkthroughs\' built-in navigation! Please select a walkthrough to start:</p>',
+                        'provide hands-on tutorials guided by interactive tooltips.</p><p>Do you prefer tutorial ' +
+                        'videos or deep-diving into the code instead? Check out ' +
+                        '<a href="https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial" target="_blank">' +
+                        'Dojo Course 3</a>!</p><p>You can get back here by canceling the current walkthrough and ' +
+                        'pressing the below button on the homepage. Please only use the walkthroughs\' built-in ' +
+                        'navigation! Please select a walkthrough to start:</p>',
                     buttons: [
                         {
                             text: 'Orchard Core Admin Walkthrough',

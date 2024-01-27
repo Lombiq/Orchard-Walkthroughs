@@ -8,6 +8,8 @@ Do you want to learn about the most important [Orchard Core](https://orchardcore
 
 The module is also available on all sites of [DotNest, the Orchard Core SaaS](https://dotnest.com/), so you can quickly create a site there and start learning.
 
+Do you prefer tutorial videos or deep-diving into the code instead? Check out [Dojo Course 3](https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial)!
+
 The module uses [shepherd.js](https://shepherdjs.dev/) for the walkthroughs.
 
 Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects! You can use the setup recipe called _Walkthroughs_ to setup a site using this feature.
