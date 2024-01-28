@@ -13,11 +13,11 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
     {
         _manifest.DefineResource("$" + nameof(FeatureIds.Area), FeatureIds.Area);
 
+        // We can't set shepherd.min.css here, since the file comes from a node module and it's originally a css file,
+        // so we are not processing it. It's also somewhat minified by default.
         _manifest
             .DefineStyle(Shepherd)
-            .SetUrl(
-                "~/" + FeatureIds.Area + "/shepherd.js/css/shepherd.min.css",
-                "~/" + FeatureIds.Area + "/shepherd.js/css/shepherd.css");
+            .SetUrl("~/" + FeatureIds.Area + "/shepherd.js/css/shepherd.css");
 
         _manifest
             .DefineScript(Shepherd)
