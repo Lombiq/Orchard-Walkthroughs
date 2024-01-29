@@ -112,6 +112,10 @@ jQuery(($) => {
 
                 // eslint-disable-next-line prefer-destructuring
                 goToRelativePageString = window.location.href.split(splitString)[0];
+
+                if (!goToRelativePageString.endsWith('/')) {
+                    goToRelativePageString += '/';
+                }
             }
 
             const goToRelativePageURL = new URL(goToRelativePageString + (nextPage ?? ''));
