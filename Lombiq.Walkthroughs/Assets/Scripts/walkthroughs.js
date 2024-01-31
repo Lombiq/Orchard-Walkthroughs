@@ -155,7 +155,8 @@ jQuery(($) => {
                                 action: function () {
                                     removeShepherdQueryParams();
                                     walkthroughs.orchardCoreAdminWalkthrough.complete();
-                                    // The walkthroughSelector is later defined and orchardCoreAdminWalkthrough is only used later.
+                                    // The walkthroughSelector is later defined and orchardCoreAdminWalkthrough is only
+                                    // used later.
                                     // eslint-disable-next-line no-use-before-define
                                     walkthroughSelector.start();
                                 },
@@ -168,14 +169,15 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: 'The setup recipe in <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">Lombiq.Walkthroughs module</a> ' +
-                            '(named Walkthroughs) used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">Blog recipe</a> ' +
+                        text: 'The setup recipe in the Walkthroughs module</a> used the ' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">Blog recipe</a> ' +
                             'as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">recipe</a> ' +
                             'is a JSON file that defines a set of instructions for setting up and configuring an ' +
-                            'Orchard Core application. Recipes can include predefined content types, widgets, menus, content items, and other ' +
-                            'configurations. They are used to streamline the setup of an Orchard Core site, making it easier ' +
-                            'to create consistent site structures and content. Recipes can be executed during the initial ' +
-                            'setup of a site or at any point to apply configurations or import content.',
+                            'Orchard Core application. Recipes can include predefined content types, widgets, menus, ' +
+                            'content items, and other configuration. They are used to streamline the setup of an ' +
+                            'Orchard Core site, making it easier to create consistent site structures and content. ' +
+                            'Setup recipes can be executed during the initial setup of a site, and non-setup recipes ' +
+                            'at any point to apply configuration or import content.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -184,8 +186,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Site setup',
-                        text: 'To get to this point (a set up site), first you will need to get through the ' +
-                            'setup screen. Where you can decide which setup recipe you\'d like to use. Currently, ' +
+                        text: 'To get to this point (a set up site), first you will need to get through the setup ' +
+                            'screen. There you can decide which setup recipe you\'d like to use. Currently, ' +
                             'we are using the Walkthroughs recipe.',
                         buttons: [
                             backButton,
@@ -1698,8 +1700,7 @@ jQuery(($) => {
                     {
                         title: 'Flow parts',
                         text: 'Now click on the <i>"Content Items"</i> button.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a
-                        // function.
+                        // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('[title="Content Items"]').parent().get(0),
                         attachTo: {
 
@@ -3738,10 +3739,14 @@ jQuery(($) => {
             steps: [
                 {
                     title: 'Select walkthrough!',
-                    text: 'Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">Lombiq.Walkthroughs module</a> ' +
-                        'is active. This module includes various walkthroughs. You can get back here, by ' +
-                        'canceling the current walkthrough and pressing the button on the homepage. Please only use, ' +
-                        'the walkthroughs\' built-in navigations! Please select a walkthrough to start:',
+                    text: '<p>Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">' +
+                        'Lombiq.Walkthroughs module</a> is active. This module includes various walkthroughs that ' +
+                        'provide hands-on tutorials guided by interactive tooltips.</p><p>Do you prefer tutorial ' +
+                        'videos or deep-diving into the code instead? Check out ' +
+                        '<a href="https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial" target="_blank">' +
+                        'Dojo Course 3</a>!</p><p>You can get back here by canceling the current walkthrough and ' +
+                        'pressing the below button on the homepage. Please only use the walkthroughs\' built-in ' +
+                        'navigation! Please select a walkthrough to start:</p>',
                     buttons: [
                         {
                             text: 'Orchard Core Admin Walkthrough',
