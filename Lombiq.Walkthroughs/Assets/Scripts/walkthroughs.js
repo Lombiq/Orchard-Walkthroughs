@@ -147,7 +147,7 @@ jQuery(($) => {
                 },
                 steps: [
                     {
-                        title: 'Welcome in the<br>Orchard Core Admin Walkthrough!',
+                        title: 'Welcome to the<br>Orchard Core Admin Walkthrough!',
                         text: 'This walkthrough covers key Orchard Core features, such as content management, user roles, ' +
                             'and theme selection, and points users to further learning resources.',
                         buttons: [
