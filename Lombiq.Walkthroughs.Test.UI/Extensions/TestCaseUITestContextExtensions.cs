@@ -14,8 +14,6 @@ public static class TestCaseUITestContextExtensions
         const string welcomeStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=welcome";
         const string adminTopMenuStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_top_menu";
 
-        await context.EnableWalkthroughsFeatureAsync();
-
         context.WalkthroughWindowsShouldExist();
 
         await context.ClickOnNextButtonAsync();
