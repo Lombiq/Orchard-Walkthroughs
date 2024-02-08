@@ -14,34 +14,34 @@ public static class TestCaseUITestContextExtensions
         const string welcomeStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=welcome";
         const string adminTopMenuStepQueryParameters = "shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_top_menu";
 
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
 
         await context.ClickOnNextButtonAsync();
 
         context.UriShouldContain(welcomeStepQueryParameters);
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
 
         await context.ClickOnNextButtonAsync();
 
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
         context.UriShouldContain("shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=setup_recipe");
 
         await context.ClickOnBackButtonAsync();
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
 
         context.UriShouldContain(welcomeStepQueryParameters);
 
         await context.SignInDirectlyAndGoToDashboardAsync();
 
         await context.GoToRelativeUrlAsync("admin?" + adminTopMenuStepQueryParameters);
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
 
         await context.ClickOnNextButtonAsync();
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
         context.UriShouldContain("shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_blog_post");
 
         await context.ClickOnBackButtonAsync();
-        context.WalkthroughWindowsShouldExist();
+        context.WalkthroughPopupShouldExist();
 
         context.UriShouldContain(adminTopMenuStepQueryParameters);
     }
@@ -52,7 +52,7 @@ public static class TestCaseUITestContextExtensions
     private static Task ClickOnBackButtonAsync(this UITestContext context) =>
         context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-secondary')]"));
 
-    private static void WalkthroughWindowsShouldExist(this UITestContext context) =>
+    private static void WalkthroughPopupShouldExist(this UITestContext context) =>
         context.Exists(By.XPath($"//div[@class='shepherd-content']"));
 
     private static void UriShouldContain(this UITestContext context, string shouldContain) =>
