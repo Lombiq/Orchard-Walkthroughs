@@ -37,12 +37,13 @@ public static class TestCaseUITestContextExtensions
         WalkthroughPopupShouldExist(context);
     }
 
+    // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
     private static Task ClickOnNextButtonAsync(UITestContext context) =>
         context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]"));
 
     private static Task ClickOnBackButtonAsync(UITestContext context) =>
-        context.ClickReliablyOnAsync(By.XPath($"//button[contains(@class, 'shepherd-button-secondary')]"));
+        context.ClickReliablyOnAsync(By.CssSelector(".shepherd-button-secondary"));
 
     private static void WalkthroughPopupShouldExist(UITestContext context) =>
-        context.Exists(By.XPath($"//div[@class='shepherd-content']"));
+        context.Exists(By.CssSelector(".shepherd-content"));
 }
