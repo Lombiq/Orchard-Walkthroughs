@@ -149,7 +149,7 @@ jQuery(($) => {
                     {
                         title: 'Welcome to the<br>Orchard Core Admin Walkthrough!',
                         text: 'This walkthrough covers key Orchard Core features, such as content management, user roles, ' +
-                            'and theme selection, and points users to further learning resources.',
+                            'and theme selection, and points you to further learning resources.',
                         buttons: [
                             {
                                 action: function () {
@@ -169,15 +169,18 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: 'The setup recipe in the Walkthroughs module</a> used the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">Blog recipe</a> ' +
-                            'as a base recipe. In Orchard Core, a <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">recipe</a> ' +
-                            'is a JSON file that defines a set of instructions for setting up and configuring an ' +
-                            'Orchard Core application. Recipes can include predefined content types, widgets, menus, ' +
-                            'content items, and other configuration. They are used to streamline the setup of an ' +
-                            'Orchard Core site, making it easier to create consistent site structures and content. ' +
-                            'Setup recipes can be executed during the initial setup of a site, and non-setup recipes ' +
-                            'at any point to apply configuration or import content.',
+                        text: '<p>The setup recipe in the Walkthroughs module used the ' +
+                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
+                            'Blog recipe</a> as a base recipe.</p>' +
+                            '<p>In Orchard Core, a ' +
+                            '<a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">' +
+                            'recipe</a> is a JSON file that defines a set of instructions for setting up and ' +
+                            'configuring an Orchard Core application. Recipes can include predefined content types, ' +
+                            'widgets, menus, content items, and other configuration. They are used to streamline the ' +
+                            'setup of an Orchard Core site, making it easier to create consistent site structures and ' +
+                            'content.</p>' +
+                            '<p>Setup recipes can be executed during the initial setup of a site, and non-setup recipes ' +
+                            'at any point to apply configuration or import content.</p>',
                         buttons: [
                             backButton,
                             nextButton,
