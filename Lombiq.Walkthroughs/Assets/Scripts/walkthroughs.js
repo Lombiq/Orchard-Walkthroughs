@@ -200,8 +200,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Log in',
-                        text: 'Let\'s log in! Please go to the following URL <i>"~/Login"</i>, by clicking on the' +
-                            ' <i>"Next"</i> button.',
+                        text: 'Let\'s log in! Please go to the <em>"~/Login"</em>, by clicking on the' +
+                            ' <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -247,7 +247,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#UserName', on: 'bottom' },
-                        text: 'Input your username, this recipe included a user. The username is <i>"testuser"</i>.', // #spell-check-ignore-line
+                        text: 'Input your username, this recipe included a user. The username is <em>"testuser"</em>.', // #spell-check-ignore-line
                         buttons: [
                             backButton,
                             nextButton,
@@ -263,7 +263,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#Password', on: 'bottom' },
-                        text: 'Input your password, the password for the test user is <i>"Password1!"</i>.',
+                        text: 'Input your password, the password for the test user is <em>"Password1!"</em>.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -318,8 +318,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        text: 'Let\'s see the admin dashboard now. Please go to the following URL <i>"~/Admin"</i>, ' +
-                            'by clicking on the <i>"Next"</i> button.',
+                        text: 'Let\'s see the admin dashboard now. Please go to the following URL <em>"~/Admin"</em>, ' +
+                            'by clicking on the <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -395,7 +395,7 @@ jQuery(($) => {
                         text: 'Let\'s create a new blog post. The blog post content type is already defined because ' +
                             'the setup recipe used the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
                             'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
-                            'menu point for it. Click on the <i>"Blog"</i> button and you will see all the blog ' +
+                            'menu point for it. Click on the <em>"Blog"</em> button and you will see all the blog ' +
                             'posts within the blog.',
                         attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
                         buttons: [
@@ -528,7 +528,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can add an image for your blog post, if you want. Click on the <i>"+"</i> sign.',
+                        text: 'You can add an image for your blog post, if you want. Click on the <em>"+"</em> sign.',
                         attachTo: { element: '#BlogPost_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -626,7 +626,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the blog post',
-                        text: 'The blog post is published. Click on the <i>"View"</i> button to see it.',
+                        text: 'The blog post is published. Click on the <em>"View"</em> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -687,7 +687,7 @@ jQuery(($) => {
                         text: 'Just as the blog post content type, article is already defined and it comes from the ' +
                             '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
                             'Blog recipe</a> that we used as the base of the setup recipe. Go to the admin dashboard ' +
-                            'by clicking on the <i>"Next"</i> button.',
+                            'by clicking on the <em>"Next"</em> button.',
                         buttons: [
                             {
                                 action: function () {
@@ -708,7 +708,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -730,7 +730,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now click on the <i>"Content Types"</i> dropdown to see what type of content items you ' +
+                        text: 'Now click on the <em>"Content Types"</em> dropdown to see what type of content items you ' +
                             'can create.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
@@ -929,7 +929,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can add an image for your article, if you want. Click on the <i>"+"</i> sign.',
+                        text: 'You can add an image for your article, if you want. Click on the <em>"+"</em> sign.',
                         attachTo: { element: '#Article_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -993,7 +993,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the article',
-                        text: 'The article is published. Click on the <i>"View"</i> button to see it.',
+                        text: 'The article is published. Click on the <em>"View"</em> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -1045,7 +1045,7 @@ jQuery(($) => {
                     {
                         title: 'Adding article to menu',
                         text: 'As you can see, the sample article that was created from the recipe is in the menu. ' +
-                            'Click on <i>"About"</i>.',
+                            'Click on <em>"About"</em>.',
                         attachTo: { element: 'a[href*="about"', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -1063,7 +1063,7 @@ jQuery(($) => {
                         title: 'Adding article to menu',
                         text: 'As you can see, you can access easily to it through the menu. Let\'s add the ' +
                             'article that we are created too. Go to the admin dashboard by clicking on the ' +
-                            '<i>"Next"</i> button.',
+                            '<em>"Next"</em> button.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -1089,7 +1089,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'Click on the <i>"Main Menu"</i> button.',
+                        text: 'Click on the <em>"Main Menu"</em> button.',
                         attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'top' }, // #spell-check-ignore-line
                         buttons: [
                             {
@@ -1127,7 +1127,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'Let\'s add the new article that we created. Click on the <i>"Add Menu Item"</i> button.',
+                        text: 'Let\'s add the new article that we created. Click on the <em>"Add Menu Item"</em> button.',
                         attachTo: { element: 'button[data-bs-target="#modalMenuItems"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1168,7 +1168,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'For now let\'s go with the, Link Menu Item one. Click on the <i>"Add"</i> button.',
+                        text: 'For now let\'s go with the, Link Menu Item one. Click on the <em>"Add"</em> button.',
                         attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -1210,7 +1210,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding article to menu',
-                        text: 'Let\'s give it your article\'s URL. Make sure to include the relative path <i>"~"</i>.',
+                        text: 'Let\'s give it your article\'s URL. Make sure to include the relative path <em>"~"</em>.',
                         attachTo: { element: '#LinkMenuItemPart_Url', on: 'top' },
                         buttons: [
                             backButton,
@@ -1273,7 +1273,7 @@ jQuery(($) => {
                     {
                         title: 'Adding article to menu',
                         text: 'Your article is now available from the menu. Let\'s see it, click on the ' +
-                            '<i>"Next"</i> button to go to the home page.',
+                            '<em>"Next"</em> button to go to the home page.',
                         buttons: [
                             backButton,
                             {
@@ -1305,7 +1305,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content list',
-                        text: 'Now let\'s go back to the admin dashboard. Click on the <i>"Next</i> button.',
+                        text: 'Now let\'s go back to the admin dashboard. Click on the <em>"Next</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -1320,7 +1320,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content list',
-                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -1342,7 +1342,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content list',
-                        text: 'Now click on the <i>"Content Items"</i> button.',
+                        text: 'Now click on the <em>"Content Items"</em> button.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
                         savedElement: $('[title="Content Items"]').parent().get(0),
@@ -1418,7 +1418,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can access this page, by going to the content types, then filtering for <i>"Taxonomy"</i>. ' +
+                        text: 'You can access this page, by going to the content types, then filtering for <em>"Taxonomy"</em>. ' +
                             'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         canClickTarget: false,
@@ -1436,7 +1436,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'Click on the <i>"Edit"</i> button.',
+                        text: 'Click on the <em>"Edit"</em> button.',
                         attachTo: { element: '.btn-sm.btn-primary.edit', on: 'top' },
                         buttons: [
                             backButton,
@@ -1529,7 +1529,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'Let\'s publish the new category. Click on the <i>"Publish"</i> button.',
+                        text: 'Let\'s publish the new category. Click on the <em>"Publish"</em> button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1576,7 +1576,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Let\'s see media management. Click on the <i>"Next"</i> button.',
+                        text: 'Let\'s see media management. Click on the <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -1591,7 +1591,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Click on the <i>"Media Library"</i> button.',
+                        text: 'Click on the <em>"Media Library"</em> button.',
                         scrollTo: true,
                         attachTo: { element: 'a[href*="Media"]', on: 'top' },
                         buttons: [
@@ -1686,7 +1686,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             backButton,
@@ -1702,7 +1702,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'Now click on the <i>"Content Items"</i> button.',
+                        text: 'Now click on the <em>"Content Items"</em> button.',
                         // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('[title="Content Items"]').parent().get(0),
                         attachTo: {
@@ -1725,7 +1725,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'Click on the <i>"New"</i> button.',
+                        text: 'Click on the <em>"New"</em> button.',
                         attachTo: { element: '#new-dropdown', on: 'top' },
                         buttons: [
                             {
@@ -1741,7 +1741,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'Click on <i>"Page"</i> to create a new page.',
+                        text: 'Click on <em>"Page"</em> to create a new page.',
                         attachTo: { element: 'a.dropdown-item[href*="Page"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1793,8 +1793,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow parts',
-                        text: 'The page has a part called <i>"Flow part"</i>, this allows you to add different ' +
-                            'widgets to your page. If you want a simple <i>"page"</i>, with only HTML content, it\'s ' +
+                        text: 'The page has a part called <em>"Flow part"</em>, this allows you to add different ' +
+                            'widgets to your page. If you want a simple <em>"page"</em>, with only HTML content, it\'s ' +
                             'better to create an article. However if you want something more complex, and perhaps ' +
                             'you created your own widget and you want to add that, then it\'s better to use a page.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
@@ -1815,7 +1815,7 @@ jQuery(($) => {
                         text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph ' +
                             'and Raw Html is self explanatory. Container is just a container for widgets, ' +
                             'so you can divide them up more. If you created another widget, or turned on a feature ' +
-                            'that adds a widget, it should also appear here. Click on the <i>"+"</i> icon.',
+                            'that adds a widget, it should also appear here. Click on the <em>"+"</em> icon.',
                         attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1917,7 +1917,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the page',
-                        text: 'The page is published. Click on the <i>"View"</i> button to see it.',
+                        text: 'The page is published. Click on the <em>"View"</em> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -1977,7 +1977,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'Go to the admin dashboard by clicking on the <i>"Next"</i> button.',
+                        text: 'Go to the admin dashboard by clicking on the <em>"Next"</em> button.',
                         buttons: [
                             {
                                 action: function () {
@@ -2000,7 +2000,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'Click on the <i>"Design"</i> dropdown.',
+                        text: 'Click on the <em>"Design"</em> dropdown.',
                         attachTo: { element: '#themes', on: 'right' },
                         buttons: [
                             {
@@ -2023,7 +2023,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'Now click on the <i>"Widgets"</i> button.',
+                        text: 'Now click on the <em>"Widgets"</em> button.',
                         attachTo: { element: 'a[href*=Layers]', on: 'right' },
                         buttons: [
                             backButton,
@@ -2039,8 +2039,8 @@ jQuery(($) => {
                     {
                         title: 'Adding widgets to the layout',
                         text: 'These are the zones, one page is divided into multiple zones. Currently we have ' +
-                            '<i>"Content"</i> and <i>"Footer"</i>. You can add new zones by going into ' +
-                            '<i>Design → Settings → Zones</i>.',
+                            '<em>"Content"</em> and <em>"Footer"</em>. You can add new zones by going into ' +
+                            '<em>Design → Settings → Zones</em>.',
                         attachTo: { element: '.col-md-8', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2060,7 +2060,7 @@ jQuery(($) => {
                         title: 'Adding widgets to the layout',
                         text: 'These are the layer, you can add new ones, then edit them and define rules for them. ' +
                             'You can set the layer of the widget, so you can configure when the widget appears. ' +
-                            'E.g. if you put a widget on the <i>"Homepage"</i> layer, it will only appear on the homepage.',
+                            'E.g. if you put a widget on the <em>"Homepage"</em> layer, it will only appear on the homepage.',
                         attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2071,7 +2071,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'Let\'s add a widget to the content zone. Click on <i>"Add widget"</i>.',
+                        text: 'Let\'s add a widget to the content zone. Click on <em>"Add widget"</em>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm.dropdown-toggle', on: 'top' },
                         buttons: [
                             backButton,
@@ -2081,7 +2081,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'Now click on <i>"Paragraph"</i>.',
+                        text: 'Now click on <em>"Paragraph"</em>.',
                         attachTo: { element: 'a[data-widget-type="Paragraph"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2195,7 +2195,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Go to the admin editor by clicking on the <i>"Next"</i> button.',
+                        text: 'Go to the admin editor by clicking on the <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -2210,7 +2210,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Click on the <i>"Content"</i> dropdown.',
+                        text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -2233,7 +2233,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Now click on the <i>"Content Definition"</i> dropdown.',
+                        text: 'Now click on the <em>"Content Definition"</em> dropdown.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
                         savedElement: $('[title="Content Definition"]').parent().get(0),
@@ -2267,7 +2267,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Click on the <i>"Content Types"</i> button.',
+                        text: 'Click on the <em>"Content Types"</em> button.',
                         attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -2566,7 +2566,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <i>"Configuration"</i>.',
+                        text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
                         buttons: [
@@ -2583,7 +2583,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <i>"Settings"</i>.',
+                        text: 'Click on <em>"Settings"</em>.',
                         // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('[data-title="Configuration"]')
                             .find('[title="Settings"]')
@@ -2620,7 +2620,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <i>"Audit Trail"</i>.',
+                        text: 'Click on <em>"Audit Trail"</em>.',
                         attachTo: { element: '#audittrailSettings', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
@@ -2719,7 +2719,7 @@ jQuery(($) => {
                     {
                         title: 'Audit Trail',
                         text: 'Now let\'s see how we can watch the recorded events. Click on the ' +
-                            '<i>"Audit Trail"</i> button.',
+                            '<em>"Audit Trail"</em> button.',
                         attachTo: { element: '#audittrail', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
@@ -2765,7 +2765,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Let\'s take a look at user management. Click on the <i>"Security"</i> dropdown.',
+                        text: 'Let\'s take a look at user management. Click on the <em>"Security"</em> dropdown.',
                         attachTo: { element: '#security', on: 'right' },
                         buttons: [
                             {
@@ -2791,7 +2791,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Now click on <i>"Users"</i>.',
+                        text: 'Now click on <em>"Users"</em>.',
                         attachTo: { element: '.users', on: 'right' },
                         buttons: [
                             backButton,
@@ -2998,7 +2998,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Let\'s see the roles now. Click on the <i>"Security"</i> dropdown.',
+                        text: 'Let\'s see the roles now. Click on the <em>"Security"</em> dropdown.',
                         attachTo: { element: '#security', on: 'right' },
                         buttons: [
                             backButton,
@@ -3014,7 +3014,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Now click on <i>"Roles"</i>.',
+                        text: 'Now click on <em>"Roles"</em>.',
                         attachTo: { element: '.roles', on: 'right' },
                         buttons: [
                             backButton,
@@ -3049,7 +3049,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Let\'s see one. Click on the <i>"Edit"</i> button.',
+                        text: 'Let\'s see one. Click on the <em>"Edit"</em> button.',
                         attachTo: { element: '.edit.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
                             backButton,
@@ -3084,7 +3084,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'After you finished, click on the <i>"Save"</i> button.',
+                        text: 'After you finished, click on the <em>"Save"</em> button.',
                         attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'top' },
                         scrollTo: true,
                         buttons: [
@@ -3149,7 +3149,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Configuration"</i>.',
+                        text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
                         buttons: [
@@ -3166,7 +3166,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Import/Export"</i>.',
+                        text: 'Click on <em>"Import/Export"</em>.',
                         savedElement: $('[title="Import/Export"]').parent().get(0),
                         attachTo: {
 
@@ -3196,7 +3196,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Deployment Plans"</i>.',
+                        text: 'Click on <em>"Deployment Plans"</em>.',
                         attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -3259,7 +3259,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Now click on the <i>"Create"</i> button.',
+                        text: 'Now click on the <em>"Create"</em> button.',
                         attachTo: { element: '.btn.btn-primary.create', on: 'top' },
                         buttons: [
                             backButton,
@@ -3275,7 +3275,7 @@ jQuery(($) => {
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
                         text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps. Click on the ' +
-                            '<i>"Manage Steps"</i> button.',
+                            '<em>"Manage Steps"</em> button.',
                         attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
                         buttons: [
                             {
@@ -3306,7 +3306,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on the <i>"Add Step"</i> button.',
+                        text: 'Click on the <em>"Add Step"</em> button.',
                         attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
                             {
@@ -3348,7 +3348,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Let\'s filter for <i>"Update Content Definitions"</i> (Click on the <i>"Next"</i> button).',
+                        text: 'Let\'s filter for <em>"Update Content Definitions"</em> (Click on the <em>"Next"</em> button).',
                         attachTo: { element: '#search-box', on: 'top' },
                         canClickTarget: false,
                         scrollTo: true,
@@ -3369,11 +3369,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: '<i>"Update Content Definitions"</i> exports the chosen content types and parts (you ' +
+                        text: '<em>"Update Content Definitions"</em> exports the chosen content types and parts (you ' +
                             'can configure it later which ones). After running the deployment plan, each step will ' +
-                            'add its own things to the final <i>"recipe.json"</i> file, which you can later download. ' +
+                            'add its own things to the final <em>"recipe.json"</em> file, which you can later download. ' +
                             'You can then import this file for maybe another Orchard Core site and it will add all the ' +
-                            'things that you exported. Click on <i>"Add"</i>.',
+                            'things that you exported. Click on <em>"Add"</em>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ContentDefinitionDeploymentStep"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -3408,7 +3408,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'If you finished click on the <i>"Create"</i> button.',
+                        text: 'If you finished click on the <em>"Create"</em> button.',
                         attachTo: { element: '.btn.btn-primary.create', on: 'top' },
                         scrollTo: true,
                         buttons: [
@@ -3425,7 +3425,7 @@ jQuery(($) => {
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
                         text: 'As you can see you added the step to the deployment plan. You could add more steps ' +
-                            'e.g. <i>"All Content"</i> which would export all the <b>content items</b>.',
+                            'e.g. <em>"All Content"</em> which would export all the <b>content items</b>.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3446,7 +3446,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'When you finished adding the steps, you can click on <i>"Execute"</i> to run the' +
+                        text: 'When you finished adding the steps, you can click on <em>"Execute"</em> to run the' +
                             ' deployment.',
                         attachTo: { element: '.btn.btn-success.btn-sm', on: 'top' },
                         buttons: [
@@ -3457,7 +3457,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Here you can use <i>"File Download"</i> so the exported <i>recipe.json</i> file will ' +
+                        text: 'Here you can use <em>"File Download"</em> so the exported <em>recipe.json</em> file will ' +
                             'be downloaded (inside a zip file).',
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'top' },
                         buttons: [
@@ -3468,7 +3468,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Configuration"</i>.',
+                        text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
                         buttons: [
@@ -3485,7 +3485,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Import/Export"</i>.',
+                        text: 'Click on <em>"Import/Export"</em>.',
                         savedElement: $('[title="Import/Export"]').parent().get(0),
                         attachTo: {
 
@@ -3515,7 +3515,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'Click on <i>"Package Import"</i>.',
+                        text: 'Click on <em>"Package Import"</em>.',
                         attachTo: { element: 'a[href*="DeploymentPlan/Import/Index"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -3552,7 +3552,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'After you selected the file, click on <i>"Import"</i> to import it. This will add, ' +
+                        text: 'After you selected the file, click on <em>"Import"</em> to import it. This will add, ' +
                             'delete, or change everything that is in the deployment plan, to/on the website.',
                         attachTo: { element: '.btn.btn-primary.import', on: 'top' },
                         buttons: [
@@ -3568,8 +3568,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Import/export, deployment, <br> deployment plan',
-                        text: 'You can also import raw JSON, if you want. It\'s under the same <i>"Import/Export"</i>' +
-                            ' dropdown called <i>"JSON import"</i>.',
+                        text: 'You can also import raw JSON, if you want. It\'s under the same <em>"Import/Export"</em>' +
+                            ' dropdown called <em>"JSON import"</em>.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -3590,7 +3590,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Click on <i>"Design"</i>.',
+                        text: 'Click on <em>"Design"</em>.',
                         attachTo: { element: '#themes', on: 'right' },
                         buttons: [
                             backButton,
@@ -3606,7 +3606,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Click on <i>"Themes"</i>.',
+                        text: 'Click on <em>"Themes"</em>.',
                         attachTo: { element: 'a[href*="Admin/Themes"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -3654,7 +3654,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Click on <i>"Configuration"</i>.',
+                        text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         buttons: [
                             backButton,
@@ -3670,7 +3670,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Features and themes',
-                        text: 'Click on <i>"Features"</i>.',
+                        text: 'Click on <em>"Features"</em>.',
                         attachTo: { element: 'a[href*="Admin/Features"]', on: 'right' },
                         buttons: [
                             backButton,
