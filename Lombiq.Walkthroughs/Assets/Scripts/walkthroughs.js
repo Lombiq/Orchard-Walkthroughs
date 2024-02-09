@@ -492,12 +492,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Markdown editor',
-                        text: '<p>This is the editor where you can write the body of your blog post. It uses the Markdown' +
-                            'syntax to give you simple formatting options.</p>' +
-                            '<p>You don\'t need to learn the Markdown syntax since you can just use the GUI of the ' +
-                            'editor, but it makes things a lot quicker! Check out ' +
-                            '<a href="https://www.markdownguide.org/basic-syntax/" target="_blank">this guide</a> for ' +
-                            ' more info.</p>',
+                        text: `<p>This is the editor where you can write the body of your blog post. It uses the
+                            Markdown syntax to give you simple formatting options.</p>
+                            <p>You don't need to learn the Markdown syntax since you can just use the GUI of the
+                            editor, but it makes things a lot quicker! Check out
+                            <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">this guide</a> for
+                            more info.</p>`,
                         attachTo: { element: '.EasyMDEContainer', on: 'top' },
                         buttons: [
                             backButton,
@@ -513,8 +513,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Subtitle',
-                        text: 'You can also give a subtitle to your blog post. This will be displayed under its title ' +
-                            'on the frontend.',
+                        text: `You can also give a subtitle to your blog post. This will be displayed under its title
+                            on the frontend.`,
                         attachTo: { element: '#BlogPost_Subtitle_Text', on: 'top' },
                         buttons: [
                             backButton,
@@ -530,8 +530,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can add an image to your blog post that\'ll be displayed in the header if you\'d ' +
-                            'like. Click on the <em>"+"</em> button if you want to add one..',
+                        text: `You can add an image to your blog post that'll be displayed in the header if you'd like.
+                            Click on the <em>"+"</em> button if you want to add one..`,
                         attachTo: { element: '#BlogPost_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -577,8 +577,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Category',
-                        text: 'You can also select the category of your blog post. Similarly to tags, this helps your ' +
-                            'readers find relevant blog posts.',
+                        text: `You can also select the category of your blog post. Similarly to tags, this helps your
+                            readers find relevant blog posts.`,
                         attachTo: { element: '#BlogPost_Category_TermEntries_FieldWrapper', on: 'top' },
                         buttons: [
                             backButton,
@@ -594,9 +594,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Preview',
-                        text: 'Before publishing your blog post, you can preview what would it look like on the ' +
-                            'frontend. You can click on the preview button to check it out, but since we are finished, ' +
-                            'let\'s just publish it!',
+                        text: `Before publishing your blog post, you can preview what would it look like on the
+                            frontend. You can click on the preview button to check it out, but since we are finished,
+                            let's just publish it!`,
                         attachTo: { element: '#previewButton', on: 'top' },
                         buttons: [
                             backButton,
@@ -673,7 +673,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now let\'s create an article! First go to the homepage.',
+                        text: 'Now let's create an article! First go to the homepage.'',
                         attachTo: { element: '.navbar-brand', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -684,15 +684,17 @@ jQuery(($) => {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_intro');
                             },
                         },
+
+
                         id: 'creating_article_intermediate_step',
                     },
                     {
                         title: 'Creating a new article',
-                        text: '<p>Just as the Blog Post content type, Article is already defined and it comes from the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
-                            'Blog recipe</a> that we used as the base of the setup recipe. We can use it for simpler ' +
-                            'static content pages like an About page.</p>' +
-                            '<p>Go to the admin dashboard again by clicking on the <em>"Next"</em> button.<p>',
+                        text: `<p>Just as the Blog Post content type, Article is already defined and it comes from the
+                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
+                            Blog recipe</a> that we used as the base of the setup recipe. We can use it for simpler
+                            static content pages like an About page.</p>
+                            <p>Go to the admin dashboard again by clicking on the <em>"Next"</em> button.<p>`,
                         buttons: [
                             {
                                 action: function () {
@@ -713,7 +715,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
+                        text: `Click on the <em>"Content"</em> dropdown.`,
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -735,13 +737,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now click on the <em>"Content Types"</em> dropdown to see what type of content items you ' +
-                            'can create.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a
-                        // function.
+                        text: `Now click on the <em>"Content Types"</em> dropdown to see what type of content items you
+                            can create.`,
+                        // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('[title="Content Types"]').parent().get(0),
                         attachTo: {
-
                             element: function getContentTypesButton() {
                                 return this.options.savedElement;
                             },
@@ -770,7 +770,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Here we have the article content type. Click on it.',
+                        text: `Here we have the article content type. Click on it.`,
                         attachTo: { element: 'a[href*= "Article"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -785,7 +785,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Here you can see all the articles. As you can see, there is already one.',
+                        text: `Here you can see all the articles. As you can see, there is already one.`,
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         // Making the list unclickable, so the user can't go somewhere else.
                         canClickTarget: false,
@@ -809,7 +809,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Click here to create a new article.',
+                        text: `Click here to create a new article.`,
                         attachTo: { element: '.btn.btn-secondary[href*="Article/Create"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -824,7 +824,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Here you can create the article.',
+                        text: `Here you can create the article.`,
                         buttons: [
                             {
                                 action: function () {
@@ -848,7 +848,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Title',
-                        text: 'Let\'s give it a title!',
+                        text: `Let's give it a title!`,
                         attachTo: { element: '#TitlePart_Title', on: 'top' },
                         buttons: [
                             backButton,
@@ -864,7 +864,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Permalink',
-                        text: 'Again, you can provide a URL by hand or let Orchard Core auto-generate it. Perhaps go with the latter?',
+                        text: `Again, you can provide a URL by hand or let Orchard Core auto-generate it. Perhaps go
+                            with the latter?`,
                         attachTo: { element: '#AutoroutePart_Path', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -880,7 +881,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Set as homepage',
-                        text: 'You can set this article as the homepage. This can be done with any content item but let\'s not do that now.',
+                        text: `You can set this article as the homepage. This can be done with any content item but
+                            let's not do that now.`,
                         attachTo: { element: '#AutoroutePart_SetHomepage', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -897,13 +899,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'HTML Body',
-                        text: '<p>This is the HTML Body, where you can add the body of an article.</p>' +
-                            'The HTML Body editor in Orchard Core provides rich formatting options and multimedia ' +
-                            'embedding, offering extensive control over layout and styling. If you\'d like, you can ' +
-                            'also directly edit its HTML code.</p>' +
-                            '<p>In contrast, the Markdown editor of Blog Post simplifies content creation using the ' +
-                            'text-based Markdown syntax, promoting ease of use and consistency but with fewer advanced' +
-                            'formatting options compared to HTML.</p>',
+                        text: `<p>This is the HTML Body, where you can add the body of an article.</p>
+                            The HTML Body editor in Orchard Core provides rich formatting options and multimedia
+                            embedding, offering extensive control over layout and styling. If you'd like, you can
+                            also directly edit its HTML code.</p>
+                            <p>In contrast, the Markdown editor of Blog Post simplifies content creation using the
+                            text-based Markdown syntax, promoting ease of use and consistency but with fewer advanced
+                            formatting options compared to HTML.</p>`,
                         attachTo: { element: '.content-part-wrapper.content-part-wrapper-html-body-part', on: 'top' },
                         buttons: [
                             backButton,
@@ -919,7 +921,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Subtitle',
-                        text: 'You can set the subtitle of your article too.',
+                        text: `You can set the subtitle of your article too.`,
                         attachTo: { element: '#Article_Subtitle_Text', on: 'top' },
                         buttons: [
                             backButton,
@@ -935,7 +937,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: 'You can add a banner image to your article too.',
+                        text: `You can add a banner image to your article too.`,
                         attachTo: { element: '#Article_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -958,8 +960,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Preview',
-                        text: 'Before publishing your article, you can preview what would it look like on the ' +
-                            'frontend, just as with blog posts. Let\'s just publish it!',
+                        text: `Before publishing your article, you can preview what would it look like on the frontend,
+                            just as with blog posts. Let's just publish it!`,
                         attachTo: { element: '#previewButton', on: 'top' },
 
                         // We don't want to go back and forth between the admin dashboard, so we won't allow the
@@ -979,7 +981,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Publishing',
-                        text: 'We are ready, let\'s publish the article! Click on the publish button.',
+                        text: `We are ready, let's publish the article! Click on the publish button.`,
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -998,7 +1000,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the article',
-                        text: 'The article is now published. Click on the <em>"View"</em> button to see it.',
+                        text: `The article is now published. Click on the <em>"View"</em> button to see it.`,
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -1049,8 +1051,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'The sample article that was created from the recipe has a link in the menu. ' +
-                            'Click on <em>"About"</em>.',
+                        text: `The sample article that was created from the recipe has a link in the menu. Click on
+                            <em>"About"</em>.`,
                         attachTo: { element: 'a[href*="about"', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -1066,9 +1068,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: '<p>As you can see, you can easily access it via the menu. It\'s a pity our new article ' +
-                            'doesn\'t have this... Let\'s add a menu item for it too!</p>' +
-                            '<p>Go back to the admin dashboard by clicking on the <em>"Next"</em> button.</p>',
+                        text: `<p>As you can see, you can easily access it via the menu. It's a pity our new article 
+                            doesn't have this... Let's add a menu item for it too!</p>
+                            <p>Go back to the admin dashboard by clicking on the <em>"Next"</em> button.</p>`,
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -1142,8 +1144,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'You can choose between multiple types of menu items. Read the descriptions too see how they ' +
-                            'are different.',
+                        text: `You can choose between multiple types of menu items. Read the descriptions too see how
+                            they are different.`,
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1173,9 +1175,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: '<p>For now, let\'s go with the Link Menu Item one. This can be used to easily add menu ' +
-                            'items for any URL.</p>' +
-                            '<p>Click on the <em>"Add"</em> button.</p>',
+                        text: `<p>For now, let's go with the Link Menu Item one. This can be used to easily add menu 
+                            items for any URL.</p>
+                            <p>Click on the <em>"Add"</em> button.</p>`,
                         attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -1217,9 +1219,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Let\'s give it your article\'s URL! Use its relative URL, the one that\'s generated as ' +
-                            'its permalink. Make sure to prefix it with a slash and tilde characters (<em>"/~"</em>) ' +
-                            'to denote it as a relative URL (e.g. "~/sample-article").',
+                        text: `Let's give it your article's URL! Use its relative URL, the one that's generated as its
+                            permalink. Make sure to prefix it with a slash and tilde characters (<em>"/~"</em>) to
+                            denote it as a relative URL (e.g. "~/sample-article").`,
                         attachTo: { element: '#LinkMenuItemPart_Url', on: 'top' },
                         buttons: [
                             backButton,
@@ -1281,8 +1283,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Your article is now linked from the menu. Let\'s see it! Click on the ' +
-                            '<em>"Next"</em> button to go to the home page.',
+                        text: `Your article is now linked from the menu. Let's see it! Click on the <em>"Next"</em>
+                            button to go to the home page.`,
                         buttons: [
                             backButton,
                             {
@@ -1314,8 +1316,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content listing',
-                        text: 'Now let\'s go back to the admin dashboard! We\'ll check out how you can list all the ' +
-                            'content of your website. Click on the <em>"Next"</em> button.',
+                        text: `Now let's go back to the admin dashboard! We'll check out how you can list all the 
+                            content of your website. Click on the <em>"Next"</em> button.`,
                         buttons: [
                             backButton,
                             {
@@ -1376,8 +1378,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content listing',
-                        text: 'Notice how we can see (and filter for) all the content items (articles, blog ' +
-                            'posts, etc.). Previously, we accessed these from various menu shortcuts.',
+                        text: `Notice how we can see (and filter for) all the content items (articles, blog posts,
+                            etc.). Previously, we accessed these from various menu shortcuts.`,
                         attachTo: { element: '#items-form', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1400,12 +1402,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: '<p>We\'ll now see how to use the Taxonomies module for categorization (remember the ' +
-                            'Tags and Categories fields of blog posts?).</p>' +
-                            '<p>With this module you can create Taxonomy content items that can contain Taxonomy Terms. ' +
-                            'These will be the specific categories or tags, and cthey can even be organized as a ' +
-                            'hierarchy (like News → Sports). Then, you can use the Taxonomy Field on other content items ' +
-                            '(like blog posts) to add these terms to them.</p>',
+                        text: `<p>We'll now see how to use the Taxonomies module for categorization (remember the Tags
+                            and Categories fields of blog posts?).</p>
+                            <p>With this module you can create Taxonomy content items that can contain Taxonomy Terms. 
+                            These will be the specific categories or tags, and they can even be organized as a 
+                            hierarchy (like News → Sports). Then, you can use the Taxonomy Field on other content items 
+                            (like blog posts) to add these terms to them.</p>`,
                         buttons: [
                             {
                                 action: function () {
@@ -1430,9 +1432,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: '<p>You can access this list by filtering for the <em>"Taxonomy"</em> content type (see ' +
-                            'top-right corner).</p>' +
-                            '<p>There are two taxonomies here: Categories and Tags. These are both used for blog posts.</p>',
+                        text: `<p>You can access this list by filtering for the <em>"Taxonomy"</em> content type (see 
+                            top-right corner).</p>
+                            <p>There are two taxonomies here: Categories and Tags. These are both used for blog posts.</p>`,
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1504,9 +1506,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can select an icon for the category. This will be displayed as decoration when ' +
-                            'listing categories on the frontend (like <a href="/categories" target="_blank">here</a>). ' +
-                            'You need to pick an icon, otherwise you can\'t publish your category.)',
+                        text: `You can select an icon for the category. This will be displayed as decoration when 
+                            listing categories on the frontend (like <a href="/categories" target="_blank">here</a>). 
+                            You need to pick an icon, otherwise you can't publish your category.)`,
                         attachTo: { element: '.btn-toolbar', on: 'top' },
                         buttons: [
                             backButton,
@@ -1527,8 +1529,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'And you can set a permalink for it or just leave it blank for Orchard Core to ' +
-                            'auto-generate it.',
+                        text: `And you can set a permalink for it or just leave it blank for Orchard Core to 
+                            auto-generate it.`,
                         attachTo: { element: '#AutoroutePart_Path', on: 'top' },
                         buttons: [
                             backButton,
@@ -1663,8 +1665,8 @@ jQuery(($) => {
                         // The Media app loads asynchronously so targeting something like #mediaContainer won't always
                         // work.
                         title: 'Media management',
-                        text: 'This is the media library. Here you can see all the uploaded media, including images ' +
-                            'and other files.',
+                        text: `This is the media library. Here you can see all the uploaded media, including images and
+                            other files.`,
                         canClickTarget: false,
                         buttons: [
                             {
