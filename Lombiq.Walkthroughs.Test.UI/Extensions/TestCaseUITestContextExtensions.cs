@@ -156,12 +156,13 @@ public static class TestCaseUITestContextExtensions
         await ClickOnNextButtonAsync();
         AssertStep("Managing the menu", "We are ready, let's publish the menu item!");
         await context.ClickPublishAsync();
+        await AssertStepAndClickNextAsync("Managing the menu", "Your new menu item is now here.");
+        AssertStep("Managing the menu", "You will also need to publish the menu itself too.");
+        await context.ClickPublishAsync();
+        await AssertStepAndClickNextAsync("Managing the menu", "Your article is now linked from the menu.");
+        await AssertStepAndClickNextAsync("Managing the menu", "The new menu item should appear up here.");
+        await AssertStepAndClickNextAsync("Content list", "Now let's go back to the admin dashboard!");
         return;
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

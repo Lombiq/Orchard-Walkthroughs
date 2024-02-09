@@ -1253,7 +1253,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'You can reorder menu items by dragging them.',
+                        text: 'Your new menu item is now here. You can reorder menu items by dragging them.',
                         attachTo: { element: '#menu', on: 'top' },
                         buttons: [
                             {
@@ -1269,7 +1269,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'You will also need to publish the menu itself too, click on the publish button!',
+                        text: 'You will also need to publish the menu itself too. Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1284,7 +1284,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Your article is now available from the menu. Let\'s see it! Click on the ' +
+                        text: 'Your article is now linked from the menu. Let\'s see it! Click on the ' +
                             '<em>"Next"</em> button to go to the home page.',
                         buttons: [
                             backButton,
@@ -1317,7 +1317,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content list',
-                        text: 'Now let\'s go back to the admin dashboard! Click on the <em>"Next</em> button.',
+                        text: 'Now let\'s go back to the admin dashboard! Click on the <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
