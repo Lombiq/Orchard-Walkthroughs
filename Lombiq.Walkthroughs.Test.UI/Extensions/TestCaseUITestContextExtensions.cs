@@ -199,13 +199,27 @@ public static class TestCaseUITestContextExtensions
         AssertStep("Media management", "Now click on the \"Media Library\" button.");
         await context.ClickReliablyOnByLinkTextAsync("Media Library");
         await AssertStepAndClickNextAsync("Media management", "This is the media library.");
+        await AssertStepAndClickNextAsync("Media management", "You can edit the files' names, delete, and view them.");
+        await AssertStepAndClickNextAsync("Media management", "You can see the different folders here");
+        await AssertStepAndClickNextAsync("Media management", "You can filter files by their name here.");
+        await AssertStepAndClickNextAsync("Media management", "You can upload new files here.");
+        await AssertStepAndClickNextAsync("Media management", "New files you upload will show up");
+
+        // Flow Part
+        AssertStep("Flow Part", "This was our intro to the Media Library.");
         return;
-        await AssertStepAndClickNextAsync("Media management", "");
-        await AssertStepAndClickNextAsync("Media management", "");
-        await AssertStepAndClickNextAsync("Media management", "");
-        await AssertStepAndClickNextAsync("Media management", "");
-        await AssertStepAndClickNextAsync("Media management", "");
-        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
+        await AssertStepAndClickNextAsync("Flow Part", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

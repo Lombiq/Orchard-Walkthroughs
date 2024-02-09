@@ -1666,7 +1666,8 @@ jQuery(($) => {
                         // work.
                         title: 'Media management',
                         text: `This is the media library. Here you can see all the uploaded media, including images and
-                            other files.`,
+                            other files. When using Media Fields under content items to quickly upload or select media
+                            (remember the banner image of blog posts?) you're interacting with the Media Library too.'`,
                         canClickTarget: false,
                         buttons: [
                             {
@@ -1682,7 +1683,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'You can edit the file names\', delete and view the files. Hover here.',
+                        text: 'You can edit the files\' names, delete, and view them. Hover here.',
                         canClickTarget: false,
                         attachTo: { element: '.buttons-container', on: 'top' },
                         buttons: [
@@ -1703,7 +1704,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'You can filter for the files here.',
+                        text: 'You can filter files by their name here. Try it out, write "home"!',
                         attachTo: { element: '.media-filter', on: 'top' },
                         buttons: [
                             backButton,
@@ -1713,7 +1714,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'You can upload files here.',
+                        text: 'You can upload new files here.',
                         attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
@@ -1723,21 +1724,25 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'If you uploaded any file, you can see it here.',
+                        text: 'New files you upload will show up here in the file list.',
                         buttons: [
                             backButton,
                             nextButton,
                         ],
-                        id: 'media_management_upload_button',
+                        id: 'media_management_file_list',
                     },
                     {
-                        title: 'Flow parts',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
+                        title: 'Flow Part',
+                        text: `<p>This was our intro to the Media Library. Not too complex, isn't it?</p>
+                            <p>We'll now take a look at building more complex layouts with Flow Part. You can use Flow
+                            Part to create pages that are more than just some simple text. They can contain various
+                            widgets in a responsive layout.</p>
+                            <p>Click on the <em>"Content"</em> dropdown to continue.</p>`,
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_content',
+                        id: 'flow_part_content',
                         advanceOn: { selector: '#content', event: 'click' },
                         when: {
                             show() {
@@ -1747,8 +1752,8 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
                         text: 'Now click on the <em>"Content Items"</em> button.',
+                        title: 'Flow Part',
                         // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('[title="Content Items"]').parent().get(0),
                         attachTo: {
@@ -1761,61 +1766,61 @@ jQuery(($) => {
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_content_items',
+                        id: 'flow_part_content_items',
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_content_items_new');
+                                setWalkthroughCookies(this.tour.options.id, 'flow_part_content_items_new');
                             },
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'Click on the <em>"New"</em> button.',
                         attachTo: { element: '#new-dropdown', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'flow_parts_content', 'Admin', 'Admin/Media');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'flow_part_content', 'Admin', 'Admin/Media');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
                         ],
-                        id: 'flow_parts_content_items_new',
+                        id: 'flow_part_content_items_new',
                         advanceOn: { selector: '#new-dropdown', event: 'click' },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'Click on <em>"Page"</em> to create a new page.',
                         attachTo: { element: 'a.dropdown-item[href*="Page"]', on: 'top' },
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_content_items_new_page',
+                        id: 'flow_part_content_items_new_page',
                         when: {
                             show() {
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_title');
+                                setWalkthroughCookies(this.tour.options.id, 'flow_part_page_title');
                             },
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'You can give it a title, just like for a blog post or for an article.',
                         attachTo: { element: '#TitlePart_Title', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
                                     goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'flow_parts_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
+                                        Shepherd.activeTour.options.id, 'flow_part_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
                             nextButton,
                         ],
-                        id: 'flow_parts_page_title',
+                        id: 'flow_part_page_title',
                         when: {
                             show() {
                                 preventSubmit();
@@ -1823,14 +1828,14 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'You can give it an URL, but you can leave it empty to auto-generate it!',
                         attachTo: { element: '#AutoroutePart_Path', on: 'top' },
                         buttons: [
                             backButton,
                             nextButton,
                         ],
-                        id: 'flow_parts_page_permalink',
+                        id: 'flow_part_page_permalink',
                         when: {
                             show() {
                                 preventSubmit();
@@ -1838,7 +1843,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'The page has a part called <em>"Flow part"</em>, this allows you to add different ' +
                             'widgets to your page. If you want a simple <em>"page"</em>, with only HTML content, it\'s ' +
                             'better to create an article. However if you want something more complex, and perhaps ' +
@@ -1849,7 +1854,7 @@ jQuery(($) => {
                             backButton,
                             nextButton,
                         ],
-                        id: 'flow_parts_page_flow_part',
+                        id: 'flow_part_page_flow_part',
                         when: {
                             show() {
                                 preventSubmit();
@@ -1857,7 +1862,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph ' +
                             'and Raw Html is self explanatory. Container is just a container for widgets, ' +
                             'so you can divide them up more. If you created another widget, or turned on a feature ' +
@@ -1866,7 +1871,7 @@ jQuery(($) => {
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_page_flow_part_widgets',
+                        id: 'flow_part_page_flow_part_widgets',
                         advanceOn: { selector: 'button[title="Add Widget"]', event: 'click' },
                         when: {
                             show() {
@@ -1875,13 +1880,13 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'Let\'s add a blockquote, for example!',
                         attachTo: { element: 'a[data-widget-type="Blockquote"]', on: 'top' },
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_page_flow_part_blockquote',
+                        id: 'flow_part_page_flow_part_blockquote',
                         advanceOn: { selector: 'a[data-widget-type="Blockquote"]', event: 'click' },
                         when: {
                             show() {
@@ -1890,13 +1895,13 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'Now you added the blockquote to your page.',
                         buttons: [
                             backButton,
                             nextButton,
                         ],
-                        id: 'flow_parts_page_flow_part_blockquote2',
+                        id: 'flow_part_page_flow_part_blockquote2',
                         when: {
                             show() {
                                 preventSubmit();
@@ -1904,7 +1909,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'Click on the dropdown to edit it!',
                         attachTo: {
                             element: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
@@ -1913,7 +1918,7 @@ jQuery(($) => {
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_page_flow_part_blockquote_dropdown',
+                        id: 'flow_part_page_flow_part_blockquote_dropdown',
                         advanceOn: {
                             selector: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
                             event: 'click',
@@ -1925,7 +1930,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'You can write here the text you want.',
                         attachTo: {
                             element: '#FlowPart-0_Blockquote_Quote_Text',
@@ -1935,7 +1940,7 @@ jQuery(($) => {
                             backButton,
                             nextButton,
                         ],
-                        id: 'flow_parts_page_flow_part_blockquote_edit',
+                        id: 'flow_part_page_flow_part_blockquote_edit',
                         when: {
                             show() {
                                 preventSubmit();
@@ -1943,21 +1948,21 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Flow parts',
+                        title: 'Flow Part',
                         text: 'We are ready, let\'s publish the page! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
                         ],
-                        id: 'flow_parts_page_publishing',
+                        id: 'flow_part_page_publishing',
                         when: {
                             show() {
                                 $('form').off('submit');
                                 addShepherdQueryParams();
 
-                                // The return URL would redirect us to the "flow_parts_content_items_new_page" step, so
+                                // The return URL would redirect us to the "flow_part_content_items_new_page" step, so
                                 // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_published', 'flow_parts_content_items_new');
+                                setWalkthroughCookies(this.tour.options.id, 'flow_part_page_published', 'flow_part_content_items_new');
                             },
                         },
                     },
@@ -1969,13 +1974,13 @@ jQuery(($) => {
                             {
                                 action: function () {
                                     goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'flow_parts_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
+                                        Shepherd.activeTour.options.id, 'flow_part_content_items_new', 'Admin', 'Admin/Contents/ContentItems');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
                         ],
-                        id: 'flow_parts_page_published',
+                        id: 'flow_part_page_published',
                         when: {
                             show() {
                                 if ($('.validation-summary-errors').length) {
@@ -1984,7 +1989,7 @@ jQuery(($) => {
                                     return;
                                 }
 
-                                setWalkthroughCookies(this.tour.options.id, 'flow_parts_page_inspecting');
+                                setWalkthroughCookies(this.tour.options.id, 'flow_part_page_inspecting');
                                 addShepherdQueryParams();
                             },
                         },
@@ -1997,14 +2002,14 @@ jQuery(($) => {
                             {
                                 action: function () {
                                     goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'flow_parts_page_published', '/', 'Admin/Contents/ContentItems');
+                                        Shepherd.activeTour.options.id, 'flow_part_page_published', '/', 'Admin/Contents/ContentItems');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
                             nextButton,
                         ],
-                        id: 'flow_parts_page_inspecting',
+                        id: 'flow_part_page_inspecting',
                     },
                     {
                         title: 'Adding widgets to the layout',
@@ -2028,7 +2033,7 @@ jQuery(($) => {
                             {
                                 action: function () {
                                     goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'flow_parts_page_published', '', 'Admin/Contents/ContentItems');
+                                        Shepherd.activeTour.options.id, 'flow_part_page_published', '', 'Admin/Contents/ContentItems');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
