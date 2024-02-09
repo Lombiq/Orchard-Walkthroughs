@@ -2017,7 +2017,7 @@ jQuery(($) => {
                         id: 'flow_part_page_inspecting',
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: `The fun with widgets doesn't stop here! You can also add them to the layout itself. Go
                             to homepage by clicking here.`,
                         attachTo: { element: '.navbar-brand', on: 'bottom' },
@@ -2033,7 +2033,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Go to the admin dashboard by clicking on the <em>"Next"</em> button.',
                         buttons: [
                             {
@@ -2056,7 +2056,7 @@ jQuery(($) => {
                         id: 'adding_widgets_to_the_layout_admin',
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Click on the <em>"Design"</em> dropdown.',
                         attachTo: { element: '#themes', on: 'right' },
                         buttons: [
@@ -2079,8 +2079,8 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
-                        text: 'Now click on the <em>"Widgets"</em> button.',
+                        title: 'Layout widgets',
+                        text: 'Now click on the <em>"Widgets"</em> menu item.',
                         attachTo: { element: 'a[href*=Layers]', on: 'right' },
                         buttons: [
                             backButton,
@@ -2094,10 +2094,14 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
-                        text: 'These are the zones, one page is divided into multiple zones. Currently we have ' +
-                            '<em>"Content"</em> and <em>"Footer"</em>. You can add new zones by going into ' +
-                            '<em>Design → Settings → Zones</em>.',
+                        title: 'Layout widgets',
+                        text: `<p>These are the layout zones. The Orchard Core layout is divided into multiple such
+                            zones, providing sections where you can put widgets (and much more, but that's a
+                            development topic).</p>
+                            <p>Currently, we have <em>"Content"</em> and <em>"Footer"</em>. You can add new zones by
+                            going to <em>Design → Settings → Zones</em>, but keep in mind, that these zones should then
+                            also be displayed by the current theme on the frontend. That's also a development topic, so
+                            perhaps leave it for another day.</p>`,
                         attachTo: { element: '.col-md-8', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2114,10 +2118,13 @@ jQuery(($) => {
                         id: 'adding_widgets_to_the_layout_zones',
                     },
                     {
-                        title: 'Adding widgets to the layout',
-                        text: 'These are the layer, you can add new ones, then edit them and define rules for them. ' +
-                            'You can set the layer of the widget, so you can configure when the widget appears. ' +
-                            'E.g. if you put a widget on the <em>"Homepage"</em> layer, it will only appear on the homepage.',
+                        title: 'Layout widgets',
+                        text: `<p>Widgets are put not just into zones, but also layers. Zones define <em>where</em> a
+                            given widget is displayed on the layout, while layers specify <em>when</em> it's displayed.
+                            E.g., if you put a widget on the <em>"Homepage"</em> layer, it will only appear on the
+                            homepage.</p>
+                            <p>You can add new layers and edit their rules, i.e. the logic that determines when they're
+                            active.</p>`,
                         attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2127,7 +2134,7 @@ jQuery(($) => {
                         id: 'adding_widgets_to_the_layout_layers',
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Let\'s add a widget to the content zone! Click on <em>"Add widget"</em>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm.dropdown-toggle', on: 'top' },
                         buttons: [
@@ -2137,7 +2144,7 @@ jQuery(($) => {
                         advanceOn: { selector: '.btn.btn-primary.btn-sm.dropdown-toggle', event: 'click' },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Now click on <em>"Paragraph"</em>.',
                         attachTo: { element: 'a[data-widget-type="Paragraph"]', on: 'top' },
                         buttons: [
@@ -2152,7 +2159,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Give it a title.',
                         attachTo: { element: '#LayerMetadata_Title', on: 'top' },
                         buttons: [
@@ -2174,7 +2181,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Give it some content.',
                         attachTo: { element: '.edit-item-parts', on: 'top' },
                         buttons: [
@@ -2196,7 +2203,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'We are ready, let\'s publish it! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
@@ -2212,7 +2219,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'Your paragraph widget is now published. Let\'s go to the homepage to see it!',
                         attachTo: { element: 'a[data-bs-original-title="Visit Site"]', on: 'bottom' },
                         buttons: [
@@ -2234,7 +2241,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding widgets to the layout',
+                        title: 'Layout widgets',
                         text: 'You should see your paragraph if you scroll down.',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [

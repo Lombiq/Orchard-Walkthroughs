@@ -237,19 +237,22 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Viewing the page", "Here is you published page with the blockquote.");
 
         // Layout widgets
-        AssertStep("Adding widgets to the layout", "The fun with widgets doesn't stop here!");
+        AssertStep("Layout widgets", "The fun with widgets doesn't stop here!");
         await context.ClickReliablyOnAsync(By.ClassName("navbar-brand"));
+        await AssertStepAndClickNextAsync("Layout widgets", "Go to the admin dashboard by clicking");
+        AssertStep("Layout widgets", "Click on the \"Design\" dropdown.");
+        await context.ClickReliablyOnByLinkTextAsync("Design");
+        AssertStep("Layout widgets", "Now click on the \"Widgets\" menu item.");
+        await context.ClickReliablyOnByLinkTextAsync("Widgets");
+        await AssertStepAndClickNextAsync("Layout widgets", "These are the layout zones.");
+        await AssertStepAndClickNextAsync("Layout widgets", "Widgets are put not just into zones,");
         return;
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
-        await AssertStepAndClickNextAsync("Adding widgets to the layout", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
+        await AssertStepAndClickNextAsync("Layout widgets", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
