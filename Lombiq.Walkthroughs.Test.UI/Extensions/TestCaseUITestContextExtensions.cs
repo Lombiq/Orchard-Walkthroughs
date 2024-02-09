@@ -148,7 +148,16 @@ public static class TestCaseUITestContextExtensions
 
         // Adding a menu item
         await context.ClickReliablyOnByLinkTextAsync("Add");
+        AssertStep("Managing the menu", "Let's give the menu item a name!");
+        await context.FillInWithRetriesAsync(By.Id("LinkMenuItemPart_Name"), "Sample article");
+        await ClickOnNextButtonAsync();
+        AssertStep("Managing the menu", "Let's give it your article's URL!");
+        await context.FillInWithRetriesAsync(By.Id("LinkMenuItemPart_Url"), "~/sample-article");
+        await ClickOnNextButtonAsync();
+        AssertStep("Managing the menu", "We are ready, let's publish the menu item!");
+        await context.ClickPublishAsync();
         return;
+        await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");

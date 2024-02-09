@@ -1177,7 +1177,7 @@ jQuery(($) => {
                     {
                         title: 'Managing the menu',
                         text: '<p>For now, let\'s go with the Link Menu Item one. This can be used to easily add menu ' +
-                            'items for content items.</p>' +
+                            'items for any URL.</p>' +
                             '<p>Click on the <em>"Add"</em> button.</p>',
                         attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
                         buttons: [
@@ -1199,7 +1199,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Let\'s give it a name!',
+                        text: 'Let\'s give the menu item a name! This is the text that\'ll be displayed in the menu.',
                         attachTo: { element: '#LinkMenuItemPart_Name', on: 'top' },
                         buttons: [
                             {
@@ -1220,7 +1220,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Let\'s give it your article\'s URL! Make sure to include the relative path <em>"~"</em>.',
+                        text: 'Let\'s give it your article\'s URL! Use its relative URL, the one that\'s generated as ' +
+                            'its permalink. Make sure to prefix it with a slash and tilde characters (<em>"/~"</em>) ' +
+                            'to denote it as a relative URL (e.g. "~/sample-article").',
                         attachTo: { element: '#LinkMenuItemPart_Url', on: 'top' },
                         buttons: [
                             backButton,
@@ -1235,7 +1237,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'We are ready, let\'s publish the link menu item! Click on the publish button.',
+                        text: 'We are ready, let\'s publish the menu item! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
