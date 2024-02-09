@@ -121,11 +121,27 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Preview", "Before publishing your article,");
         AssertStep("Publishing", "We are ready, let's publish the article!");
         await context.ClickPublishAsync();
+
+        // Article display
         AssertStep("Viewing the article", "The article is now published.");
+        await context.ClickReliablyOnAsync(By.LinkText("View"));
+        context.SwitchToLastWindow();
+        await AssertStepAndClickNextAsync("Viewing the article", "Here is you published article.");
+
+        // Managing the menu
+        AssertStep("Managing the menu", "The sample article that was created from");
+        await context.ClickReliablyOnAsync(By.LinkText("ABOUT"));
+        await AssertStepAndClickNextAsync("Managing the menu", "As you can see, you can easily access");
+        AssertStep("Managing the menu", "Click on the \"Main Menu\" link.");
         return;
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
+        await context.ClickReliablyOnAsync(By.LinkText("Main Menu"));
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

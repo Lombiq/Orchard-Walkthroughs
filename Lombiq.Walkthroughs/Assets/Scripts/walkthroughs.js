@@ -1032,7 +1032,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the article',
-                        text: 'Here is you published article.',
+                        text: 'Here is you published article. Isn\'t it beautiful?',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -1051,8 +1051,8 @@ jQuery(($) => {
                         id: 'creating_article_inspecting',
                     },
                     {
-                        title: 'Adding article to menu',
-                        text: 'As you can see, the sample article that was created from the recipe is in the menu. ' +
+                        title: 'Managing the menu',
+                        text: 'The sample article that was created from the recipe has a link in the menu. ' +
                             'Click on <em>"About"</em>.',
                         attachTo: { element: 'a[href*="about"', on: 'bottom' },
                         buttons: [
@@ -1068,10 +1068,10 @@ jQuery(($) => {
 
                     },
                     {
-                        title: 'Adding article to menu',
-                        text: 'As you can see, you can access easily to it through the menu. Let\'s add the ' +
-                            'article that we are created too! Go to the admin dashboard by clicking on the ' +
-                            '<em>"Next"</em> button.',
+                        title: 'Managing the menu',
+                        text: '<p>As you can see, you can easily access it via the menu. It\'s a pity our new article ' +
+                            'doesn\'t have this... Let\'s add a menu item for it too!</p>' +
+                            '<p>Go back to the admin dashboard by clicking on the <em>"Next"</em> button.</p>',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {
@@ -1096,9 +1096,9 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_about',
                     },
                     {
-                        title: 'Adding article to menu',
-                        text: 'Click on the <em>"Main Menu"</em> button.',
-                        attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'top' }, // #spell-check-ignore-line
+                        title: 'Managing the menu',
+                        text: 'Click on the <em>"Main Menu"</em> link.',
+                        attachTo: { element: '.icon-class-fas.icon-class-fa-sitemap.item-label.d-flex', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             {
                                 action: function () {
@@ -1117,7 +1117,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'Here you can see all the menu items.',
                         attachTo: { element: '.edit-body', on: 'top' },
                         canClickTarget: false,
@@ -1134,7 +1134,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_main_menu',
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'Let\'s add the new article that we created! Click on the <em>"Add Menu Item"</em> button.',
                         attachTo: { element: 'button[data-bs-target="#modalMenuItems"]', on: 'top' },
                         buttons: [
@@ -1144,7 +1144,7 @@ jQuery(($) => {
                         advanceOn: { selector: 'button[data-bs-target="#modalMenuItems"]', event: 'click' },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'You can choose between multiple menu items. Read the description too see how they ' +
                             'are different.',
                         attachTo: { element: '.modal-body', on: 'top' },
@@ -1175,7 +1175,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'For now let\'s go with the Link Menu Item one. Click on the <em>"Add"</em> button.',
                         attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
                         buttons: [
@@ -1196,7 +1196,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'Let\'s give it a name!',
                         attachTo: { element: '#LinkMenuItemPart_Name', on: 'top' },
                         buttons: [
@@ -1217,7 +1217,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'Let\'s give it your article\'s URL! Make sure to include the relative path <em>"~"</em>.',
                         attachTo: { element: '#LinkMenuItemPart_Url', on: 'top' },
                         buttons: [
@@ -1232,7 +1232,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'We are ready, let\'s publish the link menu item! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
@@ -1248,7 +1248,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'You can reorder menu items by dragging them.',
                         attachTo: { element: '#menu', on: 'top' },
                         buttons: [
@@ -1264,7 +1264,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_published',
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'You will also need to publish the menu itself too, click on the publish button!',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
@@ -1279,7 +1279,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'Your article is now available from the menu. Let\'s see it! Click on the ' +
                             '<em>"Next"</em> button to go to the home page.',
                         buttons: [
@@ -1295,7 +1295,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_published2',
                     },
                     {
-                        title: 'Adding article to menu',
+                        title: 'Managing the menu',
                         text: 'The new menu item should appear up here.',
                         attachTo: { element: '#navbarResponsive', on: 'bottom' },
                         canClickTarget: false,
