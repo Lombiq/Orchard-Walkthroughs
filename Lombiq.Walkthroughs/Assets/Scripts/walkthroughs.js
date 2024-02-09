@@ -1316,8 +1316,9 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_inspecting',
                     },
                     {
-                        title: 'Content list',
-                        text: 'Now let\'s go back to the admin dashboard! Click on the <em>"Next"</em> button.',
+                        title: 'Content listing',
+                        text: 'Now let\'s go back to the admin dashboard! We\'ll check out how you can list all the ' +
+                            'content of your website. Click on the <em>"Next"</em> button.',
                         buttons: [
                             backButton,
                             {
@@ -1331,7 +1332,7 @@ jQuery(($) => {
                         id: 'content_list_intro',
                     },
                     {
-                        title: 'Content list',
+                        title: 'Content listing',
                         text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
@@ -1353,7 +1354,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Content list',
+                        title: 'Content listing',
                         text: 'Now click on the <em>"Content Items"</em> button.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
@@ -1377,9 +1378,9 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Content list',
+                        title: 'Content listing',
                         text: 'Notice how we can see (and filter for) all the content items (articles, blog ' +
-                            'posts etc.). Previously we accessed these from various menu shortcuts.',
+                            'posts, etc.). Previously, we accessed these from various menu shortcuts.',
                         attachTo: { element: '#items-form', on: 'top' },
                         canClickTarget: false,
                         buttons: [

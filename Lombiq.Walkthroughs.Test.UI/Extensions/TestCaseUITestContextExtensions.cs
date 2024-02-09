@@ -164,8 +164,15 @@ public static class TestCaseUITestContextExtensions
 
         // Content list
         await AssertStepAndClickNextAsync("Content list", "Now let's go back to the admin dashboard!");
+        AssertStep("Content list", "Click on the \"Content\" dropdown.");
+        AssertStep("Content list", "Now click on the \"Content Items\" button.");
+        await AssertStepAndClickNextAsync("Content list", "Notice how we can see");
+        AssertStep("Content listing", "Click on the \"Content\" dropdown.");
+        await context.ClickReliablyOnByLinkTextAsync("Content");
+        AssertStep("Content listing", "Now click on the \"Content Items\" button.");
+        await context.ClickReliablyOnByLinkTextAsync("Content Items");
+        await AssertStepAndClickNextAsync("Content listing", "Notice how we can see");
         return;
-        await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
