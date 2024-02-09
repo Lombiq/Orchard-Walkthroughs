@@ -134,12 +134,21 @@ public static class TestCaseUITestContextExtensions
         await context.ClickReliablyOnByLinkTextAsync("ABOUT");
         await AssertStepAndClickNextAsync("Managing the menu", "As you can see, you can easily access");
         AssertStep("Managing the menu", "Click on the \"Main Menu\" link.");
-        return;
         await context.ClickReliablyOnByLinkTextAsync("Main Menu");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
-        await AssertStepAndClickNextAsync("Managing the menu", "");
+        await AssertStepAndClickNextAsync("Managing the menu", "Here you can see the menu's editor");
+        AssertStep("Managing the menu", "Let's add a menu item for the new article we created!");
+        await context.ClickReliablyOnAsync(By.XPath("//button[normalize-space() = 'Add Menu Item']"));
+        // The overlay on the overlay of the menu item type selector is strange, including that its text can't be
+        // highlighted in the browser. Its buttons can't be clicked with ClickReliablyAsync() so we need to do this.
+        AssertStep("Managing the menu", "You can choose between multiple types of menu items.");
+        var originalUri = context.GetCurrentUri();
+        context.Get(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]")).Click();
+        context.DoWithRetriesOrFail(() => context.GetCurrentUri() != originalUri);
+        AssertStep("Managing the menu", "For now, let's go with the Link Menu Item one.");
+
+        // Adding a menu item
+        await context.ClickReliablyOnByLinkTextAsync("Add");
+        return;
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");

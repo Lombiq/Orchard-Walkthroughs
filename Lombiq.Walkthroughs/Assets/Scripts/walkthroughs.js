@@ -1118,7 +1118,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Here you can see all the menu items.',
+                        text: 'Here you can see the menu\'s editor, including all the menu items.',
                         attachTo: { element: '.edit-body', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1135,7 +1135,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'Let\'s add the new article that we created! Click on the <em>"Add Menu Item"</em> button.',
+                        text: 'Let\'s add a menu item for the new article we created! Click on the <em>"Add Menu Item"</em> button.',
                         attachTo: { element: 'button[data-bs-target="#modalMenuItems"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1145,7 +1145,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'You can choose between multiple menu items. Read the description too see how they ' +
+                        text: 'You can choose between multiple types of menu items. Read the descriptions too see how they ' +
                             'are different.',
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
@@ -1176,7 +1176,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Managing the menu',
-                        text: 'For now let\'s go with the Link Menu Item one. Click on the <em>"Add"</em> button.',
+                        text: '<p>For now, let\'s go with the Link Menu Item one. This can be used to easily add menu ' +
+                            'items for content items.</p>' +
+                            '<p>Click on the <em>"Add"</em> button.</p>',
                         attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
                         buttons: [
                             backButton,
