@@ -66,10 +66,10 @@ public static class TestCaseUITestContextExtensions
 
         // Blog
         AssertStep("Creating a new blog post", "Let's create a new blog post!");
-        await context.ClickReliablyOnAsync(By.LinkText("Blog"));
+        await context.ClickReliablyOnByLinkTextAsync("Blog");
         await AssertStepAndClickNextAsync("Blog posts", "Here you can see the blog posts inside the blog.");
         AssertStep("Creating a new blog post", "Click here to create a new blog post.");
-        await context.ClickReliablyOnAsync(By.LinkText("Create Blog Post"));
+        await context.ClickReliablyOnByLinkTextAsync("Create Blog Post");
 
         // Blog Post editor
         await AssertStepAndClickNextAsync("Creating a new blog post", "Here is the editor of your new blog post.");
@@ -91,7 +91,7 @@ public static class TestCaseUITestContextExtensions
 
         // Blog Post display
         AssertStep("Viewing the blog post", "The blog post is published, good job!");
-        await context.ClickReliablyOnAsync(By.LinkText("View"));
+        await context.ClickReliablyOnByLinkTextAsync("View");
         context.SwitchToLastWindow();
         await AssertStepAndClickNextAsync("Viewing the blog post", "Here is your published blog post");
 
@@ -100,14 +100,14 @@ public static class TestCaseUITestContextExtensions
         await context.ClickReliablyOnAsync(By.ClassName("navbar-brand"));
         await AssertStepAndClickNextAsync("Creating a new article", "Just as the Blog Post content type");
         AssertStep("Creating a new article", "Click on the \"Content\" dropdown.");
-        await context.ClickReliablyOnAsync(By.LinkText("Content"));
+        await context.ClickReliablyOnByLinkTextAsync("Content");
         AssertStep("Creating a new article", "Now click on the \"Content Types\" dropdown");
-        await context.ClickReliablyOnAsync(By.LinkText("Content Types"));
+        await context.ClickReliablyOnByLinkTextAsync("Content Types");
         AssertStep("Creating a new article", "Here we have the article content type.");
-        await context.ClickReliablyOnAsync(By.LinkText("Article"));
+        await context.ClickReliablyOnByLinkTextAsync("Article");
         await AssertStepAndClickNextAsync("Creating a new article", "Here you can see all the articles.");
         AssertStep("Creating a new article", "Click here to create a new article.");
-        await context.ClickReliablyOnAsync(By.LinkText("New Article"));
+        await context.ClickReliablyOnByLinkTextAsync("New Article");
 
         // Article editor
         await AssertStepAndClickNextAsync("Creating a new article", "Here you can create the article.");
@@ -124,17 +124,17 @@ public static class TestCaseUITestContextExtensions
 
         // Article display
         AssertStep("Viewing the article", "The article is now published.");
-        await context.ClickReliablyOnAsync(By.LinkText("View"));
+        await context.ClickReliablyOnByLinkTextAsync("View");
         context.SwitchToLastWindow();
         await AssertStepAndClickNextAsync("Viewing the article", "Here is you published article.");
 
         // Managing the menu
         AssertStep("Managing the menu", "The sample article that was created from");
-        await context.ClickReliablyOnAsync(By.LinkText("ABOUT"));
+        await context.ClickReliablyOnByLinkTextAsync("ABOUT");
         await AssertStepAndClickNextAsync("Managing the menu", "As you can see, you can easily access");
         AssertStep("Managing the menu", "Click on the \"Main Menu\" link.");
         return;
-        await context.ClickReliablyOnAsync(By.LinkText("Main Menu"));
+        await context.ClickReliablyOnByLinkTextAsync("Main Menu");
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");
         await AssertStepAndClickNextAsync("Managing the menu", "");
