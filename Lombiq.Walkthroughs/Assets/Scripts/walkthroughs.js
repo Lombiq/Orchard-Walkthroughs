@@ -148,8 +148,8 @@ jQuery(($) => {
                 steps: [
                     {
                         title: 'Welcome to the<br>Orchard Core Admin Walkthrough!',
-                        text: 'This walkthrough covers key Orchard Core features, such as content management, user roles, ' +
-                            'and theme selection, and points you to further learning resources.',
+                        text: `This walkthrough covers key Orchard Core features, such as content management, user roles, 
+                            and theme selection, and points you to further learning resources.`,
                         buttons: [
                             {
                                 action: function () {
@@ -169,18 +169,17 @@ jQuery(($) => {
                     },
                     {
                         title: 'Setup recipe',
-                        text: '<p>The setup recipe in the Walkthroughs module used the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
-                            'Blog recipe</a> as a base recipe.</p>' +
-                            '<p>In Orchard Core, a ' +
-                            '<a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">' +
-                            'recipe</a> is a JSON file that defines a set of instructions for setting up and ' +
-                            'configuring an Orchard Core application. Recipes can include predefined content types, ' +
-                            'widgets, menus, content items, and other configuration. They are used to streamline the ' +
-                            'setup of an Orchard Core site, making it easier to create consistent site structures and ' +
-                            'content.</p>' +
-                            '<p>Setup recipes can be executed during the initial setup of a site, and non-setup recipes ' +
-                            'at any point to apply configuration or import content.</p>',
+                        text: `<p>The setup recipe in the Walkthroughs module used the 
+                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
+                            Blog recipe</a> as a base recipe.</p>
+                            <p>In Orchard Core, a 
+                            <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">
+                            recipe</a> is a JSON file that defines a set of instructions for setting up and configuring
+                            an Orchard Core application. Recipes can include predefined content types, widgets, menus,
+                            content items, and other configuration. They are used to streamline the setup of an Orchard
+                            Core site, making it easier to create consistent site structures and content.</p>
+                            <p>Setup recipes can be executed during the initial setup of a site, and non-setup recipes 
+                            at any point to apply configuration or import content.</p>`,
                         buttons: [
                             backButton,
                             nextButton,
@@ -189,9 +188,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Site setup',
-                        text: 'To get to this point (a set up site), first you will need to get through the setup ' +
-                            'screen. There you can decide which setup recipe you\'d like to use. Currently, ' +
-                            'we are using the Walkthroughs recipe.',
+                        text: `To get to this point (a set up site), first you will need to get through the setup 
+                            screen. There you can decide which setup recipe you'd like to use. Currently, we are using
+                            the Walkthroughs recipe.`,
                         buttons: [
                             backButton,
                             nextButton,
@@ -200,8 +199,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Log in',
-                        text: 'Let\'s log in! Please go to the <em>"~/Login"</em>, by clicking on the <em>"Next"</em> ' +
-                            'button.',
+                        text: `Let's log in! Please go to the <em>"~/Login"</em>, by clicking on the <em>"Next"</em> 
+                            button.`,
                         buttons: [
                             backButton,
                             {
@@ -247,7 +246,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#UserName', on: 'bottom' },
-                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.', // #spell-check-ignore-line
+                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -318,8 +317,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        text: 'Let\'s see the admin dashboard now! Please go to the <em>"~/Admin"</em> URL by ' +
-                            'clicking on the <em>"Next"</em> button.',
+                        text: `Let's see the admin dashboard now! Please go to the <em>"~/Admin"</em> URL by 
+                            clicking on the <em>"Next"</em> button.`,
                         buttons: [
                             backButton,
                             {
@@ -334,9 +333,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Admin dashboard',
-                        text: 'Welcome to the admin dashboard! The admin dashboard serves as the centralized ' +
-                            'control panel for managing and configuring various aspects of the Orchard Core ' +
-                            'application.',
+                        text: `Welcome to the admin dashboard! The admin dashboard serves as the centralized control
+                            panel for managing and configuring various aspects of the Orchard Core application.`,
                         buttons: [
                             {
                                 action: function () {
@@ -363,9 +361,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Side menu',
-                        text: 'This is the side menu, which organizes essential functionalities. This menu includes ' +
-                            'key sections such as content management, security settings, and other administrative ' +
-                            'options.',
+                        text: `This is the side menu, which organizes essential functionalities. This menu includes key
+                            sections such as content management, security settings, and other administrative.`,
                         attachTo: { element: '#ta-left-sidebar', on: 'right' },
 
                         // Making side navigation unclickable, so the user can't go somewhere else.
@@ -378,8 +375,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Top menu',
-                        text: 'This is the top menu. Here you can switch between dark and light modes, go to the ' +
-                            'homepage, log off, or take a look at your profile.',
+                        text: `This is the top menu. Here you can switch between dark and light modes, go to the 
+                    homepage, log off, or take a look at your profile.`,
                         attachTo: { element: '.user-top-navbar', on: 'bottom' },
 
                         // Making top navigation unclickable, so the user can't go somewhere else.
@@ -392,12 +389,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new blog post',
-                        text: '<p>Let\'s create a new blog post!</p>' +
-                            '<p>The Blog Post content type is already defined because the setup recipe used the ' +
-                            '<a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
-                            'Blog recipe</a> as a base. There is also a singular blog content item and there is a ' +
-                            'menu pointing to it.</p>' +
-                            '<p>Click on the <em>"Blog"</em> link and you will see all the blog posts within the blog.</p>',
+                        text: `<p>Let's create a new blog post!</p>
+                            <p>The Blog Post content type is already defined because the setup recipe used the 
+                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
+                            Blog recipe</a> as a base. There is also a singular blog content item and there is a menu
+                            pointing to it.</p>
+                            <p>Click on the <em>"Blog"</em> link and you will see all the blog posts within the blog.</p>`,
                         attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
                         buttons: [
                             backButton,
@@ -412,9 +409,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Blog posts',
-                        text: 'Here you can see the blog posts inside the blog. There is already an example one ' +
-                            'because of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">' +
-                            'Blog recipe</a>.',
+                        text: `Here you can see the blog posts inside the blog. There is already an example one because
+                            of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
+                            Blog recipe</a>.`,
                         attachTo: { element: '#ci-sortable', on: 'top' },
 
                         // Making the blog posts unclickable, so the user can't go somewhere else.
@@ -478,8 +475,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Permalink',
-                        text: 'You can give the blog post an URL by hand, but you can leave it empty to let Orchard ' +
-                            'Core auto-generate it. We recommend you let Orchard do its magic.',
+                        text: `You can give the blog post an URL by hand, but you can leave it empty to let Orchard 
+                            Core auto-generate it. We recommend you let Orchard do its magic.`,
                         attachTo: { element: '#AutoroutePart_Path', on: 'bottom' },
                         buttons: [
                             backButton,
