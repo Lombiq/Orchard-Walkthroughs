@@ -660,7 +660,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the blog post',
-                        text: 'Here is you published blog post in all of its glory!',
+                        text: 'Here is your published blog post in all of its glory!',
                         attachTo: { element: 'body', on: 'top' },
                         buttons: [
                             {

@@ -1,6 +1,5 @@
 using Atata;
 using Lombiq.Tests.UI.Extensions;
-using Lombiq.Tests.UI.Pages;
 using Lombiq.Tests.UI.Services;
 using OpenQA.Selenium;
 using Shouldly;
@@ -51,14 +50,13 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Log in", "Let's log in!");
         await AssertStepAndClickNextAsync("Log in page", "Here you can log in.");
         AssertStep("Username", "Provide your username.");
-        var loginPage = await context.GoToPageAsync<OrchardCoreLoginPage>(navigate: false);
-        loginPage.UserName.Set("testuser");
+        await context.FillInWithRetriesAsync(By.Id("UserName"), "testuser");
         await ClickOnNextButtonAsync();
         AssertStep("Password", "Provide your password.");
-        loginPage.Password.Set("Password1!");
+        await context.FillInWithRetriesAsync(By.Id("Password"), "Password1!");
         await ClickOnNextButtonAsync();
         AssertStep("Logging in", "Now you can log in!");
-        loginPage.LogIn.Click();
+        await context.ClickReliablyOnSubmitAsync();
         await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!");
 
         // Dashboard
@@ -82,7 +80,9 @@ public static class TestCaseUITestContextExtensions
         AssertStep("Markdown editor", "This is the editor where you can write");
         await context.FillInCodeMirrorEditorWithRetriesAsync(By.CssSelector(".CodeMirror.cm-s-easymde.CodeMirror-wrap"), "Hello world.");
         await ClickOnNextButtonAsync();
-        await AssertStepAndClickNextAsync("Subtitle", "You can also give a subtitle to your blog post.");
+        AssertStep("Subtitle", "You can also give a subtitle to your blog post.");
+        await context.FillInWithRetriesAsync(By.Id("BlogPost_Subtitle_Text"), "Sample subtitle");
+        await ClickOnNextButtonAsync();
         await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
         await AssertStepAndClickNextAsync("Tags", "You can add tags to your blog post");
         await AssertStepAndClickNextAsync("Category", "You can also select the category of your blog post.");
@@ -93,7 +93,8 @@ public static class TestCaseUITestContextExtensions
         // Blog Post display
         AssertStep("Viewing the blog post", "The blog post is published, good job!");
         await context.ClickReliablyOnAsync(By.LinkText("View"));
-        await AssertStepAndClickNextAsync("Viewing the blog post", "Here is you published blog post");
+        context.SwitchToLastWindow();
+        await AssertStepAndClickNextAsync("Viewing the blog post", "Here is your published blog post");
 
         // Article
         AssertStep("Creating a new article", "Now let's create an article!");
