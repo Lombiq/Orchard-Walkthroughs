@@ -161,6 +161,8 @@ public static class TestCaseUITestContextExtensions
         await context.ClickPublishAsync();
         await AssertStepAndClickNextAsync("Managing the menu", "Your article is now linked from the menu.");
         await AssertStepAndClickNextAsync("Managing the menu", "The new menu item should appear up here.");
+
+        // Content list
         await AssertStepAndClickNextAsync("Content list", "Now let's go back to the admin dashboard!");
         return;
         await AssertStepAndClickNextAsync("", "");
