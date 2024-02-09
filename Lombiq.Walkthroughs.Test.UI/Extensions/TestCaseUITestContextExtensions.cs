@@ -172,8 +172,29 @@ public static class TestCaseUITestContextExtensions
         AssertStep("Content listing", "Now click on the \"Content Items\" button.");
         await context.ClickReliablyOnByLinkTextAsync("Content Items");
         await AssertStepAndClickNextAsync("Content listing", "Notice how we can see");
+
+        // Taxonomies
+        await AssertStepAndClickNextAsync("Taxonomies", "We'll now see how to use the Taxonomies module");
+        await AssertStepAndClickNextAsync("Taxonomies", "You can access this list by filtering");
+        AssertStep("Taxonomies", "Let's see how we can edit taxonomies!");
+        await context.ClickReliablyOnByLinkTextAsync("Edit");
+        AssertStep("Taxonomies", "You can add a new category by clicking here.");
+        await context.ClickReliablyOnByLinkTextAsync("Add Category");
+        await AssertStepAndClickNextAsync("Taxonomies", "You can name your category.");
+        await context.FillContentItemTitleAsync("Sample category");
+        AssertStep("Taxonomies", "You can select an icon for the category.");
+        await context.ClickReliablyOnAsync(By.Id("Category_Icon"));
+        await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item"));
+        await ClickOnNextButtonAsync();
+        await AssertStepAndClickNextAsync("Taxonomies", "And you can set a permalink for it");
+        AssertStep("Taxonomies", "Let's publish the new category! ");
+        await context.ClickPublishAsync();
+        AssertStep("Taxonomies", "Your category is now published.");
+        await context.ClickPublishAsync();
+
+        // Media management
+        await AssertStepAndClickNextAsync("Media management", "We're now done with Taxonomies.");
         return;
-        await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

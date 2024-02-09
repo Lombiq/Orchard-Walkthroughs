@@ -1403,10 +1403,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'The Taxonomies feature is turned on. This module provides the Taxonomy content type ' +
-                            'that is used to define managed vocabularies (categories) of any type. Taxonomy content ' +
-                            'items are made of terms organized as a hierarchy. Using the Taxonomy Field allows any ' +
-                            'content item to be associated with one or many terms of a taxonomy.',
+                        text: '<p>We\'ll now see how to use the Taxonomies module for categorization (remember the ' +
+                            'Tags and Categories fields of blog posts?).</p>' +
+                            '<p>With this module you can create Taxonomy content items that can contain Taxonomy Terms. ' +
+                            'These will be the specific categories or tags, and cthey can even be organized as a ' +
+                            'hierarchy (like News → Sports). Then, you can use the Taxonomy Field on other content items ' +
+                            '(like blog posts) to add these terms to them.</p>',
                         buttons: [
                             {
                                 action: function () {
@@ -1431,8 +1433,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can access this page, by going to the content types, then filtering for <em>"Taxonomy"</em>. ' +
-                            'There are two taxonomies here: Categories, and Tags. These are both used for the blog posts.',
+                        text: '<p>You can access this list by filtering for the <em>"Taxonomy"</em> content type (see ' +
+                            'top-right corner).</p>' +
+                            '<p>There are two taxonomies here: Categories and Tags. These are both used for blog posts.</p>',
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -1449,7 +1452,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'Click on the <em>"Edit"</em> button.',
+                        text: 'Let\'s see how we can edit taxonomies! Click on the <em>"Edit"</em> button.',
                         attachTo: { element: '.btn-sm.btn-primary.edit', on: 'top' },
                         buttons: [
                             backButton,
@@ -1464,7 +1467,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can add a category by clicking here.',
+                        text: 'You can add a new category by clicking here.',
                         attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
                             {
@@ -1504,8 +1507,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'You can set an icon for the category. (You need to pick an icon otherwise you can\'t ' +
-                            'publish your category.)',
+                        text: 'You can select an icon for the category. This will be displayed as decoration when ' +
+                            'listing categories on the frontend (like <a href="/categories" target="_blank">here</a>). ' +
+                            'You need to pick an icon, otherwise you can\'t publish your category.)',
                         attachTo: { element: '.btn-toolbar', on: 'top' },
                         buttons: [
                             backButton,
@@ -1526,7 +1530,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'And you can set a permalink for it.',
+                        text: 'And you can set a permalink for it or just leave it blank for Orchard Core to ' +
+                            'auto-generate it.',
                         attachTo: { element: '#AutoroutePart_Path', on: 'top' },
                         buttons: [
                             backButton,
@@ -1558,8 +1563,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Taxonomies',
-                        text: 'Your category is published. Next time when you are editing blog post, you will be ' +
-                            'able to set this new category.',
+                        text: `<p>Your category is now published. The next time when you are editing blog post, you
+                            will be able to select it.</p>
+                            <p>However, just as with menus, you'll also need to publish the taxonomy too, so let's do
+                            that!</p>`,
+                        attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
@@ -1572,9 +1580,9 @@ jQuery(($) => {
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
                             },
-                            nextButton,
                         ],
                         id: 'taxonomies_category_published',
+
                         when: {
                             show() {
                                 // If publishing is failed (no icon was set) don't go ahead.
@@ -1583,13 +1591,16 @@ jQuery(($) => {
                                     Shepherd.activeTour.back();
                                     return;
                                 }
+
                                 addShepherdQueryParams();
+                                setWalkthroughCookies(this.tour.options.id, 'media_management_intro');
                             },
                         },
                     },
                     {
                         title: 'Media management',
-                        text: 'Let\'s see media management! Click on the <em>"Next"</em> button.',
+                        text: `<p>We're now done with Taxonomies.</p>
+                            <p>Let's see media management next! Click on the <em>"Next"</em> button.</p>`,
                         buttons: [
                             backButton,
                             {
