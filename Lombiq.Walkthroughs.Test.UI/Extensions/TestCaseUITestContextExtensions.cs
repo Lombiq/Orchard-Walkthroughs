@@ -34,7 +34,6 @@ public static class TestCaseUITestContextExtensions
         // log in the user and jump to a step right away like you can see below.
         //await context.SignInDirectlyAsync("testuser");
         //await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_blog_post");
-        //await context.GoToAdminRelativeUrlAsync("/Contents/ContentItems/Article?admin=-181203353&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_published");
 
         await AssertStepAndClickNextAsync("Select walkthrough!", "Welcome! The Lombiq.Walkthroughs module is active.");
         await AssertStepAndClickNextAsync("Orchard Core Admin Walkthrough", "This walkthrough covers");
