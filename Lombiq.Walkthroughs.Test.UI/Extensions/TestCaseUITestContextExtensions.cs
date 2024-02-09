@@ -194,8 +194,18 @@ public static class TestCaseUITestContextExtensions
 
         // Media management
         await AssertStepAndClickNextAsync("Media management", "We're now done with Taxonomies.");
+        AssertStep("Media management", "Click on the \"Content\" dropdown.");
+        await context.ClickReliablyOnByLinkTextAsync("Content");
+        AssertStep("Media management", "Now click on the \"Media Library\" button.");
+        await context.ClickReliablyOnByLinkTextAsync("Media Library");
+        await AssertStepAndClickNextAsync("Media management", "This is the media library.");
         return;
-        await AssertStepAndClickNextAsync("", "");
+        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Media management", "");
+        await AssertStepAndClickNextAsync("Media management", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

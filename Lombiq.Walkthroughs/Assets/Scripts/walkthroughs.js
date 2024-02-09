@@ -1605,7 +1605,7 @@ jQuery(($) => {
                             backButton,
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu1', 'Admin', 'Admin');
                                 },
                                 classes: 'shepherd-button-primary',
                                 text: 'Next',
@@ -1615,9 +1615,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Click on the <em>"Media Library"</em> button.',
-                        scrollTo: true,
-                        attachTo: { element: 'a[href*="Media"]', on: 'top' },
+                        text: 'Click on the <em>"Content"</em> dropdown.',
+                        attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -1631,7 +1630,31 @@ jQuery(($) => {
                                 text: 'Back',
                             },
                         ],
-                        id: 'media_management_menu',
+                        id: 'media_management_menu1',
+                        advanceOn: { selector: '#content', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Media management',
+                        text: 'Now click on the <em>"Media Library"</em> button.',
+                        // There is no proper basic JS selector, to select the element, so we need to use a
+                        // function.
+                        savedElement: $('[title="Media Library"]').parent().get(0),
+                        attachTo: {
+                            element: function getContentItemsButton() {
+                                return this.options.savedElement;
+                            },
+                            on: 'right',
+                        },
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'media_management_menu2',
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -1640,15 +1663,16 @@ jQuery(($) => {
                         },
                     },
                     {
+                        // The Media app loads asynchronously so targeting something like #mediaContainer won't always
+                        // work.
                         title: 'Media management',
-                        text: 'This is the media library, here you can see all the uploaded media, including images ' +
+                        text: 'This is the media library. Here you can see all the uploaded media, including images ' +
                             'and other files.',
-                        attachTo: { element: '#mediaContainer', on: 'top' },
                         canClickTarget: false,
                         buttons: [
                             {
                                 action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu', 'Admin', 'Admin');
+                                    goToRelativePage(Shepherd.activeTour.options.id, 'media_management_menu1', 'Admin', 'Admin');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1701,7 +1725,6 @@ jQuery(($) => {
                     {
                         title: 'Media management',
                         text: 'If you uploaded any file, you can see it here.',
-                        attachTo: { element: '#mediaContainer', on: 'top' },
                         buttons: [
                             backButton,
                             nextButton,
