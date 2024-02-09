@@ -673,7 +673,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: 'Now let's create an article! First go to the homepage.'',
+                        text: 'Now let\'s create an article! First go to the homepage.',
                         attachTo: { element: '.navbar-brand', on: 'bottom' },
                         buttons: [
                             backButton,
