@@ -1776,7 +1776,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'Click on the <em>"New"</em> button.',
+                        text: 'We\'ll create a new Page content item. Click on the <em>"New"</em> button.',
                         attachTo: { element: '#new-dropdown', on: 'top' },
                         buttons: [
                             {
@@ -1807,7 +1807,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'You can give it a title, just like for a blog post or for an article.',
+                        text: 'You can give it a title, just like for a blog post or an article. It\'s the same thing, really.',
                         attachTo: { element: '#TitlePart_Title', on: 'top' },
                         buttons: [
                             {
@@ -1829,7 +1829,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'You can give it an URL, but you can leave it empty to auto-generate it!',
+                        text: 'Surely you know the drill with Permalink by now!',
                         attachTo: { element: '#AutoroutePart_Path', on: 'top' },
                         buttons: [
                             backButton,
@@ -1844,11 +1844,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'The page has a part called <em>"Flow part"</em>, this allows you to add different ' +
-                            'widgets to your page. If you want a simple <em>"page"</em>, with only HTML content, it\'s ' +
-                            'better to create an article. However if you want something more complex, and perhaps ' +
-                            'you created your own widget and you want to add that, then it\'s better to use a page.',
-                        attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
+                        text: `<p>The page has a part called <em>"Flow Part"</em>. It allows you to add different 
+                            widgets to your page, building complex layouts that are displayed in a responsive way, so
+                            they look good on all screen sizes (hence the name "flow").</p>
+                            <p>If you want a simple page, with only some simpler HTML content, it's better to create an
+                            article. However if you want something more involved, and perhaps you created your own
+                            widget and you want to add that, then it's better to use a Flow Part.`,
+                        attachTo: { element: 'button[title="Add Widget"]', on: 'left' },
                         canClickTarget: false,
                         buttons: [
                             backButton,
@@ -1863,11 +1865,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'You will see the different widgets here that you can add. Blockquote, Image, Paragraph ' +
-                            'and Raw Html is self explanatory. Container is just a container for widgets, ' +
-                            'so you can divide them up more. If you created another widget, or turned on a feature ' +
-                            'that adds a widget, it should also appear here. Click on the <em>"+"</em> icon.',
-                        attachTo: { element: 'button[title="Add Widget"]', on: 'top' },
+                        text: `<p>You will see the different widgets here that you can add. Blockquote, Image, Paragraph, 
+                            and Raw Html are all just what their names suggest. Container is a container for widgets, 
+                            so you can build some multi-level structure.</p>
+                            <p>These widgets came with the Blog recipe, but modules can add new ones too, and you can
+                            create your own widget types as well!</p>
+                            <p>Enough of theory, let's click on the <em>"+"</em> icon!</em>`,
+                        attachTo: { element: 'button[title="Add Widget"]', on: 'left' },
                         buttons: [
                             backButton,
                         ],
@@ -1881,7 +1885,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'Let\'s add a blockquote, for example!',
+                        text: 'Let\'s add a blockquote, for example! Can you guess what it\'ll contain? :)',
                         attachTo: { element: 'a[data-widget-type="Blockquote"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -1896,7 +1900,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'Now you added the blockquote to your page.',
+                        text: 'Now you added the blockquote to your page. This is a quotable moment!',
                         buttons: [
                             backButton,
                             nextButton,
@@ -1931,7 +1935,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'You can write here the text you want.',
+                        text: `Can you think of a good quote? My favorite is "Don't believe everything you read on the
+                            internet." by Abraham Lincoln.`,
                         attachTo: {
                             element: '#FlowPart-0_Blockquote_Quote_Text',
                             on: 'top',
@@ -1968,7 +1973,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the page',
-                        text: 'The page is published. Click on the <em>"View"</em> button to see it.',
+                        text: 'The page is published! Click on the <em>"View"</em> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -2013,7 +2018,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Adding widgets to the layout',
-                        text: 'You can also add widgets to the layout itself. Go to homepage by clicking here.',
+                        text: `The fun with widgets doesn't stop here! You can also add them to the layout itself. Go
+                            to homepage by clicking here.`,
                         attachTo: { element: '.navbar-brand', on: 'bottom' },
                         buttons: [
                             backButton,
@@ -3793,17 +3799,18 @@ jQuery(($) => {
             steps: [
                 {
                     title: 'Select walkthrough!',
-                    text: '<p>Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">' +
-                        'Lombiq.Walkthroughs module</a> is active. This module includes various walkthroughs that ' +
-                        'provide hands-on tutorials guided by interactive tooltips.</p>' +
-                        '<p>Do you prefer tutorial videos or deep-diving into the code instead? Check out ' +
-                        '<a href="https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial" target="_blank">' +
-                        'Dojo Course 3</a>!</p>' +
-                        '<p>You can pause a walkthrough at any time. Just bookmark the page and you can open it later ' +
-                        'to continue where you left off.</p>' +
-                        '<p>You can get back here by canceling the current walkthrough and pressing the below button ' +
-                        'on the homepage. Please only use the walkthroughs\' built-in navigation!<p>' +
-                        '<p>Please select a walkthrough to start:</p>',
+                    text: `<p>Welcome! The <a href="https://github.com/Lombiq/Orchard-Walkthroughs" target="_blank">
+                        Lombiq.Walkthroughs module</a> is active. This module includes various walkthroughs that 
+                        provide hands-on tutorials guided by interactive tooltips.</p>
+                        <p>Do you prefer tutorial videos or deep-diving into the code instead? Check out 
+                        <a href="https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial" target="_blank">
+                        Dojo Course 3</a>!</p>
+                        <p>You can pause a walkthrough at any time. Just bookmark the page and you can open it later to
+                        continue where you left off.</p>
+                        <p>You can get back here by canceling the current walkthrough and pressing the below button on
+                        the homepage. Please only use the walkthroughs' built-in navigation!<p>
+                        <p>Please select a walkthrough to start:</p>`,
+
                     buttons: [
                         {
                             text: 'Orchard Core Admin Walkthrough',
