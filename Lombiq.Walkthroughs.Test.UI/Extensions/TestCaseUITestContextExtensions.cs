@@ -49,7 +49,7 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Log in", "Let's log in!");
         await AssertStepAndClickNextAsync("Log in page", "Here you can log in.");
         AssertStep("Username", "Provide your username.");
-        await context.FillInWithRetriesAsync(By.Id("UserName"), "testuser");
+        await context.FillInWithRetriesAsync(By.Id("UserName"), "testuser"); // #spell-check-ignore-line
         await ClickOnNextButtonAsync();
         AssertStep("Password", "Provide your password.");
         await context.FillInWithRetriesAsync(By.Id("Password"), "Password1!");
@@ -77,7 +77,8 @@ public static class TestCaseUITestContextExtensions
         await context.FillContentItemTitleAsync("Sample Blog Post");
         await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
         AssertStep("Markdown editor", "This is the editor where you can write");
-        await context.FillInCodeMirrorEditorWithRetriesAsync(By.CssSelector(".CodeMirror.cm-s-easymde.CodeMirror-wrap"), "Hello world.");
+        await context.FillInCodeMirrorEditorWithRetriesAsync(
+            By.CssSelector(".CodeMirror.cm-s-easymde.CodeMirror-wrap"), "Hello world."); // #spell-check-ignore-line
         await ClickOnNextButtonAsync();
         AssertStep("Subtitle", "You can also give a subtitle to your blog post.");
         await context.FillInWithRetriesAsync(By.Id("BlogPost_Subtitle_Text"), "Sample subtitle");
