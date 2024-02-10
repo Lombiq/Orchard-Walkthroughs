@@ -11,17 +11,20 @@ public static class TestCaseUITestContextExtensions
 {
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
-        Task AssertStepAndClickNextAsync(string header, string text)
+        Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetExists = true)
         {
-            AssertStep(header, text);
+            AssertStep(header, text, assertShepherdTargetExists);
             return ClickOnNextButtonAsync();
         }
 
-        void AssertStep(string header, string text)
+        void AssertStep(string header, string text, bool assertShepherdTargetExists = true)
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
+            if (assertShepherdTargetExists) context.Exists(By.ClassName("shepherd-target"));
         }
+
+        Task ClickShepherdTargetAsync() => context.ClickReliablyOnAsync(By.ClassName("shepherd-target"));
 
         // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
         Task ClickOnNextButtonAsync() =>
