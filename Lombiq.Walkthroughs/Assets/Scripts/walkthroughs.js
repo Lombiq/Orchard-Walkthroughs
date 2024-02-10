@@ -2124,7 +2124,9 @@ jQuery(($) => {
                             E.g., if you put a widget on the <em>"Homepage"</em> layer, it will only appear on the
                             homepage.</p>
                             <p>You can add new layers and edit their rules, i.e. the logic that determines when they're
-                            active.</p>`,
+                            active. More infor is avaialable in the
+                            <a href="https://docs.orchardcore.net/en/latest/docs/reference/modules/Layers/" target="_blank">
+                            official docs</a>.</p>`,
                         attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2135,7 +2137,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Layout widgets',
-                        text: 'Let\'s add a widget to the content zone! Click on <em>"Add widget"</em>.',
+                        text: 'Let\'s add a widget to the content zone! Click on <em>"Add Widget"</em>.',
                         attachTo: { element: '.btn.btn-primary.btn-sm.dropdown-toggle', on: 'top' },
                         buttons: [
                             backButton,
@@ -2145,7 +2147,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Layout widgets',
-                        text: 'Now click on <em>"Paragraph"</em>.',
+                        text: 'Now click on <em>"Paragraph"</em> to add a simple widget that can contain a paragraph of text..',
                         attachTo: { element: 'a[data-widget-type="Paragraph"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2160,7 +2162,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Layout widgets',
-                        text: 'Give it a title.',
+                        text: `Give it a title. This will show up in the previous screen, and can also optionally be
+                            rendered on the frontend.`,
                         attachTo: { element: '#LayerMetadata_Title', on: 'top' },
                         buttons: [
                             {
@@ -2259,7 +2262,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Go to the admin editor by clicking on the <em>"Next"</em> button.',
+                        text: `<p>We'll now take a look at how the sausage is made!</p>
+                            <p>Until now, we've edited content items, i.e. pieces of content. We haven't yet seen where
+                            the settings of those come from. E.g., where is it set that a Blob Post has a title and a
+                            Markdown-formatted body? This is all configured in content types, i.e. the blueprints of
+                            content items.</p>
+                            <p>Let's check out content types and their editors on the admin. Click on the
+                            <em>"Next"</em> button once you've gathered all your strength!</p>`,
                         buttons: [
                             backButton,
                             {
