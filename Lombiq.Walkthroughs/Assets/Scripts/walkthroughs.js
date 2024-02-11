@@ -3755,7 +3755,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Here you can see and change the themes. Currently the site is using the blog theme.',
+                        text: `<p>Here you can see and change the themes. Currently the site uses The Blog Theme.</p>
+                            <p>You can change which theme is the active one on the frontend by clicking <em>"Make
+                            Current"</em> under it. You can try this if you'd like, but do note that not all themes are
+                            equally suited for all sites. For example, your blog is best themes by The Blog Theme. While
+                            you may switch to e.g. The Agency Theme, it'd need some adjustments to make it really work
+                            for a blog.</p>`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3776,9 +3781,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Take a look at features. Features in Orchard Core are modular components that add ' +
-                            'specific functionalities to a website, providing a way to extend the system by ' +
-                            'enabling or disabling distinct capabilities.',
+                        text: `We'll continue with modules. Modules, in contrast to themes, are less about UX and more
+                            about functionality and backend behavior. For example, the code for content parts are
+                            usually kept in modules, not themes.`,
+
                         buttons: [
                             backButton,
                             nextButton,
@@ -3803,7 +3809,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Click on <em>"Features"</em>.',
+                        text: `<p>Click on <em>"Features"</em>.</p>
+                            <p>Why "Features" and not "Modules", you ask? Modules can have multiple "features" that can
+                            be turned on or off separately. So, what you actually turn on are the features of a module,
+                            not the module itself.</p>`,
                         attachTo: { element: 'a[href*="Admin/Features"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -3819,7 +3828,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Here you can see all the features and you can turn them on or off.',
+                        text: `<p>Here you can see all the features that you can turn on or off. There are many! But don't
+                            worry, <a href="https://docs.orchardcore.net/en/latest/docs/reference/" target="_blank">
+                            the documentation</a> will help you get an overview of all the modules and features that
+                            Orchard Core provides out of the box. And you can also create your own modules!</p>
+                            <p>We recommend you explore what Orchard Core provides, with the help of the documentation
+                            and by just trying them all out.</p>`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3840,8 +3854,27 @@ jQuery(($) => {
                     },
                     {
                         title: 'Walkthrough completed',
-                        text: 'Congratulations! You completed the walkthrough. For further learning points, you can ' +
-                            'watch these videos: <ul><li><a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13" target="_blank">Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a></li><li><a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14" target="_blank">Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a></li><li><a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15" target="_blank">Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a></li></ul>',
+                        text: `<p>Congratulations! You completed the walkthrough. For further learning, we recommend you 
+                            check out the following resources:</p>
+                            <ul>
+                            <li>
+                            <a href ="https://www.youtube.com/watch?v=6jJH9ntqi_A&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=13" target="_blank">
+                            Searching and indexing Orchard Core content items - Dojo Course 3 (11)</a>
+                            </li>
+                            <li>
+                            <a href ="https://www.youtube.com/watch?v=pi_WiSqp5x4&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=14" target="_blank">
+                            Automating tasks in Orchard Core with Workflows and Liquid markup - Dojo Course 3 (12)</a>
+                            </li>
+                            <li>
+                            <a href ="https://www.youtube.com/watch?v=Sd-aYy5DblI&list=PLuskKJW0FhJcSX7j0Bd-1X5hq3dgCtYwO&index=15" target="_blank">
+                            Building a form from the admin in Orchard Core (Forms, Workflows, Liquid) - Dojo Course 3 (13)</a>
+                            </li>
+                            <li>
+                            And the rest of the
+                            <a href="https://orcharddojo.net/orchard-training/dojo-course-3-the-full-orchard-core-tutorial" target="_blank">
+                            Dojo Course 3!</a>
+                            </li>
+                            </ul>`,
                         buttons: [
                             backButton,
                             {

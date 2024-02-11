@@ -57,7 +57,7 @@ public static class TestCaseUITestContextExtensions
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
 
-        void SwithToLastWindowAndSetDefaultBrowserSize()
+        void SwitchToLastWindowAndSetDefaultBrowserSize()
         {
             context.SwitchToLastWindow();
             // The new tab will open in a small size when in headless mode.
@@ -129,7 +129,7 @@ public static class TestCaseUITestContextExtensions
         AssertStep("Viewing the blog post", "The blog post is published, good job!");
         // The URL is not changing here so can't use ClickShepherdTargetAsync().
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        SwithToLastWindowAndSetDefaultBrowserSize();
+        SwitchToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the blog post", "Here is your published blog post", assertShepherdTargetIsNotBody: false);
 
         // Article introduction
@@ -162,7 +162,7 @@ public static class TestCaseUITestContextExtensions
         // The URL is not changing here so can't use ClickShepherdTargetAsync().
         AssertStep("Viewing the article", "The article is now published.");
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        SwithToLastWindowAndSetDefaultBrowserSize();
+        SwitchToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the article", "Here is you published article.", assertShepherdTargetIsNotBody: false);
 
         // Managing the menu
@@ -245,7 +245,7 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickShepherdTargetAsync("Flow Part", "We are ready, let's publish the page!");
         AssertStep("Viewing the page", "The page is published!");
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        SwithToLastWindowAndSetDefaultBrowserSize();
+        SwitchToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the page", "Here is you published page", assertShepherdTargetIsNotBody: false);
 
         // Layout widgets
@@ -266,7 +266,7 @@ public static class TestCaseUITestContextExtensions
         AssertStep(
             "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        SwithToLastWindowAndSetDefaultBrowserSize();
+        SwitchToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Layout widgets", "You should see your paragraph", assertShepherdTargetIsNotBody: false);
 
         // Content type editor
@@ -379,27 +379,16 @@ public static class TestCaseUITestContextExtensions
         ////await context.GoToAdminRelativeUrlAsync(
         ////    "/DeploymentPlan/Import/Index?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=features_and_themes_themes_intro");
         await AssertStepAndClickNextAsync("Themes and modules", "Now let's take a look at how plugins", assertShepherdTargetIsNotBody: false);
-        return;
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
-        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Design\".");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Themes\".");
+        await AssertStepAndClickNextAsync("Themes and modules", "Here you can see and change the themes.");
+        await AssertStepAndClickNextAsync("Themes and modules", "We'll continue with modules", assertShepherdTargetIsNotBody: false);
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Configuration\".");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Features\".");
+        await AssertStepAndClickNextAsync("Themes and modules", "Here you can see all the features");
 
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
+        // Walkthrough completed
+        AssertStep("Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false);
     }
 
     private static async Task RetryTimeoutStepAsync(Func<Task> stepAsync, string exceptionMessage)
