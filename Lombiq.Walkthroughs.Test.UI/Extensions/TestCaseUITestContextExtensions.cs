@@ -530,9 +530,9 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see all the features");
             });
 
-        // Outro
+        // Outro #spell-check-ignore-line
         context.ExecuteLogged(
-            "Outro",
+            "Outro", // #spell-check-ignore-line
             () => AssertStep(
                 "Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false));
     }
