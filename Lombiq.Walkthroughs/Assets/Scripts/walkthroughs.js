@@ -710,7 +710,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: `Click on the <em>"Content"</em> dropdown.`,
+                        text: 'Click on the <em>"Content"</em> dropdown.',
                         attachTo: { element: '#content', on: 'right' },
                         buttons: [
                             {
@@ -765,7 +765,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: `Here we have the article content type. Click on it.`,
+                        text: 'Here we have the article content type. Click on it.',
                         attachTo: { element: 'a[href*= "Article"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -780,7 +780,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: `Here you can see all the articles. As you can see, there is already one.`,
+                        text: 'Here you can see all the articles. As you can see, there is already one.',
                         attachTo: { element: '.list-group.with-checkbox', on: 'top' },
                         // Making the list unclickable, so the user can't go somewhere else.
                         canClickTarget: false,
@@ -804,7 +804,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: `Click here to create a new article.`,
+                        text: 'Click here to create a new article.',
                         attachTo: { element: '.btn.btn-secondary[href*="Article/Create"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -819,7 +819,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Creating a new article',
-                        text: `Here you can create the article.`,
+                        text: 'Here you can create the article.',
                         buttons: [
                             {
                                 action: function () {
@@ -843,7 +843,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Title',
-                        text: `Let's give it a title!`,
+                        text: 'Let\'s give it a title!',
                         attachTo: { element: '#TitlePart_Title', on: 'top' },
                         buttons: [
                             backButton,
@@ -916,7 +916,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Subtitle',
-                        text: `You can set the subtitle of your article too.`,
+                        text: 'You can set the subtitle of your article too.',
                         attachTo: { element: '#Article_Subtitle_Text', on: 'top' },
                         buttons: [
                             backButton,
@@ -932,7 +932,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Banner image',
-                        text: `You can add a banner image to your article too.`,
+                        text: 'You can add a banner image to your article too.',
                         attachTo: { element: '#Article_Image', on: 'top' },
                         buttons: [
                             backButton,
@@ -976,7 +976,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Publishing',
-                        text: `We are ready, let's publish the article! Click on the publish button.`,
+                        text: 'We are ready, let\'s publish the article! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -995,7 +995,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Viewing the article',
-                        text: `The article is now published. Click on the <em>"View"</em> button to see it.`,
+                        text: 'The article is now published. Click on the <em>"View"</em> button to see it.',
                         attachTo: { element: '.btn.btn-sm.btn-success.view', on: 'top' },
                         buttons: [
                             {
@@ -1504,6 +1504,8 @@ jQuery(($) => {
                         text: `You can select an icon for the category. This will be displayed as decoration when 
                             listing categories on the frontend (like <a href="/categories" target="_blank">here</a>). 
                             You need to pick an icon, otherwise you can't publish your category.)`,
+                        // Not attaching to #Category_Icon because then the opening UI overlay would be partially
+                        // obstructed.
                         attachTo: { element: '.btn-toolbar', on: 'top' },
                         buttons: [
                             backButton,
@@ -2458,7 +2460,7 @@ jQuery(($) => {
                         title: 'Content type editor',
                         text: `Select Text Field. Notice how there are many more fields available? You can try them out
                             later.`,
-                        attachTo: { element: 'input[value="TextField"]', on: 'top' },
+                        attachTo: { element: 'li:has(input[value="TextField"])', on: 'top' },
                         buttons: [
                             backButton,
                             nextButton,
