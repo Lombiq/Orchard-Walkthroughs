@@ -246,7 +246,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#UserName', on: 'bottom' },
-                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.',
+                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.', // #spell-check-ignore-line
                         buttons: [
                             backButton,
                             nextButton,
@@ -2121,7 +2121,7 @@ jQuery(($) => {
                             E.g., if you put a widget on the <em>"Homepage"</em> layer, it will only appear on the
                             homepage.</p>
                             <p>You can add new layers and edit their rules, i.e. the logic that determines when they're
-                            active. More infor is avaialable in the
+                            active. More info is available in the
                             <a href="https://docs.orchardcore.net/en/latest/docs/reference/modules/Layers/" target="_blank">
                             official docs</a>.</p>`,
                         attachTo: { element: '.col-md-4.col-md-pull-end', on: 'top' },
@@ -2636,9 +2636,9 @@ jQuery(($) => {
                             e.g. creation or deletion of content items, and events like user login failures. For
                             content items, previous versions and deleted items can be restored, and changes can be
                             tracked.</p>
-                            <p>All this is quite useful especially if multiple admins are editing content. But even if
-                            you're working alone, it's handy to be able to see content changes and go back to previous
-                            versions.</p>
+                            <p>All this is quite useful especially if multiple administrators are editing content. But
+                            even if you're working alone, it's handy to be able to see content changes and go back to
+                            previous versions.</p>
                             <p>Audit Trail was turned on and configured by the setup recipe. Let's take a look!</p>`,
                         buttons: [
                             {
@@ -2889,7 +2889,7 @@ jQuery(($) => {
                     {
                         title: 'User management',
                         text: `This menu contains all security and role-based access control-related settings. For now,
-                            we're only interestd in user management specifically, so click on <em>"Users"</em>.`,
+                            we're only interested in user management specifically, so click on <em>"Users"</em>.`,
                         attachTo: { element: '.users', on: 'right' },
                         buttons: [
                             backButton,
@@ -3139,7 +3139,8 @@ jQuery(($) => {
                         title: 'Roles',
                         text: `Here you can see all the existing roles and edit their permissions. All users will be in
                             the "Anonymous" role by default. Once they log in, they'll have the "Authenticated" role
-                            istead. Then, you can configure further logged-in roles (users can have multiple roles) here.`,
+                            instead. Then, you can configure further logged-in roles (users can have multiple roles)
+                            here.`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         buttons: [
                             {

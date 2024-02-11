@@ -144,7 +144,7 @@ public static class TestCaseUITestContextExtensions
 
         // Article editor
         ////await context.GoToAdminRelativeUrlAsync(
-        ////    "/Contents/ContentTypes/Article/Create?returnUrl=%2FAdmin%2FContents%2FContentItems" +
+        ////    "/Contents/ContentTypes/Article/Create?returnUrl=%2FAdmin%2FContents%2FContentItems" + // #spell-check-ignore-line
         ////    "&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_editor");
         await AssertStepAndClickNextAsync("Creating a new article", "Here you can create the article.", assertShepherdTargetIsNotBody: false);
         await AssertStepAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample article");
@@ -208,7 +208,7 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndFillInShepherdTargetAndClickNextAsync("Taxonomies", "You can name your category.", "Sample category");
         AssertStep("Taxonomies", "You can select an icon for the category.");
         await context.ClickReliablyOnAsync(By.Id("Category_Icon"));
-        await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item"));
+        await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item")); // #spell-check-ignore-line
         await ClickOnNextButtonAsync();
         await AssertStepAndClickNextAsync("Taxonomies", "And you can set a permalink for it");
         await AssertStepAndClickShepherdTargetAsync("Taxonomies", "Let's publish the new category! ");
