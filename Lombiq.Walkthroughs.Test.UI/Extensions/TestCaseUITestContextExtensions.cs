@@ -176,11 +176,8 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Managing the menu", "Your article is now linked from the menu.");
         await AssertStepAndClickNextAsync("Managing the menu", "The new menu item should appear up here.");
 
-        // Content list
-        await AssertStepAndClickNextAsync("Content list", "Now let's go back to the admin dashboard!");
-        AssertStep("Content list", "Click on the \"Content\" dropdown.");
-        AssertStep("Content list", "Now click on the \"Content Items\" button.");
-        await AssertStepAndClickNextAsync("Content list", "Notice how we can see");
+        // Content listing
+        await AssertStepAndClickNextAsync("Content listing", "Now let's go back to the admin dashboard!");
         AssertStep("Content listing", "Click on the \"Content\" dropdown.");
         await context.ClickReliablyOnByLinkTextAsync("Content");
         AssertStep("Content listing", "Now click on the \"Content Items\" button.");
@@ -303,32 +300,13 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Audit Trail\".");
         await AssertStepAndClickNextAsync("Audit Trail", "Here you can see and turn on or off all the events");
         await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the trimming settings.");
+        For some reason(perhaps because it's at the very bottom of the page), clicking Next on this step is flaky,
 
-        // For some reason, clicking Next on this step is flaky, so need to retry.
-        var trimmingStepLeft = false;
-        var trimmingStepLeaveAttemptIndex = 0;
-        while (!trimmingStepLeft)
-        {
-            try
-            {
-                await AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely");
-                trimmingStepLeft = true;
-            }
-            catch (TimeoutException)
-            {
-                trimmingStepLeaveAttemptIndex++;
+        so need to retry.
 
-                // False alarm: https://github.com/SonarSource/sonar-dotnet/issues/8736.
-#pragma warning disable S2583 // Conditionally executed code should be reachable
-                if (trimmingStepLeaveAttemptIndex == 5)
-                {
-                    throw new TimeoutException(
-                        "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
-                }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
-            }
-        }
-
+       await RetryTimeoutStepAsync(
+           () => AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely"),
+           "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
         await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
         await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
         await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
@@ -367,19 +345,61 @@ public static class TestCaseUITestContextExtensions
 
         // Deployment
         await AssertStepAndClickNextAsync("Deployment", "Let's take a look at exporting and importing,");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Configuration\".");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\".");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "We'll start with \"Deployment Plans\".");
+        await AssertStepAndClickNextAsync("Deployment", "Here you would see the deployment plans, but we currently have");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Let's create a deployment plan! Click here.");
+        AssertStep("Deployment", "Give it a name.");
+        await FillInShepherdTargetWithRetriesAsync("Sample deployment plan");
+        await ClickOnNextButtonAsync();
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Now click on the \"Create\" button.");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Now we have a deployment plan, but it's empty.");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on the \"Add Step\" button.");
+        await AssertStepAndClickNextAsync("Deployment", "Here you can see all the steps that you can use.");
+        // For some reason (perhaps because it's an overlay on an overlay), clicking Next on this step is flaky, so
+        // need to retry.
+        await RetryTimeoutStepAsync(
+            () => AssertStepAndClickNextAsync("Deployment", "Let's filter for \"Update Content Definitions\"!"),
+            "Attempting to advance from the deployment_filter_steps step didn't succeed even after 5 attempts.");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "\"Update Content Definitions\" exports the chosen");
+        await AssertStepAndClickNextAsync("Deployment", "Here you can select which content types and parts you want");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "If you're finished, click on the \"Create\" button.");
+        await AssertStepAndClickNextAsync("Deployment", "As you can see, you added the step to the deployment plan. ");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Once you finished adding steps, you can click on");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Here you can use \"File Download\" so the exported");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
         return;
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
-        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
+
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
+    }
+
+    private static async Task RetryTimeoutStepAsync(Func<Task> stepAsync, string exceptionMessage)
+    {
+        var trimmingStepLeft = false;
+        var trimmingStepLeaveAttemptIndex = 0;
+        while (!trimmingStepLeft)
+        {
+            try
+            {
+                await stepAsync();
+                trimmingStepLeft = true;
+            }
+            catch (TimeoutException)
+            {
+                trimmingStepLeaveAttemptIndex++;
+
+                // False alarm: https://github.com/SonarSource/sonar-dotnet/issues/8736.
+#pragma warning disable S2583 // Conditionally executed code should be reachable
+                if (trimmingStepLeaveAttemptIndex == 5) throw new TimeoutException(exceptionMessage);
+#pragma warning restore S2583 // Conditionally executed code should be reachable
+            }
+        }
     }
 }

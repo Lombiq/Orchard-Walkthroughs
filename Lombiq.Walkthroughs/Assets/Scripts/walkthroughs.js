@@ -3245,7 +3245,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Let\'s take a look at exporting and importing, deployment and deployment plans!',
+                        text: `Let's take a look at exporting and importing, deployment and deployment plans! These
+                            features will allow you to move content and configuration between Orchard Core instances.`,
                         buttons: [
                             {
                                 action: function () {
@@ -3311,7 +3312,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Deployment Plans"</em>.',
+                        text: `<p>We'll start with <em>"Deployment Plans"</em>. A Deployment Plan is a collection of steps
+                            that build an export of your site. The result will be a downloadable recipe file (or it can
+                            even be automatically sent to another Orchard Core instance with Remote Deployment).</p>
+                            <p>You've already used recipes before, right when you've run the setup in the very
+                            beginning. Recipes are simply JSON files.</p>`,
                         attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -3326,9 +3331,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Here you would see the deployment plans, but we currently have none. A deployment ' +
-                            'plan refers to a set of configurations, steps, or actions that define how an ' +
-                            'Orchard Core application is deployed. The result will be a downloadable recipe.',
+                        text: 'Here you would see the deployment plans, but we currently have none.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3389,8 +3392,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps! Click on the ' +
-                            '<em>"Manage Steps"</em> button.',
+                        text: `Now we have a deployment plan, but it's empty. Let's add steps! Click on the <em>"Manage
+                            Steps"</em> button.`,
                         attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
                         buttons: [
                             {
@@ -3415,7 +3418,7 @@ jQuery(($) => {
                                 }
 
                                 addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'deployment_manage_steps');
+                                setWalkthroughCookies(this.tour.options.id, 'deployment_add_step');
                             },
                         },
                     },
@@ -3436,12 +3439,13 @@ jQuery(($) => {
                                 text: 'Back',
                             },
                         ],
-                        id: 'deployment_manage_steps',
+                        id: 'deployment_add_step',
                         advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
                     },
                     {
                         title: 'Deployment',
-                        text: 'Here you can see all the steps that you can add.',
+                        text: `Here you can see all the steps that you can use. Just as anything in Orchard Core, this
+                            list is extensible. Built-in modules and ones developed by you can add more steps.`,
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3463,7 +3467,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Let\'s filter for <em>"Update Content Definitions"</em>! (Click on the <em>"Next"</em> button).',
+                        text: `<p>Let's filter for <em>"Update Content Definitions"</em>! (Click on the <em>"Next"</em>
+                            button.)</p>
+                            <p>This step will allow you to export all the content definition from this site (so, all
+                            the content types and their configuration, together with content parts). Then, when
+                            importing the recipe on the target site, it'll create or update all content definition it
+                            brought.</p>`,
                         attachTo: { element: '#search-box', on: 'top' },
                         canClickTarget: false,
                         scrollTo: true,
@@ -3484,11 +3493,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: '<em>"Update Content Definitions"</em> exports the chosen content types and parts (you ' +
-                            'can configure it later which ones). After running the deployment plan, each step will ' +
-                            'add its own things to the final <em>"recipe.json"</em> file, which you can later download. ' +
-                            'You can then import this file for maybe another Orchard Core site and it will add all the ' +
-                            'things that you exported. Click on <em>"Add"</em>.',
+                        text: `<p><em>"Update Content Definitions"</em> exports the chosen content types and parts (you 
+                            can configure it later which ones).</p>
+                            <p>After running the deployment plan, each step will add its own JSON to the final
+                            <em>"recipe.json"</em> file, which you can later download. You can then import this file on
+                            maybe another Orchard Core site and it will add all the content/configuration that you
+                            exported. Click on <em>"Add"</em>.`,
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ContentDefinitionDeploymentStep"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -3503,7 +3513,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Here you can select which content types and parts you want to include.',
+                        text: `<p>Here you can select which content types and parts you want to include. How about
+                            choosing Article and Blog Post, since we already know them?</p>
+                            <p>Note how you can hoose content parts too. This is useful since content parts can have
+                            their own configuration too. This is useful when reusing them among multiple content types.</p>
+                            <p>Be sure to tick all parts for the content types you select too!</p>`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         buttons: [
                             {
@@ -3523,7 +3537,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'If you finished click on the <em>"Create"</em> button.',
+                        text: 'If you\'re finished, click on the <em>"Create"</em> button.',
                         attachTo: { element: '.btn.btn-primary.create', on: 'top' },
                         scrollTo: true,
                         buttons: [
@@ -3539,8 +3553,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'As you can see you added the step to the deployment plan. You could add more steps ' +
-                            'e.g. <em>"All Content"</em> which would export all the <b>content items</b>.',
+                        text: `As you can see, you added the step to the deployment plan. You could add more steps;
+                            e.g., <em>"All Content"</em> would export all the content <strong>items</strong>.`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3561,8 +3575,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'When you finished adding the steps, you can click on <em>"Execute"</em> to run the' +
-                            ' deployment.',
+                        text: 'Once you finished adding steps, you can click on <em>"Execute"</em> to run the deployment.',
                         attachTo: { element: '.btn.btn-success.btn-sm', on: 'top' },
                         buttons: [
                             backButton,
@@ -3572,8 +3585,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Here you can use <em>"File Download"</em> so the exported <em>recipe.json</em> file will ' +
-                            'be downloaded (inside a zip file).',
+                        text: `Here you can use <em>"File Download"</em> so the exported <em>recipe.json</em> file will 
+                            be downloaded (inside a zip file).`,
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -3583,7 +3596,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Configuration"</em>.',
+                        text: `We've now seen how to export content. But you surely want to see how to import it! We'll
+                            do exactly that. Click on <em>"Configuration"</em>.`,
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
                         buttons: [
