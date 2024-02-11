@@ -3,6 +3,7 @@ using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using OpenQA.Selenium;
 using Shouldly;
+using System;
 using System.Threading.Tasks;
 
 namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
@@ -32,7 +33,7 @@ public static class TestCaseUITestContextExtensions
             if (assertShepherdTargetExists) context.Exists(_byShepherdTarget);
         }
 
-        Task ClickShepherdTargetAsync() => context.ClickReliablyOnAsync(_byShepherdTarget);
+        Task ClickShepherdTargetAsync() => context.ClickReliablyOnThenWaitForUrlChangeAsync(_byShepherdTarget);
 
         Task FillInShepherdTargetWithRetriesAsync(string text) => context.FillInWithRetriesAsync(_byShepherdTarget, text);
 
@@ -334,22 +335,37 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Audit Trail", "Here you can see all the recorded events.");
 
         // User management
-        await AssertStepAndClickShepherdTargetAsync("User management", "It's too quiet if you're alone in your Orchard Core");
-        return;
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
-        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickShepherdTargetAsync("User management", "It's too quiet if you're alone in your Orchard");
+        await AssertStepAndClickShepherdTargetAsync("User management", "This menu contains all security and role-based");
+        await AssertStepAndClickNextAsync("User management", "Here you can see all the users, including");
+        await AssertStepAndClickShepherdTargetAsync("User management", "You can edit existing users and add add new");
+        AssertStep("User management", "Think of someone you like so much you want them in your Orchard Core app");
+        await FillInShepherdTargetWithRetriesAsync("sample.user");
+        await ClickOnNextButtonAsync();
+        AssertStep("User management", "Add their e-mail address.");
+        await FillInShepherdTargetWithRetriesAsync("sample.user@example.com");
+        await ClickOnNextButtonAsync();
+        await AssertStepAndClickNextAsync("User management", "You can enter a phone number too, but it's optional.");
+        await AssertStepAndClickNextAsync("User management", "You can disable the user, though for a new one this");
+        AssertStep("User management", "You can enter a password or generate a strong one automatically.");
+        await context.ClickReliablyOnAsync(By.ClassName("password-generator-button"));
+        await ClickOnNextButtonAsync();
+        await AssertStepAndClickNextAsync("User management", "Finally, you can select one or more roles for the user.");
+        // Without this it won't find the Save button to click on.
+        context.ScrollTo(_byShepherdTarget);
+        await AssertStepAndClickShepherdTargetAsync("User management", "We are ready, let's publish the user!");
+        await AssertStepAndClickNextAsync("User management", "You should see the newly created user here.");
 
-        await AssertStepAndClickNextAsync("", "");
+        // Roles
+        await AssertStepAndClickShepherdTargetAsync("Roles", "Since you're surely curious about those roles");
+        return;
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Roles", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
