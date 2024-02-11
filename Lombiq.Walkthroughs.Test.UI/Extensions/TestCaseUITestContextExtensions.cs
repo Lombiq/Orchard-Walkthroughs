@@ -129,7 +129,7 @@ public static class TestCaseUITestContextExtensions
         AssertStep("Viewing the blog post", "The blog post is published, good job!");
         // The URL is not changing here so can't use ClickShepherdTargetAsync().
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        context.SwitchToLastWindow();
+        SwithToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the blog post", "Here is your published blog post", assertShepherdTargetIsNotBody: false);
 
         // Article introduction
@@ -162,7 +162,7 @@ public static class TestCaseUITestContextExtensions
         // The URL is not changing here so can't use ClickShepherdTargetAsync().
         AssertStep("Viewing the article", "The article is now published.");
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        context.SwitchToLastWindow();
+        SwithToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the article", "Here is you published article.", assertShepherdTargetIsNotBody: false);
 
         // Managing the menu
@@ -245,7 +245,7 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickShepherdTargetAsync("Flow Part", "We are ready, let's publish the page!");
         AssertStep("Viewing the page", "The page is published!");
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        context.SwitchToLastWindow();
+        SwithToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Viewing the page", "Here is you published page", assertShepherdTargetIsNotBody: false);
 
         // Layout widgets
@@ -266,7 +266,7 @@ public static class TestCaseUITestContextExtensions
         AssertStep(
             "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
         await context.ClickReliablyOnAsync(_byShepherdTarget);
-        context.SwitchToLastWindow();
+        SwithToLastWindowAndSetDefaultBrowserSize();
         await AssertStepAndClickNextAsync("Layout widgets", "You should see your paragraph", assertShepherdTargetIsNotBody: false);
 
         // Content type editor
