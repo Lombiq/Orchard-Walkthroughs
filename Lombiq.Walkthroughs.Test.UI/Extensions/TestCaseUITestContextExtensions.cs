@@ -71,8 +71,10 @@ public static class TestCaseUITestContextExtensions
         ////await context.SignInDirectlyAsync("testuser"); // #spell-check-ignore-line
 
         // The below steps could be split into multiple tests, one for each section. For now, this would only bring some
-        // performance benefit if any of the steps fail (because then not the whole tests would need to be retried. With
-        // xUnit 3 and it bringing parallelization within test classes too, this would matter more.
+        // performance benefit if any of the steps fail (because then not the whole tests would need to be retried) but
+        // these shouldn't be too flaky (with the reliability features for each command) anyway. Otherwise, there would
+        // be a large overhead starting multiple tests, even if launching them from the same setup snapshot. With xUnit
+        // 3 and it bringing parallelization within test classes too, this would matter more.
 
         await AssertStepAndClickNextAsync("Select walkthrough!", "Welcome! The Lombiq.Walkthroughs", assertShepherdTargetIsNotBody: false);
         await AssertStepAndClickNextAsync("Orchard Core Admin Walkthrough", "This walkthrough covers", assertShepherdTargetIsNotBody: false);
