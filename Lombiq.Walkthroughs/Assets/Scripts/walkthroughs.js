@@ -170,7 +170,7 @@ jQuery(($) => {
                     {
                         title: 'Setup recipe',
                         text: `<p>The setup recipe in the Walkthroughs module used the 
-                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
+                            <a href="https://docs.orchardcore.net/en/latest/docs/getting-started/starter-recipes/#theblogtheme-and-blog-recipe" target="_blank">
                             Blog recipe</a> as a base recipe.</p>
                             <p>In Orchard Core, a 
                             <a href="https://docs.orchardcore.net/en/main/docs/reference/modules/Recipes/" target="_blank">
@@ -390,9 +390,8 @@ jQuery(($) => {
                     {
                         title: 'Creating a new blog post',
                         text: `<p>Let's create a new blog post!</p>
-                            <p>The Blog Post content type is already defined because the setup recipe used the 
-                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
-                            Blog recipe</a> as a base. There is also a singular blog content item and there is a menu
+                            <p>The Blog Post content type is already defined because the setup recipe used the Blog
+                            recipe</a> as a base. There is also a singular blog content item and there is a menu
                             pointing to it.</p>
                             <p>Click on the <em>"Blog"</em> link and you will see all the blog posts within the blog.</p>`,
                         attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
@@ -410,8 +409,7 @@ jQuery(($) => {
                     {
                         title: 'Blog posts',
                         text: `Here you can see the blog posts inside the blog. There is already an example one because
-                            of the <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
-                            Blog recipe</a>.`,
+                            of the  Blog recipe</a>.`,
                         attachTo: { element: '#ci-sortable', on: 'top' },
 
                         // Making the blog posts unclickable, so the user can't go somewhere else.
@@ -689,7 +687,6 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: `<p>Just as the Blog Post content type, Article is already defined and it comes from the
-                            <a href="https://github.com/OrchardCMS/OrchardCore/blob/main/src/OrchardCore.Themes/TheBlogTheme/Recipes/blog.recipe.json" target="_blank">
                             Blog recipe</a> that we used as the base of the setup recipe. We can use it for simpler
                             static content pages like an About page.</p>
                             <p>Go to the admin dashboard again by clicking on the <em>"Next"</em> button.<p>`,
