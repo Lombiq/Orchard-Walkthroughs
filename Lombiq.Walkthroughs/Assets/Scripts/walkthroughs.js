@@ -3614,7 +3614,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Import/Export"</em>.',
+                        text: 'Click on <em>"Import/Export"</em> again.',
                         savedElement: $('[title="Import/Export"]').parent().get(0),
                         attachTo: {
 
@@ -3661,7 +3661,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Here you can import your exported deployment plan (in json or zip).',
+                        text: 'Here you can import your exported deployment plan (a JSON file directly or ZIP in a file).',
                         attachTo: { element: '#file', on: 'top' },
                         buttons: [
                             {
@@ -3681,8 +3681,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'After you selected the file, click on <em>"Import"</em> to import it. This will add, ' +
-                            'delete, or change everything that is in the deployment plan, to/on the website.',
+                        text: `After you selected the file, click on <em>"Import"</em> to import it. This will add, 
+                            delete, or change everything that is configured in the deployment plan.`,
                         attachTo: { element: '.btn.btn-primary.import', on: 'top' },
                         buttons: [
                             backButton,
@@ -3697,8 +3697,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'You can also import raw JSON, if you want. It\'s under the same <em>"Import/Export"</em>' +
-                            ' dropdown called <em>"JSON import"</em>.',
+                        text: `You can also import a piece of JSON text directly too. It's under the same
+                            <em>"Import/Export"</em> dropdown called <em>"JSON import"</em>.`,
                         buttons: [
                             backButton,
                             nextButton,
@@ -3706,11 +3706,16 @@ jQuery(($) => {
                         id: 'deployment_import_package_import_imported',
                     },
                     {
-                        title: 'Features and themes',
-                        text: 'Now take a look at themes. Themes in Orchard Core dictate how a website looks and ' +
-                            'feels by controlling its visual presentation—managing layouts, styles, and design ' +
-                            'elements without altering the site\'s core functionality. They enable easy customization ' +
-                            'and allow users to switch the appearance of their websites swiftly.',
+                        title: 'Themes and modules',
+                        text: `<p>Now let's take a look at how plugins work in Orchard Core. Note that we call them
+                            extensions here.</p> 
+                            <p>There are many built-in extensions (like all the ones that you use during this
+                            walkthrough), and you or other developers can create their own ones too.</p>
+                            <p>We have two kinds of extensions: Themes and modules. Themes define how a website looks
+                            and feels by controlling its graphics, layouts, styles, and UX, without altering the site's
+                            core functionality. They enable easy customization and allow you to switch the appearance
+                            of your website quickly.</p>
+                            </p>We'll first take a look at themes, and then see what modules do.</p>`,
                         buttons: [
                             backButton,
                             nextButton,
@@ -3718,7 +3723,7 @@ jQuery(($) => {
                         id: 'features_and_themes_themes_intro',
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Click on <em>"Design"</em>.',
                         attachTo: { element: '#themes', on: 'right' },
                         buttons: [
@@ -3734,7 +3739,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Click on <em>"Themes"</em>.',
                         attachTo: { element: 'a[href*="Admin/Themes"]', on: 'right' },
                         buttons: [
@@ -3750,7 +3755,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Here you can see and change the themes. Currently the site is using the blog theme.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
@@ -3771,7 +3776,7 @@ jQuery(($) => {
                         id: 'features_and_themes_themes_page',
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Take a look at features. Features in Orchard Core are modular components that add ' +
                             'specific functionalities to a website, providing a way to extend the system by ' +
                             'enabling or disabling distinct capabilities.',
@@ -3782,7 +3787,7 @@ jQuery(($) => {
                         id: 'features_and_themes_features_intro',
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         buttons: [
@@ -3798,7 +3803,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Click on <em>"Features"</em>.',
                         attachTo: { element: 'a[href*="Admin/Features"]', on: 'right' },
                         buttons: [
@@ -3814,7 +3819,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Features and themes',
+                        title: 'Themes and modules',
                         text: 'Here you can see all the features and you can turn them on or off.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,

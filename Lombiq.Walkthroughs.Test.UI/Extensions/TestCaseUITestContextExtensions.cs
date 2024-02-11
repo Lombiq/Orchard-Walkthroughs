@@ -11,26 +11,27 @@ namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 public static class TestCaseUITestContextExtensions
 {
     private static readonly By _byShepherdTarget = By.ClassName("shepherd-target");
+    private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body).shepherd-target");
 
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
-        Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetExists = true)
+        Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetExists);
+            AssertStep(header, text, assertShepherdTargetIsNotBody);
             return ClickOnNextButtonAsync();
         }
 
-        Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetExists = true)
+        Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetExists);
+            AssertStep(header, text, assertShepherdTargetIsNotBody);
             return ClickShepherdTargetAsync();
         }
 
-        void AssertStep(string header, string text, bool assertShepherdTargetExists = true)
+        void AssertStep(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
-            if (assertShepherdTargetExists) context.Exists(_byShepherdTarget);
+            context.Exists(assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget);
         }
 
         Task ClickShepherdTargetAsync() => context.ClickReliablyOnThenWaitForUrlChangeAsync(_byShepherdTarget);
@@ -369,10 +370,37 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickShepherdTargetAsync("Deployment", "Once you finished adding steps, you can click on");
         await AssertStepAndClickShepherdTargetAsync("Deployment", "Here you can use \"File Download\" so the exported");
         await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\" again.");
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Package Import\".");
+        await AssertStepAndClickNextAsync("Deployment", "Here you can import your exported deployment plan");
+        // This will cause a validation error since we didn't select a file, but it's easier this way and an actual
+        // upload is not necessary.
+        await AssertStepAndClickShepherdTargetAsync("Deployment", "After you selected the file, click on \"Import\" to import");
+        await AssertStepAndClickNextAsync("Deployment", "You can also import a piece of JSON", assertShepherdTargetIsNotBody: false);
+        // log in the user and jump to a step right away with the URLs you can see below at the beginning of each
+        // section. For most of the steps you'll also need to sign in with the below shortcut.
+        await context.SignInDirectlyAsync("testuser"); // #spell-check-ignore-line
+
+        // Themes and modules
+        ////await context.GoToAdminRelativeUrlAsync(
+        ////    "/DeploymentPlan/Import/Index?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=features_and_themes_themes_intro");
+        await AssertStepAndClickNextAsync("Themes and modules", "Now let's take a look at how plugins", assertShepherdTargetIsNotBody: false);
         return;
-        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
-        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
-        await AssertStepAndClickShepherdTargetAsync("Deployment", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
+        await AssertStepAndClickShepherdTargetAsync("Themes and modules", "");
 
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
