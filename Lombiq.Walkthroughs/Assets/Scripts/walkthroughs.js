@@ -2637,6 +2637,9 @@ jQuery(($) => {
                             e.g. creation or deletion of content items, and events like user login failures. For
                             content items, previous versions and deleted items can be restored, and changes can be
                             tracked.</p>
+                            <p>All this is quite useful especially if multiple admins are editing content. But even if
+                            you're working alone, it's handy to be able to see content changes and go back to previous
+                            versions.</p>
                             <p>Audit Trail was turned on and configured by the setup recipe. Let's take a look!</p>`,
                         buttons: [
                             {
@@ -2656,7 +2659,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <em>"Configuration"</em>.',
+                        text: 'Click on <em>"Configuration"</em>. Most of the Orchard Core settings are available here.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
                         buttons: [
@@ -2725,7 +2728,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Here you can see and modify all the events that we are tracking.',
+                        text: 'Here you can see and turn on or off all the events that we are tracking.',
                         attachTo: { element: '.edit-item', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2756,7 +2759,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Here you can see the trimming settings.',
+                        text: `To not let the Audit Trail database grow indefinitely, you can configure a periodic
+                            trimming. This will clean up old entries. A retention period of 90 days is a good default
+                            (hence why it's the default!).`,
                         attachTo: { element: '.edit-item', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2777,7 +2782,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click here to see the types of content whose events are recorded.',
+                        text: 'Click here to see the content types whose events are recorded.',
                         attachTo: { element: 'a[href="#tab-content"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2787,7 +2792,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'These are currently the types of content whose events are recorded.',
+                        text: 'These are the content whose events are currently recorded. Feel free to change this.',
                         attachTo: { element: '.edit-item', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2808,8 +2813,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Now let\'s see how we can watch the recorded events! Click on the ' +
-                            '<em>"Audit Trail"</em> button.',
+                        text: `Now let's see how we can see the details of the recorded events! Click on the <em>"Audit
+                            Trail"</em> button.`,
                         attachTo: { element: '#audittrail', on: 'right' }, // #spell-check-ignore-line
                         buttons: [
                             backButton,
@@ -2824,7 +2829,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Here you can see all the recorded events.',
+                        text: `Here you can see all the recorded events. You may find your previous content changes
+                            listed here, as well as logins.`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2855,7 +2861,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Let\'s take a look at user management! Click on the <em>"Security"</em> dropdown.',
+                        text: `It's too quiet if you're alone in your Orchard Core app. Time to invite your colleagues
+                            or friends, perhaps? Let's take a look at user management! Click on the <em>"Security"</em>
+                            dropdown.`,
                         attachTo: { element: '#security', on: 'right' },
                         buttons: [
                             {

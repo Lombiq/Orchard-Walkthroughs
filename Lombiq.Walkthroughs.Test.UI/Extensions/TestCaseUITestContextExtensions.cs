@@ -297,111 +297,58 @@ public static class TestCaseUITestContextExtensions
 
         // Audit Trail
         await AssertStepAndClickNextAsync("Audit Trail", "The Audit Trail module provides an immutable");
-        AssertStep("Audit Trail", "Click on \"Configuration\".");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
-        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Configuration\".");
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Settings\".");
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Audit Trail\".");
+        await AssertStepAndClickNextAsync("Audit Trail", "Here you can see and turn on or off all the events");
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the trimming settings.");
 
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
-        await AssertStepAndClickNextAsync("", "");
+        // For some reason, clicking Next on this step is flaky, so need to retry.
+        var trimmingStepLeft = false;
+        var trimmingStepLeaveAttemptIndex = 0;
+        while (!trimmingStepLeft)
+        {
+            try
+            {
+                await AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely");
+                trimmingStepLeft = true;
+            }
+            catch (TimeoutException)
+            {
+                trimmingStepLeaveAttemptIndex++;
+
+                // False alarm: https://github.com/SonarSource/sonar-dotnet/issues/8736.
+#pragma warning disable S2583 // Conditionally executed code should be reachable
+                if (trimmingStepLeaveAttemptIndex == 5)
+                {
+                    throw new TimeoutException(
+                        "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
+                }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
+            }
+        }
+
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
+        await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
+        await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
+        await AssertStepAndClickNextAsync("Audit Trail", "Here you can see all the recorded events.");
+
+        // User management
+        await AssertStepAndClickShepherdTargetAsync("User management", "It's too quiet if you're alone in your Orchard Core");
+        return;
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+        await AssertStepAndClickNextAsync("User management", "");
+
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
