@@ -9,6 +9,8 @@ namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 
 public static class TestCaseUITestContextExtensions
 {
+    private static readonly By _byShepherdTarget = By.ClassName("shepherd-target");
+
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
         Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetExists = true)
@@ -21,10 +23,12 @@ public static class TestCaseUITestContextExtensions
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
-            if (assertShepherdTargetExists) context.Exists(By.ClassName("shepherd-target"));
+            if (assertShepherdTargetExists) context.Exists(_byShepherdTarget);
         }
 
-        Task ClickShepherdTargetAsync() => context.ClickReliablyOnAsync(By.ClassName("shepherd-target"));
+        Task ClickShepherdTargetAsync() => context.ClickReliablyOnAsync(_byShepherdTarget);
+
+        Task FillInShepherdTargetWithRetriesAsync(string text) => context.FillInWithRetriesAsync(_byShepherdTarget, text);
 
         // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
         Task ClickOnNextButtonAsync() =>
@@ -250,84 +254,54 @@ public static class TestCaseUITestContextExtensions
         await AssertStepAndClickNextAsync("Layout widgets", "These are the layout zones.");
         await AssertStepAndClickNextAsync("Layout widgets", "Widgets are put not just into zones,");
         AssertStep("Layout widgets", "Let's add a widget to the content zone!");
-        await ClickShepherdTargetAsync();
-        AssertStep("Layout widgets", "Now click on \"Paragraph\"");
-        await ClickShepherdTargetAsync();
-        AssertStep("Layout widgets", "Give it a title.");
-        await context.FillInWithRetriesAsync(_byShepherdTarget, "Sample paragraph widget");
-        await ClickOnNextButtonAsync();
-        await AssertStepAndClickNextAsync("Layout widgets", "Give it some content.");
-        AssertStep("Layout widgets", "We are ready, let's publish it!");
-        await ClickShepherdTargetAsync();
-        AssertStep("Layout widgets", "Your paragraph widget is now published.");
-        await ClickShepherdTargetAsync();
-        // In Orchard Core 1.8 this link doesn't open a new tab anymore so this will need to be removed after an Orchard
-        // upgrade.
-        context.SwitchToLastWindow();
-        await AssertStepAndClickNextAsync("Layout widgets", "You should see your paragraph if you scroll down.");
-
         // Content type editor
         await AssertStepAndClickNextAsync("Content type editor", "We'll now take a look at how the sausage is made!");
+        AssertStep("Content type editor", "Click on the \"Content\" dropdown.");
+        await ClickShepherdTargetAsync();
+        AssertStep("Content type editor", "Now click on the \"Content Definition\" dropdown.");
+        await ClickShepherdTargetAsync();
+        AssertStep("Content type editor", "Click on the \"Content Types\" button.");
+        await ClickShepherdTargetAsync();
+        await AssertStepAndClickNextAsync("Content type editor", "Here you can see and edit all the content types.");
+        AssertStep("Content type editor", "Let's edit the Blog Post content type");
+        await ClickShepherdTargetAsync();
+        await AssertStepAndClickNextAsync("Content type editor", "Here you can see the content type's editor.");
+        AssertStep("Content type editor", "You can add a new field by clicking here.");
+        await ClickShepherdTargetAsync();
+        AssertStep("Content type editor", "Let's suppose that you're writing a travel blog");
+        await FillInShepherdTargetWithRetriesAsync("Sample field");
+        await ClickOnNextButtonAsync();
+        AssertStep("Content type editor", "Select Text Field.");
+        await ClickShepherdTargetAsync();
+        await ClickOnNextButtonAsync();
+        AssertStep("Content type editor", "Okay, now save it.");
+        await ClickShepherdTargetAsync();
+        AssertStep("Content type editor", "Now let's edit the text field to see");
+        await ClickShepherdTargetAsync();
+        await AssertStepAndClickNextAsync("Content type editor", "Most of the options are well explained.");
+        await AssertStepAndClickNextAsync("Content type editor", "You can select the editor type here.");
+        await AssertStepAndClickNextAsync("Content type editor", "You can also select the display mode here.");
+        AssertStep("Content type editor", "Okay, now save it.");
+        await ClickShepherdTargetAsync();
+        AssertStep("Content type editor", "The text field is now saved. You will also");
+        await ClickShepherdTargetAsync();
+        await AssertStepAndClickNextAsync("Content type editor", "Congratulations, you just tinkered with what's");
+
+        // Audit Trail
+        await AssertStepAndClickNextAsync("Audit Trail", "The Audit Trail module provides an immutable");
         return;
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
-        await AssertStepAndClickNextAsync("Content type editor", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+        await AssertStepAndClickNextAsync("Audit Trail", "");
+
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

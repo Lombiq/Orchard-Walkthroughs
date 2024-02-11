@@ -684,8 +684,6 @@ jQuery(($) => {
                                 setWalkthroughCookies(this.tour.options.id, 'creating_article_intro');
                             },
                         },
-
-
                         id: 'creating_article_intermediate_step',
                     },
                     {
@@ -2340,7 +2338,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Click on the <em>"Content Types"</em> button.',
+                        text: `Click on the <em>"Content Types"</em> button. Note how this is now NOT the top "Content
+                            Types" button.`,
                         attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -2373,7 +2372,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Let\'s edit the Blog Post content type! Click here.',
+                        text: 'Let\'s edit the Blog Post content type since we know that already very well! Click here.',
                         attachTo: { element: 'a[role="btn-edit-BlogPost"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2388,8 +2387,18 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Here you can see the content type editor. All the options are explained here. But ' +
-                            'what if you want to add a new field, like a text field?',
+                        text: `<p>Here you can see the content type's editor. All the options are explained here.</p>
+                            <p>If you scroll down, you can also see the familiar Title and MarkdownBody <em>content
+                            parts</em>. That's another term: content parts are the basic building blocks of content
+                            types. They're reusable, so e.g. the title of blog posts and articles are all handled by
+                            the same Title Part.</p>
+                            <p>But what if you want to add a new field, like a text field? Let's see that next! <em>
+                            Content fields</em> are also building blocks of content types, smaller ones, usually only
+                            storing a single piece of data. But unlike parts, they can be added to the same content
+                            type multiple times (e.g., your content type can only have a single MarkdownBody, but can
+                            have any number of Text Fields). If your head hurts, check out the docs
+                            <a href="https://docs.orchardcore.net/en/latest/docs/glossary/#content-item" target="_blank">
+                            here</a>.</p>`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2426,7 +2435,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Set a display name (the technical name will be auto generated).',
+                        text: `<p>Let's suppose that you're writing a travel blog, and want to display the locations
+                            where the blog post takes place, like "Budapest, Hungary and Lake Balaton, Hungary". So,
+                            perhaps name the field "Location"? (Or you can think of a different example too, of
+                            course.)</p>
+                            <p>Fields also have a technical name, but that'll be auto-generated for you.</p>`,
                         attachTo: { element: '#DisplayName', on: 'top' },
                         buttons: [
                             {
@@ -2446,7 +2459,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Select text field.',
+                        text: `Select Text Field. Notice how there are many more fields available? You can try them out
+                            later.`,
                         attachTo: { element: 'input[value="TextField"]', on: 'top' },
                         buttons: [
                             backButton,
@@ -2474,10 +2488,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Now let\'s edit the text field!',
+                        text: 'Now let\'s edit the text field to see what we can do with it!',
                         scrollTo: true,
-                        // There is no proper basic JS selector, to select the element, so we need to use a
-                        // function.
+                        // There is no proper basic JS selector, to select the element, so we need to use a function.
                         savedElement: $('.btn.btn-primary.btn-sm').get(1),
                         attachTo: {
 
@@ -2530,8 +2543,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'You can select the editor type here, so while on the admin dashboard editing a' +
-                            ' blog post, this text field\'s editor would look and act different, based on the selected option.',
+                        text: `You can select the editor type here. This affects whether you have a simple text field,
+                            a field to edit e-mail addresses or phone numbers, or even a code editor. There are many
+                            options, check them out!`,
                         attachTo: { element: '#field-editor-select', on: 'right' },
                         buttons: [
                             backButton,
@@ -2541,7 +2555,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'You can select the display mode here. This will affect how the text will appear on the frontend.',
+                        text: `You can also select the display mode here. This affects how the text will appear on the
+                            frontend. By the way, all of these options are extensible, so if you're willing to write
+                            some code, you can have your own editors or displays too!`,
                         attachTo: { element: '#field-display-select', on: 'right' },
                         buttons: [
                             backButton,
@@ -2595,8 +2611,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Now if you edit a blog post the new text field should appear and after creating a ' +
-                            'new blog post, your new field\'s content will be visible on the frontend.',
+                        text: `Congratulations, you just tinkered with what's under the hood! Now if you edit a blog
+                            post, the new text field's editor will appear and once you published the blog post, your
+                            new field's content will be visible on the frontend too.`,
                         buttons: [
                             backButton,
                             {
@@ -2615,12 +2632,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'The Audit Trail module provides an immutable (for users, even administrators but not ' +
-                            'for developers), auditable log of certain changes and events in the system. This ' +
-                            'includes e.g. creation or deletion of content items, and events like user login ' +
-                            'failures. For content items, previous versions and deleted items can be restored, and ' +
-                            'changes can be tracked. <br> It was turned on and configured by the setup recipe. Let\'s ' +
-                            'take a look!',
+                        text: `<p>The Audit Trail module provides an immutable (for users, even administrators, but not 
+                            for developers), auditable log of certain changes and events in the system. This includes
+                            e.g. creation or deletion of content items, and events like user login failures. For
+                            content items, previous versions and deleted items can be restored, and changes can be
+                            tracked.</p>
+                            <p>Audit Trail was turned on and configured by the setup recipe. Let's take a look!</p>`,
                         buttons: [
                             {
                                 action: function () {
