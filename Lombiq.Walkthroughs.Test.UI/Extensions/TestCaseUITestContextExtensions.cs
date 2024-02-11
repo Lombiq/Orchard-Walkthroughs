@@ -358,14 +358,25 @@ public static class TestCaseUITestContextExtensions
 
         // Roles
         await AssertStepAndClickShepherdTargetAsync("Roles", "Since you're surely curious about those roles");
+        await AssertStepAndClickShepherdTargetAsync("Roles", "Now click on \"Roles\".");
+        await AssertStepAndClickNextAsync("Roles", "Here you can see all the existing roles and edit their");
+        await AssertStepAndClickShepherdTargetAsync("Roles", "Let's see one! Click on the \"Edit\" button.");
+        await AssertStepAndClickNextAsync("Roles", "A role is a collection of permissions that the user has.");
+        await AssertStepAndClickShepherdTargetAsync("Roles", "Not much to tune on this role, but click on the \"Save\"");
+        await AssertStepAndClickNextAsync("Roles", "If you change permissions of a role, then");
+
+        // Deployment
+        await AssertStepAndClickNextAsync("Deployment", "Let's take a look at exporting and importing,");
         return;
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
-        await AssertStepAndClickNextAsync("Roles", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
+        await AssertStepAndClickNextAsync("Deployment", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");
         await AssertStepAndClickNextAsync("", "");

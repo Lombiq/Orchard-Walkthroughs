@@ -2889,7 +2889,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Now click on <em>"Users"</em>.',
+                        text: `This menu contains all security and role-based access control-related settings. For now,
+                            we're only interestd in user management specifically, so click on <em>"Users"</em>.`,
                         attachTo: { element: '.users', on: 'right' },
                         buttons: [
                             backButton,
@@ -2904,7 +2905,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Here you can see all the users, including yourself the testuser.', // #spell-check-ignore-line
+                        text: 'Here you can see all the users, including your current account, "testuser".', // #spell-check-ignore-line
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -2925,7 +2926,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'You can edit the users, but also add new ones. Click here to add a new user.',
+                        text: `You can edit existing users and add add new ones (this also works if user registration
+                            is not enabled, which is the case by default). Click here to add a new user.`,
                         attachTo: { element: 'a[href*="Users/Create"', on: 'top' },
                         buttons: [
                             backButton,
@@ -2940,7 +2942,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Enter a user name.',
+                        text: `Think of someone you like so much you want them in your Orchard Core app, then add a
+                            user name for them.`,
                         attachTo: { element: '#User_UserName', on: 'top' },
                         buttons: [
                             {
@@ -2965,7 +2968,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Enter an email.',
+                        text: 'Add their e-mail address.',
                         attachTo: { element: '#User_Email', on: 'top' },
                         buttons: [
                             backButton,
@@ -2980,7 +2983,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'You can enter a phone number, but it\'s optional.',
+                        text: `You can enter a phone number too, but it's optional. It becomes more interesting if you
+                            enable SMS-based
+                            <a href="https://docs.orchardcore.net/en/latest/docs/reference/modules/Users/#two-factor-authentication" target="_blank">
+                            two-factor authentication</a>.`,
                         attachTo: { element: '#User_PhoneNumber', on: 'top' },
                         buttons: [
                             backButton,
@@ -2995,8 +3001,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'You can disable the user, this is also available for existing users. If the user is ' +
-                            'disabled then they will not be able to log in.',
+                        text: `You can disable the user, though for a new one this kind of misses the point. This
+                            option is also available for existing users. If a user is disabled then they will not be
+                            able to log in.`,
                         attachTo: { element: '#User_IsEnabled', on: 'top' },
                         buttons: [
                             backButton,
@@ -3011,7 +3018,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'You can enter a password, but it could be also generated.',
+                        text: `You can enter a password or generate a strong one automatically. Don't forget to copy it
+                            though if you generate it, otherwise nobody will know it!`,
                         attachTo: { element: '.password-generator-wrapper', on: 'top' },
                         buttons: [
                             backButton,
@@ -3026,8 +3034,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Finally, you can select the role(s) for the user. Each role gives different ' +
-                            'permissions for the users. We will take a look at that later.',
+                        text: `Finally, you can select one or more roles for the user. Each role gives different
+                            permissions for users. We will take a look at that later. If you don't select anything here,
+                            the user will only have the default Authenticated role after they log in, and Anonymous
+                            before that.`,
                         savedElement: $('#User_Roles_0__Role').parent().parent().get(0),
                         attachTo: {
                             element: function getContentTypesButton() {
@@ -3096,7 +3106,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Let\'s see the roles now! Click on the <em>"Security"</em> dropdown.',
+                        text: `Since you're surely curious about those roles we've seen a glimpse of, let's actually
+                            see them now! Click on the <em>"Security"</em> dropdown.`,
                         attachTo: { element: '#security', on: 'right' },
                         buttons: [
                             backButton,
@@ -3127,7 +3138,9 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Here you can see all the roles and edit their permissions.',
+                        text: `Here you can see all the existing roles and edit their permissions. All users will be in
+                            the "Anonymous" role by default. Once they log in, they'll have the "Authenticated" role
+                            istead. Then, you can configure further logged-in roles (users can have multiple roles) here.`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         buttons: [
                             {
@@ -3162,7 +3175,11 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'You can see and edit all the permissions here.',
+                        text: `<p>A role is a collection of permissions that the user has. And permissions specify what a
+                            user can do in Orchard Core.</p>
+                            <p>Since we're looking a the Administrator role, these users are very powerful. Sine the
+                            role also has the "Site Owners Permission" (see below), they can do just about anything.
+                            By the way, you're one of them :).</p>`,
                         attachTo: { element: '.ta-content', on: 'top' },
                         buttons: [
                             {
@@ -3182,7 +3199,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'After you finished, click on the <em>"Save"</em> button.',
+                        text: 'Not much to tune on this role, but click on the <em>"Save"</em> button to save any changes.',
                         attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'top' },
                         scrollTo: true,
                         buttons: [
@@ -3198,8 +3215,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Roles',
-                        text: 'Now if you changed the permissions, every user with that role will lose or gain ' +
-                            'those permissions, depending on what you did.',
+                        text: `If you change permissions of a role, then all users with that role will lose or gain
+                            those permissions.`,
                         buttons: [
                             {
                                 action: function () {
@@ -3227,7 +3244,7 @@ jQuery(($) => {
                         id: 'roles_published',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Let\'s take a look at exporting and importing, deployment and deployment plans!',
                         buttons: [
                             {
@@ -3246,7 +3263,7 @@ jQuery(($) => {
                         id: 'deployment_intro',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
@@ -3263,7 +3280,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Import/Export"</em>.',
                         savedElement: $('[title="Import/Export"]').parent().get(0),
                         attachTo: {
@@ -3293,7 +3310,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Deployment Plans"</em>.',
                         attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
                         buttons: [
@@ -3308,7 +3325,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Here you would see the deployment plans, but we currently have none. A deployment ' +
                             'plan refers to a set of configurations, steps, or actions that define how an ' +
                             'Orchard Core application is deployed. The result will be a downloadable recipe.',
@@ -3331,7 +3348,7 @@ jQuery(($) => {
                         id: 'deployment_deployment_plans',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Let\'s create a deployment plan! Click here.',
                         attachTo: { element: '.btn.btn-secondary.create', on: 'top' },
                         buttons: [
@@ -3346,7 +3363,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Give it a name.',
                         attachTo: { element: '#Name', on: 'top' },
                         buttons: [
@@ -3356,7 +3373,7 @@ jQuery(($) => {
                         id: 'deployment_creating_deployment_plan',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Now click on the <em>"Create"</em> button.',
                         attachTo: { element: '.btn.btn-primary.create', on: 'top' },
                         buttons: [
@@ -3371,7 +3388,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps! Click on the ' +
                             '<em>"Manage Steps"</em> button.',
                         attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
@@ -3403,7 +3420,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on the <em>"Add Step"</em> button.',
                         attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
@@ -3423,7 +3440,7 @@ jQuery(($) => {
                         advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Here you can see all the steps that you can add.',
                         attachTo: { element: '.modal-body', on: 'top' },
                         canClickTarget: false,
@@ -3445,7 +3462,7 @@ jQuery(($) => {
                         advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Let\'s filter for <em>"Update Content Definitions"</em>! (Click on the <em>"Next"</em> button).',
                         attachTo: { element: '#search-box', on: 'top' },
                         canClickTarget: false,
@@ -3466,7 +3483,7 @@ jQuery(($) => {
                         id: 'deployment_filter_steps',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: '<em>"Update Content Definitions"</em> exports the chosen content types and parts (you ' +
                             'can configure it later which ones). After running the deployment plan, each step will ' +
                             'add its own things to the final <em>"recipe.json"</em> file, which you can later download. ' +
@@ -3485,7 +3502,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Here you can select which content types and parts you want to include.',
                         attachTo: { element: '.ta-content', on: 'top' },
                         buttons: [
@@ -3505,7 +3522,7 @@ jQuery(($) => {
                         id: 'deployment_update_content_definitions_edit',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'If you finished click on the <em>"Create"</em> button.',
                         attachTo: { element: '.btn.btn-primary.create', on: 'top' },
                         scrollTo: true,
@@ -3521,7 +3538,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'As you can see you added the step to the deployment plan. You could add more steps ' +
                             'e.g. <em>"All Content"</em> which would export all the <b>content items</b>.',
                         attachTo: { element: '.ta-content', on: 'top' },
@@ -3543,7 +3560,7 @@ jQuery(($) => {
                         id: 'deployment_update_content_definitions_published',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'When you finished adding the steps, you can click on <em>"Execute"</em> to run the' +
                             ' deployment.',
                         attachTo: { element: '.btn.btn-success.btn-sm', on: 'top' },
@@ -3554,7 +3571,7 @@ jQuery(($) => {
                         advanceOn: { selector: '.btn.btn-success.btn-sm', event: 'click' },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Here you can use <em>"File Download"</em> so the exported <em>recipe.json</em> file will ' +
                             'be downloaded (inside a zip file).',
                         attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'top' },
@@ -3565,7 +3582,7 @@ jQuery(($) => {
                         advanceOn: { selector: '.btn.btn-primary.btn-sm[href*="ExportFile"]', event: 'click' },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Configuration"</em>.',
                         attachTo: { element: '#configuration', on: 'right' },
                         scrollTo: true,
@@ -3582,7 +3599,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Import/Export"</em>.',
                         savedElement: $('[title="Import/Export"]').parent().get(0),
                         attachTo: {
@@ -3612,7 +3629,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Click on <em>"Package Import"</em>.',
                         attachTo: { element: 'a[href*="DeploymentPlan/Import/Index"]', on: 'right' },
                         buttons: [
@@ -3629,7 +3646,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'Here you can import your exported deployment plan (in json or zip).',
                         attachTo: { element: '#file', on: 'top' },
                         buttons: [
@@ -3649,7 +3666,7 @@ jQuery(($) => {
                         id: 'deployment_import_package_import_choose_file',
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'After you selected the file, click on <em>"Import"</em> to import it. This will add, ' +
                             'delete, or change everything that is in the deployment plan, to/on the website.',
                         attachTo: { element: '.btn.btn-primary.import', on: 'top' },
@@ -3665,7 +3682,7 @@ jQuery(($) => {
                         },
                     },
                     {
-                        title: 'Import/export, deployment, <br> deployment plan',
+                        title: 'Deployment',
                         text: 'You can also import raw JSON, if you want. It\'s under the same <em>"Import/Export"</em>' +
                             ' dropdown called <em>"JSON import"</em>.',
                         buttons: [
