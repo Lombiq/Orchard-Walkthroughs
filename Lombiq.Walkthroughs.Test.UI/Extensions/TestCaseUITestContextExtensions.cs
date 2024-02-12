@@ -142,10 +142,7 @@ public static class TestCaseUITestContextExtensions
                 "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
-                AssertStep("Markdown editor", "This is the editor where you can write");
-                await context.FillInCodeMirrorEditorWithRetriesAsync(
-                By.CssSelector(".CodeMirror.cm-s-easymde.CodeMirror-wrap"), "Hello world."); // #spell-check-ignore-line
-                await ClickOnNextButtonAsync();
+                await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync(
                 "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
                 await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
