@@ -139,12 +139,12 @@ public static class TestCaseUITestContextExtensions
             {
                 // The ID of the blog will be random, so we can't have a start URL here.
                 await AssertStepAndClickNextAsync(
-                "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
+                    "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync(
-                "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
+                    "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
                 await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
                 await AssertStepAndClickNextAsync("Tags", "You can add tags to your blog post");
                 await AssertStepAndClickNextAsync("Category", "You can also select the category of your blog post.");
@@ -245,9 +245,9 @@ public static class TestCaseUITestContextExtensions
             {
                 // The URL of the menu item will be random, so we can't have a start URL here.
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync(
-                "Managing the menu", "Let's give the menu item a name!", "Sample article");
+                    "Managing the menu", "Let's give the menu item a name!", "Sample article");
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync(
-                "Managing the menu", "Let's give it your article's URL!", "~/sample-article");
+                    "Managing the menu", "Let's give it your article's URL!", "~/sample-article");
                 await AssertStepAndClickShepherdTargetAsync("Managing the menu", "We are ready, let's publish the menu item!");
                 await AssertStepAndClickNextAsync("Managing the menu", "Your new menu item is now here.");
                 await AssertStepAndClickShepherdTargetAsync("Managing the menu", "You will also need to publish the menu itself too.");
@@ -362,7 +362,7 @@ public static class TestCaseUITestContextExtensions
                 // In Orchard Core 1.8 this link doesn't open a new tab anymore so these three lines will need to be switched to
                 // just AssertStepAndClickShepherdTargetAsync() after an Orchard upgrade.
                 AssertStep(
-                "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
+                    "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
                 await context.ClickReliablyOnAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
                 await AssertStepAndClickNextAsync(
@@ -417,7 +417,7 @@ public static class TestCaseUITestContextExtensions
                 // so need to retry.
                 await RetryTimeoutStepAsync(
                 () => AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely"),
-                "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
+                    "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
                 await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
