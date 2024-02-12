@@ -391,8 +391,8 @@ jQuery(($) => {
                         title: 'Creating a new blog post',
                         text: `<p>Let's create a new blog post!</p>
                             <p>The Blog Post content type is already defined because the setup recipe used the Blog
-                            recipe</a> as a base. There is also a singular blog content item and there is a menu
-                            pointing to it.</p>
+                            recipe as a base. There is also a singular blog content item and there is a menu pointing
+                            to it.</p>
                             <p>Click on the <em>"Blog"</em> link and you will see all the blog posts within the blog.</p>`,
                         attachTo: { element: '.icon-class-fas.icon-class-fa-rss.item-label.d-flex', on: 'right' },
                         buttons: [
@@ -409,7 +409,7 @@ jQuery(($) => {
                     {
                         title: 'Blog posts',
                         text: `Here you can see the blog posts inside the blog. There is already an example one because
-                            of the  Blog recipe</a>.`,
+                            of the  Blog recipe.`,
                         attachTo: { element: '#ci-sortable', on: 'top' },
 
                         // Making the blog posts unclickable, so the user can't go somewhere else.
@@ -687,8 +687,8 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: `<p>Just as the Blog Post content type, Article is already defined and it comes from the
-                            Blog recipe</a> that we used as the base of the setup recipe. We can use it for simpler
-                            static content pages like an About page.</p>
+                            Blog recipe that we used as the base of the setup recipe. We can use it for simpler static
+                            content pages like an About page.</p>
                             <p>Go to the admin dashboard again by clicking on the <em>"Next"</em> button.<p>`,
                         buttons: [
                             {
@@ -1578,7 +1578,6 @@ jQuery(($) => {
                             },
                         ],
                         id: 'taxonomies_category_published',
-
                         when: {
                             show() {
                                 // If publishing is failed (no icon was set) don't go ahead.
