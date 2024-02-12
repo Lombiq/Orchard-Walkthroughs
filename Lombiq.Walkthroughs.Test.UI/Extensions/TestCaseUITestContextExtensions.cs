@@ -413,11 +413,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Audit Trail\".");
                 await AssertStepAndClickNextAsync("Audit Trail", "Here you can see and turn on or off all the events");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the trimming settings.");
-                // For some reason (perhaps because it's at the very bottom of the page), clicking Next on this step is flaky,
-                // so need to retry.
-                await RetryTimeoutStepAsync(
-                () => AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely"),
-                    "Attempting to leave the Trimming tab of the Audit Trail didn't succeed even after 5 attempts.");
+                await AssertStepAndClickNextAsync("Audit Trail", "To not let the Audit Trail database grow indefinitely");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
                 await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
@@ -532,28 +528,5 @@ public static class TestCaseUITestContextExtensions
             "Outro", // #spell-check-ignore-line
             () => AssertStep(
                 "Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false));
-    }
-
-    private static async Task RetryTimeoutStepAsync(Func<Task> stepAsync, string exceptionMessage)
-    {
-        var trimmingStepLeft = false;
-        var trimmingStepLeaveAttemptIndex = 0;
-        while (!trimmingStepLeft)
-        {
-            try
-            {
-                await stepAsync();
-                trimmingStepLeft = true;
-            }
-            catch (TimeoutException)
-            {
-                trimmingStepLeaveAttemptIndex++;
-
-                // False alarm: https://github.com/SonarSource/sonar-dotnet/issues/8736.
-#pragma warning disable S2583 // Conditionally executed code should be reachable
-                if (trimmingStepLeaveAttemptIndex == 5) throw new TimeoutException(exceptionMessage);
-#pragma warning restore S2583 // Conditionally executed code should be reachable
-            }
-        }
     }
 }
