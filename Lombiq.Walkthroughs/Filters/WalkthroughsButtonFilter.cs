@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
-using System;
+using OrchardCore.Modules;
 using System.Threading.Tasks;
 
 namespace Lombiq.Walkthroughs.Filters;

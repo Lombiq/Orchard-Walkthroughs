@@ -3586,7 +3586,7 @@ jQuery(($) => {
                         title: 'Deployment',
                         text: `Here you can use <em>"File Download"</em> so the exported <em>recipe.json</em> file will 
                             be downloaded (inside a zip file).`,
-                        attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'top' },
+                        attachTo: { element: '.btn.btn-primary.btn-sm[href*="ExportFile"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
