@@ -79,8 +79,9 @@ public static class TestCaseUITestContextExtensions
         // The below steps could be split into multiple tests, one for each section. For now, this would only bring some
         // performance benefit if any of the steps fail (because then not the whole tests would need to be retried) but
         // these shouldn't be too flaky (with the reliability features for each command) anyway. Otherwise, there would
-        // be a large overhead starting multiple tests, even if launching them from the same setup snapshot. With xUnit
-        // 3 and it bringing parallelization within test classes too, this would matter more.
+        // be a large overhead starting multiple tests, even if launching them from the same setup snapshot. If xUnit
+        // will bring parallelization within test classes too (see https://github.com/xunit/xunit/issues/1986), this
+        // would matter more.
 
         // Introduction
         await context.ExecuteLoggedAsync(
