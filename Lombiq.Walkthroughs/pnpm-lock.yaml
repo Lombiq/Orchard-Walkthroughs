@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   shepherd.js:
-    specifier: 12.0.6
-    version: 12.0.6
+    specifier: 14.3.0
+    version: 14.3.0
 
 packages:
 
@@ -28,20 +28,21 @@ packages:
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
     dev: false
 
-  /deepmerge-ts@5.1.0:
-    resolution: {integrity: sha512-eS8dRJOckyo9maw9Tu5O5RUi/4inFLrnoLkBe3cPfDMx3WZioXtmOew4TXQaxq7Rhl4xjDtR7c6x8nNTxOvbFw==}
+  /@scarf/scarf@1.4.0:
+    resolution: {integrity: sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ==}
+    requiresBuild: true
+    dev: false
+
+  /deepmerge-ts@7.1.3:
+    resolution: {integrity: sha512-qCSH6I0INPxd9Y1VtAiLpnYvz5O//6rCfJXKk0z66Up9/VOSr+1yS8XSKA5IWRxjocFGlzPyaZYe+jxq7OOLtQ==}
     engines: {node: '>=16.0.0'}
     dev: false
 
-  /idb@8.0.0:
-    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
-    dev: false
-
-  /shepherd.js@12.0.6:
-    resolution: {integrity: sha512-M0I8GLQyi9a34XiVKRUBWM2CRr4xjiqpuOHkh9ja59fzI8liVk1bQ9NLwzo2mFM3jYVauafnIbIOP3y1QawzOQ==}
+  /shepherd.js@14.3.0:
+    resolution: {integrity: sha512-m73/+dkcPotaGfCnzLJtWJtY7TYSiyeXQ5uRIFs+Ed5HD7kw9tX8vlFbgF6yJ7H5N3z27/i5H3hBWlTw64PeXA==}
     engines: {node: 18.* || >= 20}
     dependencies:
       '@floating-ui/dom': 1.6.5
-      deepmerge-ts: 5.1.0
-      idb: 8.0.0
+      '@scarf/scarf': 1.4.0
+      deepmerge-ts: 7.1.3
     dev: false
