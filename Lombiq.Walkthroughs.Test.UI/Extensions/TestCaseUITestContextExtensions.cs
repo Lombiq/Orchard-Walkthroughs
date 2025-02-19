@@ -74,7 +74,7 @@ public static class TestCaseUITestContextExtensions
         // jump to a step right away with the URLs you can see below at the beginning of each section (you'll need to
         // temporarily comment out the steps before it. For most of the steps you'll also need to sign in with the below
         // shortcut.
-        ////await context.SignInDirectlyAsync("testuser"); // #spell-check-ignore-line
+        ////await context.SignInDirectlyAsync("testuser");
 
         // The below steps could be split into multiple tests, one for each section. For now, this would only bring some
         // performance benefit if any of the steps fail (because then not the whole tests would need to be retried) but
@@ -110,7 +110,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Log in", "Let's log in!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Log in page", "Here you can log in.", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync(
-                    "Username", "Provide your username.", "testuser"); // #spell-check-ignore-line
+                    "Username", "Provide your username.", "testuser");
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
                 await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
                 await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
@@ -195,7 +195,7 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 ////await context.GoToAdminRelativeUrlAsync(
-                ////    "/Contents/ContentTypes/Article/Create?returnUrl=%2FAdmin%2FContents%2FContentItems" + // #spell-check-ignore-line
+                ////    "/Contents/ContentTypes/Article/Create?returnUrl=%2FAdmin%2FContents%2FContentItems" +
                 ////    "&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_editor");
                 await AssertStepAndClickNextAsync(
                     "Creating a new article", "Here you can create the article.", assertShepherdTargetIsNotBody: false);
@@ -295,7 +295,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync("Taxonomies", "You can name your category.", "Sample category");
                 AssertStep("Taxonomies", "You can select an icon for the category.");
                 await context.ClickReliablyOnAsync(By.Id("Category_Icon"));
-                await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item")); // #spell-check-ignore-line
+                await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item"));
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("Taxonomies", "And you can set a permalink for it");
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "Let's publish the new category! ");
@@ -534,9 +534,9 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see all the features");
             });
 
-        // Outro #spell-check-ignore-line
+        // Outro
         context.ExecuteLogged(
-            "Outro", // #spell-check-ignore-line
+            "Outro",
             () => AssertStep(
                 "Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false));
     }

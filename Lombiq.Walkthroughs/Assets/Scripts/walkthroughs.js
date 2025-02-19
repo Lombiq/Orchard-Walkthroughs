@@ -12,7 +12,7 @@ jQuery(($) => {
         }
 
         function deleteWalkthroughCookies() {
-            const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;'; // #spell-check-ignore-line
+            const expireCookie = '=; expires = Thu, 01 Jan 1970 00:00:00 UTC; path = /;';
             document.cookie = 'Walkthrough' + expireCookie;
             document.cookie = 'WalkthroughStep' + expireCookie;
             document.cookie = 'IgnoreQueryStep' + expireCookie;
@@ -256,7 +256,7 @@ jQuery(($) => {
                     {
                         title: 'Username',
                         attachTo: { element: '#LoginForm_UserName', on: 'bottom' },
-                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.', // #spell-check-ignore-line
+                        text: 'Provide your username. This recipe included a user. The username is <em>"testuser"</em>.',
                         buttons: [
                             backButton,
                             nextButton,
@@ -315,8 +315,8 @@ jQuery(($) => {
                         when: {
                             show() {
                                 // If login is failed don't go ahead.
-                                if ($('.field-validation-error[data-valmsg-for="Password"]').length || // #spell-check-ignore-line
-                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) { // #spell-check-ignore-line
+                                if ($('.field-validation-error[data-valmsg-for="Password"]').length ||
+                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;
@@ -1102,7 +1102,7 @@ jQuery(($) => {
                     {
                         title: 'Managing the menu',
                         text: 'Click on the <em>"Main Menu"</em> link.',
-                        attachTo: { element: () => firstWithText('.item-label', 'Main Menu'), on: 'right' }, // #spell-check-ignore-line
+                        attachTo: { element: () => firstWithText('.item-label', 'Main Menu'), on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -1427,7 +1427,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_intro2',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
                                 },
                                 classes: 'shepherd-button-primary',
                                 text: 'Next',
@@ -1480,7 +1480,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1526,7 +1526,7 @@ jQuery(($) => {
                             show() {
                                 $('#Category_Icon').on('click', function moveOverlay() {
                                     $('.shepherd-modal-overlay-container').css('z-index', 1100);
-                                    $('.iconpicker-container').css('z-index', 1101); // #spell-check-ignore-line
+                                    $('.iconpicker-container').css('z-index', 1101);
                                 });
 
                                 // Needs to be added to other steps in this page, so a reload doesn't break it.
@@ -1581,7 +1581,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1629,7 +1629,7 @@ jQuery(($) => {
                                         Shepherd.activeTour.options.id,
                                         'taxonomies_categories',
                                         'Admin',
-                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy'); // #spell-check-ignore-line
+                                        'Admin/Contents/ContentItems?q=type%3ATaxonomy');
                                 },
                                 classes: 'shepherd-button-secondary',
                                 text: 'Back',
@@ -1721,7 +1721,7 @@ jQuery(($) => {
                     {
                         title: 'Media management',
                         text: 'You can upload new files here.',
-                        attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' }, // #spell-check-ignore-line
+                        attachTo: { element: '.btn.btn-sm.btn-primary.fileinput-button.upload-button', on: 'top' },
                         buttons: [
                             backButton,
                             nextButton,
@@ -2730,7 +2730,7 @@ jQuery(($) => {
                     {
                         title: 'Audit Trail',
                         text: 'Click on <em>"Audit Trail"</em>.',
-                        attachTo: { element: '#audittrailSettings', on: 'right' }, // #spell-check-ignore-line
+                        attachTo: { element: '#audittrailSettings', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2831,7 +2831,7 @@ jQuery(($) => {
                         title: 'Audit Trail',
                         text: `Now let's see how we can see the details of the recorded events! Click on the <em>"Audit
                             Trail"</em> button.`,
-                        attachTo: { element: '#audittrail', on: 'right' }, // #spell-check-ignore-line
+                        attachTo: { element: '#audittrail', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2921,7 +2921,7 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: 'Here you can see all the users, including your current account, "testuser".', // #spell-check-ignore-line
+                        text: 'Here you can see all the users, including your current account, "testuser".',
                         attachTo: { element: '.ta-content', on: 'top' },
                         canClickTarget: false,
                         buttons: [
@@ -3518,7 +3518,7 @@ jQuery(($) => {
                                 action: function () {
                                     const searchBox = $('#search-box');
                                     searchBox.val('Update Content Definitions');
-                                    searchBox.trigger('keyup'); // #spell-check-ignore-line
+                                    searchBox.trigger('keyup');
                                     return this.next();
                                 },
                                 classes: 'shepherd-button-primary',
@@ -3922,7 +3922,7 @@ jQuery(($) => {
                                 text: 'End',
                             },
                         ],
-                        id: 'outro', // #spell-check-ignore-line
+                        id: 'outro',
                     },
                 ],
             }),
