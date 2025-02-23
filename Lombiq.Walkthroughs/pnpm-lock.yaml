@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   shepherd.js:
-    specifier: 14.4.0
-    version: 14.4.0
+    specifier: 14.5.0
+    version: 14.5.0
 
 packages:
 
@@ -38,8 +38,8 @@ packages:
     engines: {node: '>=16.0.0'}
     dev: false
 
-  /shepherd.js@14.4.0:
-    resolution: {integrity: sha512-pXuyhtHPj47Wp6vYESIdhcRrpva67+AolbvVBnJlZNZDa4VBPTwoN+x3R7h1C+RV+z5Tvk3JuLB/8ZgEKMeyEQ==}
+  /shepherd.js@14.5.0:
+    resolution: {integrity: sha512-23yBjWnrEeaCHFVUukPNol/K0pdvq6NgyqxDeq1qfJuNhxTHpiAvqTB9ULUogndBcGxfkyTRud95PpUyZwGAGQ==}
     engines: {node: 18.* || >= 20}
     dependencies:
       '@floating-ui/dom': 1.6.13
