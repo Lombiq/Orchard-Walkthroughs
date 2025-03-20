@@ -314,9 +314,8 @@ jQuery(($) => {
                         id: 'login_logged_in',
                         when: {
                             show() {
-                                // If login is failed don't go ahead.
-                                if ($('.field-validation-error[data-valmsg-for="Password"]').length ||
-                                    $('.field-validation-error[data-valmsg-for="UserName"]').length) {
+                                // If login failed then don't go ahead.
+                                if ($('.validation-summary-errors').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
                                     return;

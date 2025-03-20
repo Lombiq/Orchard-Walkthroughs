@@ -113,6 +113,8 @@ public static class TestCaseUITestContextExtensions
                     "Username", "Provide your username.", "testuser");
                 await AssertStepAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
                 await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
+                (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
+                await context.Driver.Navigate().BackAsync();
                 await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
             });
 
