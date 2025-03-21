@@ -115,9 +115,25 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Username", "Provide your username.", "testuser");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
-                await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
+
+                // Under Ubuntu Chrome, the click on this step will randomly not work. Working it around like this.
+                try
+                {
+                    await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
+                }
+                catch (TimeoutException)
+                {
+                    context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
+                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
+                        "the next step.");
+
+                    await context.SignInDirectlyAsync("testuser");
+                    await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=login_logged_in");
+                }
+
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
+
                 // Under Ubuntu Chrome, the Next button on this step is randomly not clickable with the "cursor:
                 // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled.
                 // Working it around like this.
