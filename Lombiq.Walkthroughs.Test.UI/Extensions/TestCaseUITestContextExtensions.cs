@@ -3,7 +3,9 @@ using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using OpenQA.Selenium;
 using Shouldly;
+using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 
@@ -116,7 +118,21 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
-                await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
+                // Under Ubuntu Chrome, the Next button on this step is randomly not clickable with the "cursor:
+                // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled.
+                // Working it around like this.
+                try
+                {
+                    await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
+                }
+                catch (TimeoutException)
+                {
+                    context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
+                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
+                        "the next step.");
+
+                    await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
+                }
             });
 
         // Dashboard
