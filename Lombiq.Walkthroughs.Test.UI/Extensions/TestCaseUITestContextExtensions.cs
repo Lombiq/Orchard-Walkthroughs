@@ -27,14 +27,14 @@ public static class TestCaseUITestContextExtensions
             return ClickShepherdTargetAsync();
         }
 
-        async Task AssertStepAndFillInShepherdTargetAndClickNextAsync(
+        async Task AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
             string header,
             string text,
             string targetText,
             bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            await FillInShepherdTargetWithRetriesAsync(targetText);
+            await ClickAndFillInShepherdTargetWithRetriesAsync(targetText);
             await ClickOnNextButtonAsync();
         }
 
@@ -54,7 +54,8 @@ public static class TestCaseUITestContextExtensions
                 return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
             });
 
-        Task FillInShepherdTargetWithRetriesAsync(string text) => context.FillInWithRetriesAsync(_byShepherdTarget, text);
+        Task ClickAndFillInShepherdTargetWithRetriesAsync(string text) =>
+            context.ClickAndFillInWithRetriesAsync(_byShepherdTarget, text);
 
         // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
         Task ClickOnNextButtonAsync() =>
@@ -109,9 +110,9 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=logging_in");
                 await AssertStepAndClickNextAsync("Log in", "Let's log in!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Log in page", "Here you can log in.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Username", "Provide your username.", "testuser");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
                 await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
@@ -149,10 +150,10 @@ public static class TestCaseUITestContextExtensions
                 // The ID of the blog will be random, so we can't have a start URL here.
                 await AssertStepAndClickNextAsync(
                     "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
                 await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
                 await AssertStepAndClickNextAsync("Tags", "You can add tags to your blog post");
@@ -201,7 +202,7 @@ public static class TestCaseUITestContextExtensions
                 ////    "&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_editor");
                 await AssertStepAndClickNextAsync(
                     "Creating a new article", "Here you can create the article.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample article");
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample article");
                 await AssertStepAndClickNextAsync("Permalink", "Again, you can provide a URL");
                 await AssertStepAndClickNextAsync("Set as homepage", "You can set this article as the homepage.");
                 await AssertStepAndClickNextAsync("HTML Body", "This is the HTML Body, where");
@@ -258,9 +259,9 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 // The URL of the menu item will be random, so we can't have a start URL here.
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Managing the menu", "Let's give the menu item a name!", "Sample article");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Managing the menu", "Let's give it your article's URL!", "~/sample-article");
                 await AssertStepAndClickShepherdTargetAsync("Managing the menu", "We are ready, let's publish the menu item!");
                 await AssertStepAndClickNextAsync("Managing the menu", "Your new menu item is now here.");
@@ -294,7 +295,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Taxonomies", "You can access this list by filtering");
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "Let's see how we can edit taxonomies!");
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "You can add a new category by clicking here.");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync("Taxonomies", "You can name your category.", "Sample category");
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Taxonomies", "You can name your category.", "Sample category");
                 AssertStep("Taxonomies", "You can select an icon for the category.");
                 await context.ClickReliablyOnAsync(By.Id("Category_Icon"));
                 await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item"));
@@ -337,7 +338,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "Now click on the \"Content Items\" button.");
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "We'll create a new Page content item.");
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "Click on \"Page\" to create a new page.");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Flow Part", "You can give it a title, just like", "Sample page");
                 await AssertStepAndClickNextAsync("Flow Part", "Surely you know the drill");
                 await AssertStepAndClickNextAsync("Flow Part", "The page has a part called \"Flow Part\".");
@@ -346,7 +347,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync(
                     "Flow Part", "Now you added the blockquote to your page.", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "Click on the dropdown to edit it!");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Flow Part", "Can you think of a good quote?", "Sample blockquote");
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "We are ready, let's publish the page!");
                 AssertStep("Viewing the page", "The page is published!");
@@ -371,7 +372,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Layout widgets", "Widgets are put not just into zones,");
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "Let's add a widget to the content zone!");
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "Now click on \"Paragraph\"");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync("Layout widgets", "Give it a title.", "Sample paragraph widget");
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Layout widgets", "Give it a title.", "Sample paragraph widget");
                 await AssertStepAndClickNextAsync("Layout widgets", "Give it some content.");
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "We are ready, let's publish it!");
                 await AssertStepAndClickShepherdTargetAsync(
@@ -395,7 +396,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "Let's edit the Blog Post content type");
                 await AssertStepAndClickNextAsync("Content type editor", "Here you can see the content type's editor.");
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "You can add a new field by clicking here.");
-                await AssertStepAndFillInShepherdTargetAndClickNextAsync(
+                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Content type editor", "Let's suppose that you're", "Sample field");
                 AssertStep("Content type editor", "Select Text Field.");
                 await context.ClickReliablyOnAsync(By.CssSelector($".{_shepherdTargetClass} input"));
@@ -443,10 +444,10 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("User management", "Here you can see all the users, including");
                 await AssertStepAndClickShepherdTargetAsync("User management", "You can edit existing users and add add new");
                 AssertStep("User management", "Think of someone you like so much you want them in your Orchard Core app");
-                await FillInShepherdTargetWithRetriesAsync("sample.user");
+                await ClickAndFillInShepherdTargetWithRetriesAsync("sample.user");
                 await ClickOnNextButtonAsync();
                 AssertStep("User management", "Add their e-mail address.");
-                await FillInShepherdTargetWithRetriesAsync("sample.user@example.com");
+                await ClickAndFillInShepherdTargetWithRetriesAsync("sample.user@example.com");
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("User management", "You can enter a phone number too, but it's optional.");
                 await AssertStepAndClickNextAsync("User management", "You can disable the user, though for a new one this");
@@ -491,7 +492,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Deployment", "Here you would see the deployment plans, but we currently have");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Let's create a deployment plan! Click here.");
                 AssertStep("Deployment", "Give it a name.");
-                await FillInShepherdTargetWithRetriesAsync("Sample deployment plan");
+                await ClickAndFillInShepherdTargetWithRetriesAsync("Sample deployment plan");
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now click on the \"Create\" button.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now we have a deployment plan, but it's empty.");
