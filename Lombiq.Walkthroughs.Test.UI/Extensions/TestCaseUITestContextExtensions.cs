@@ -153,7 +153,8 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
-                await AssertStepAndClickNextAsync("Admin dashboard", "Let's see the admin dashboard now!", assertShepherdTargetIsNotBody: false);
+                await AssertStepAndClickNextWithScriptAsync(
+                    "Admin dashboard", "Let's see the admin dashboard now!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Admin dashboard", "Welcome to the admin dashboard!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Side menu", "This is the side menu");
                 await AssertStepAndClickNextAsync("Top menu", "This is the top menu.");
