@@ -60,8 +60,17 @@ public static class TestCaseUITestContextExtensions
             context.ClickAndFillInWithRetriesAsync(_byShepherdTarget, text);
 
         // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
-        Task ClickOnNextButtonAsync() =>
-            context.ClickReliablyOnUntilUrlChangeAsync(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]"));
+        Task ClickOnNextButtonAsync()
+        {
+            var buttonBy = By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]");
+
+            // Under Ubuntu Chrome, the Next button of a step can randomly become not clickable with the "cursor:
+            // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled.
+            // Removing that to work around this.
+            context.ExecuteScript("arguments[0].style.cssText = 'cursor: pointer !important';", context.Get(buttonBy));
+
+            return context.ClickReliablyOnUntilUrlChangeAsync(buttonBy);
+        }
 
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
@@ -124,7 +133,7 @@ public static class TestCaseUITestContextExtensions
                 catch (TimeoutException)
                 {
                     context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
-                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
+                        "Clicking the Next button on the Logging in step failed; working around by going directly to " +
                         "the next step.");
 
                     await context.SignInDirectlyAsync("testuser");
@@ -134,21 +143,7 @@ public static class TestCaseUITestContextExtensions
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
 
-                // Under Ubuntu Chrome, the Next button on this step is randomly not clickable with the "cursor:
-                // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled.
-                // Working it around like this.
-                try
-                {
-                    await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
-                }
-                catch (TimeoutException)
-                {
-                    context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
-                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
-                        "the next step.");
-
-                    await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
-                }
+                await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
             });
 
         // Dashboard
