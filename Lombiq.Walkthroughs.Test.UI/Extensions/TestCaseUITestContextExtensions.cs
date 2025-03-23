@@ -24,12 +24,6 @@ public static class TestCaseUITestContextExtensions
             return ClickOnNextButtonAsync();
         }
 
-        Task AssertStepAndClickNextWithScriptAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
-        {
-            AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickOnNextButtonWithScriptAsync();
-        }
-
         Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
@@ -74,12 +68,11 @@ public static class TestCaseUITestContextExtensions
         Task ClickAndFillInShepherdTargetWithRetriesAsync(string text) =>
             context.ClickAndFillInWithRetriesAsync(_byShepherdTarget, text);
 
-        Task ClickOnNextButtonAsync() => context.ClickReliablyOnUntilUrlChangeAsync(_nextButtonBy);
-
-        // Under Ubuntu Chrome, the Next button of certain steps can randomly become not clickable with the "cursor:
+        // Under Ubuntu Chrome, the Next button of random steps can randomly become not clickable with the "cursor:
         // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled. Removing
-        // the styling doesn't fix this alone, but clicking with JavaScript does.
-        Task ClickOnNextButtonWithScriptAsync() =>
+        // the styling doesn't fix this alone, but clicking with JavaScript does. So, to be sure, we click all Next
+        // buttons with JavaScript.
+        Task ClickOnNextButtonAsync() =>
             context.DoWithRetriesUntilUrlChangeOrFailAsync(() =>
             {
                 context.ExecuteScript("arguments[0].click();", context.Get(_nextButtonBy));
@@ -144,7 +137,7 @@ public static class TestCaseUITestContextExtensions
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
 
-                await AssertStepAndClickNextWithScriptAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
+                await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
             });
 
         // Dashboard
@@ -153,7 +146,7 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
-                await AssertStepAndClickNextWithScriptAsync(
+                await AssertStepAndClickNextAsync(
                     "Admin dashboard", "Let's see the admin dashboard now!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Admin dashboard", "Welcome to the admin dashboard!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Side menu", "This is the side menu");
