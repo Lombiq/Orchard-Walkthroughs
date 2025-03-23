@@ -162,7 +162,7 @@ public static class TestCaseUITestContextExtensions
                 await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_blog_post");
                 await AssertStepAndClickShepherdTargetWithScriptAsync("Creating a new blog post", "Let's create a new blog post!");
                 await AssertStepAndClickNextAsync("Blog posts", "Here you can see the blog posts inside the blog.");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new blog post", "Click here to create a new blog post.");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Creating a new blog post", "Click here to create a new blog post.");
             });
 
         // Blog Post editor
