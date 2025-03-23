@@ -61,7 +61,8 @@ public static class TestCaseUITestContextExtensions
         Task ClickShepherdTargetWithScriptAsync() =>
             context.RetryIfNotStaleOrFailAsync(() =>
             {
-                context.ExecuteScript($"document.querySelector('.{_shepherdTargetClass}').click()");
+                // The targeted element is randomly obscured by the gray Shepherd overlay, so using any visibility.
+                context.ExecuteScript("arguments[0].click();", context.Get(By.ClassName(_shepherdTargetClass).OfAnyVisibility()));
                 return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
             });
 
