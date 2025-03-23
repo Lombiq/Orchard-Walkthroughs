@@ -28,13 +28,13 @@ public static class TestCaseUITestContextExtensions
         Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickShepherdTargetAsync();
+            return ClickShepherdTargetAsync(assertShepherdTargetIsNotBody);
         }
 
         Task AssertStepAndClickShepherdTargetWithScriptAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickShepherdTargetWithScriptAsync();
+            return ClickShepherdTargetWithScriptAsync(assertShepherdTargetIsNotBody);
         }
 
         async Task AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
@@ -44,7 +44,7 @@ public static class TestCaseUITestContextExtensions
             bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            await ClickAndFillInShepherdTargetWithRetriesAsync(targetText);
+            await ClickAndFillInShepherdTargetWithRetriesAsync(targetText, assertShepherdTargetIsNotBody);
             await ClickOnNextButtonAsync();
         }
 
@@ -52,22 +52,23 @@ public static class TestCaseUITestContextExtensions
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
-            context.Exists(assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget);
+            context.Exists(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
         }
 
-        Task ClickShepherdTargetAsync() => context.ClickReliablyOnUntilUrlChangeAsync(_byShepherdTarget);
+        Task ClickShepherdTargetAsync(bool assertShepherdTargetIsNotBody = true) =>
+            context.ClickReliablyOnUntilUrlChangeAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
 
         // Under Ubuntu Chrome, the Next button of certain steps can randomly become not clickable. Working around this
         // with JavaScript.
-        Task ClickShepherdTargetWithScriptAsync() =>
+        Task ClickShepherdTargetWithScriptAsync(bool assertShepherdTargetIsNotBody = true) =>
             context.RetryIfNotStaleOrFailAsync(() =>
             {
-                context.ExecuteScript("arguments[0].click();", context.Get(_byShepherdTarget));
+                context.ExecuteScript("arguments[0].click();", context.Get(GetShepherdTargetBy(assertShepherdTargetIsNotBody)));
                 return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
             });
 
-        Task ClickAndFillInShepherdTargetWithRetriesAsync(string text) =>
-            context.ClickAndFillInWithRetriesAsync(_byShepherdTarget, text);
+        Task ClickAndFillInShepherdTargetWithRetriesAsync(string text, bool assertShepherdTargetIsNotBody = true) =>
+            context.ClickAndFillInWithRetriesAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody), text);
 
         // Under Ubuntu Chrome, the Next button of random steps can randomly become not clickable with the "cursor:
         // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled. Removing
@@ -82,6 +83,9 @@ public static class TestCaseUITestContextExtensions
 
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
+
+        By GetShepherdTargetBy(bool assertShepherdTargetIsNotBody = true) =>
+            assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget;
 
         void SwitchToLastWindowAndSetDefaultBrowserSize()
         {
