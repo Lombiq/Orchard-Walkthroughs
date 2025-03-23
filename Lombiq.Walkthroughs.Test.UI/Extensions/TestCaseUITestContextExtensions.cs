@@ -11,8 +11,9 @@ namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 public static class TestCaseUITestContextExtensions
 {
     private const string _shepherdTargetClass = "shepherd-target";
-    private static readonly By _byShepherdTarget = By.ClassName(_shepherdTargetClass);
-    private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body)." + _shepherdTargetClass);
+    // The targeted element is randomly obscured by the gray Shepherd overlay, so using any visibility.
+    private static readonly By _byShepherdTarget = By.ClassName(_shepherdTargetClass).OfAnyVisibility();
+    private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body)." + _shepherdTargetClass).OfAnyVisibility();
     // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
     private static readonly By _nextButtonBy = By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]");
 
@@ -61,8 +62,7 @@ public static class TestCaseUITestContextExtensions
         Task ClickShepherdTargetWithScriptAsync() =>
             context.RetryIfNotStaleOrFailAsync(() =>
             {
-                // The targeted element is randomly obscured by the gray Shepherd overlay, so using any visibility.
-                context.ExecuteScript("arguments[0].click();", context.Get(By.ClassName(_shepherdTargetClass).OfAnyVisibility()));
+                context.ExecuteScript("arguments[0].click();", context.Get(_byShepherdTarget));
                 return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
             });
 
