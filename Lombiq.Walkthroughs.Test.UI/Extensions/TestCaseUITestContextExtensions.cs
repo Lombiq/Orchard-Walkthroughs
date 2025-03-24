@@ -63,7 +63,7 @@ public static class TestCaseUITestContextExtensions
         Task ClickShepherdTargetWithScriptAsync(bool assertShepherdTargetIsNotBody = true) =>
             context.RetryIfNotStaleOrFailAsync(async () =>
             {
-                await context.ClickWithScriptAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
+                await context.ClickOnWithScriptAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
                 return context.Exists(_byShepherdTarget.Safely());
             });
 
@@ -75,7 +75,7 @@ public static class TestCaseUITestContextExtensions
         // the styling doesn't fix this alone, but clicking with JavaScript does. So, to be sure, we click all Next
         // buttons with JavaScript.
         Task ClickOnNextButtonAsync() =>
-            context.DoWithRetriesUntilUrlChangeOrFailAsync(() => context.ClickWithScriptAsync(_nextButtonBy));
+            context.DoWithRetriesUntilUrlChangeOrFailAsync(() => context.ClickOnWithScriptAsync(_nextButtonBy));
 
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
