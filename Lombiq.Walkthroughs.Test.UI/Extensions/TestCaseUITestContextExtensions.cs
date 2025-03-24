@@ -182,7 +182,7 @@ public static class TestCaseUITestContextExtensions
                 // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
                 // title editor directly to work around this.
                 AssertStep("Title", "Let's give it a title!");
-                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title"), "Sample Blog Post");
+                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title").OfAnyVisibility(), "Sample Blog Post");
                 await ClickOnNextButtonAsync();
 
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
