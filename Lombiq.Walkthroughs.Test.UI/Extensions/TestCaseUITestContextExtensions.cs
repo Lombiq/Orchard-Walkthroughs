@@ -177,7 +177,14 @@ public static class TestCaseUITestContextExtensions
                 // The ID of the blog will be random, so we can't have a start URL here.
                 await AssertStepAndClickNextAsync(
                     "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
+
+                // For some reason Get()-ting the title is flaky here. Even though the Exists() always succeeds in
+                // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
+                // title editor directly to work around this.
+                AssertStep("Title", "Let's give it a title!");
+                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title"), "Sample Blog Post");
+                await ClickOnNextButtonAsync();
+
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
