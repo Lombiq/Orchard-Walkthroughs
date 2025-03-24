@@ -5,15 +5,17 @@ using OpenQA.Selenium;
 using Shouldly;
 using System;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Lombiq.Walkthroughs.Tests.UI.Extensions;
 
 public static class TestCaseUITestContextExtensions
 {
     private const string _shepherdTargetClass = "shepherd-target";
-    private static readonly By _byShepherdTarget = By.ClassName(_shepherdTargetClass);
-    private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body)." + _shepherdTargetClass);
+    // The targeted element is randomly obscured by the gray Shepherd overlay, so using any visibility.
+    private static readonly By _byShepherdTarget = By.ClassName(_shepherdTargetClass).OfAnyVisibility();
+    private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body)." + _shepherdTargetClass).OfAnyVisibility();
+    // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
+    private static readonly By _nextButtonBy = By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]");
 
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
@@ -26,7 +28,13 @@ public static class TestCaseUITestContextExtensions
         Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickShepherdTargetAsync();
+            return ClickShepherdTargetAsync(assertShepherdTargetIsNotBody);
+        }
+
+        Task AssertStepAndClickShepherdTargetWithScriptAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
+        {
+            AssertStep(header, text, assertShepherdTargetIsNotBody);
+            return ClickShepherdTargetWithScriptAsync(assertShepherdTargetIsNotBody);
         }
 
         async Task AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
@@ -36,7 +44,7 @@ public static class TestCaseUITestContextExtensions
             bool assertShepherdTargetIsNotBody = true)
         {
             AssertStep(header, text, assertShepherdTargetIsNotBody);
-            await ClickAndFillInShepherdTargetWithRetriesAsync(targetText);
+            await ClickAndFillInShepherdTargetWithRetriesAsync(targetText, assertShepherdTargetIsNotBody);
             await ClickOnNextButtonAsync();
         }
 
@@ -44,27 +52,40 @@ public static class TestCaseUITestContextExtensions
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
-            context.Exists(assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget);
+            context.Exists(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
         }
 
-        Task ClickShepherdTargetAsync() => context.ClickReliablyOnUntilUrlChangeAsync(_byShepherdTarget);
+        Task ClickShepherdTargetAsync(bool assertShepherdTargetIsNotBody = true) =>
+            context.ClickReliablyOnUntilUrlChangeAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
 
-        Task ClickShepherdTargetWithScriptAsync() =>
+        // Under Ubuntu Chrome, the Next button of certain steps can randomly become not clickable. Working around this
+        // with JavaScript.
+        Task ClickShepherdTargetWithScriptAsync(bool assertShepherdTargetIsNotBody = true) =>
             context.RetryIfNotStaleOrFailAsync(() =>
             {
-                context.ExecuteScript($"document.querySelector('.{_shepherdTargetClass}').click()");
+                context.ExecuteScript("arguments[0].click();", context.Get(GetShepherdTargetBy(assertShepherdTargetIsNotBody)));
                 return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
             });
 
-        Task ClickAndFillInShepherdTargetWithRetriesAsync(string text) =>
-            context.ClickAndFillInWithRetriesAsync(_byShepherdTarget, text);
+        Task ClickAndFillInShepherdTargetWithRetriesAsync(string text, bool assertShepherdTargetIsNotBody = true) =>
+            context.ClickAndFillInWithRetriesAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody), text);
 
-        // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
+        // Under Ubuntu Chrome, the Next button of random steps can randomly become not clickable with the "cursor:
+        // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled. Removing
+        // the styling doesn't fix this alone, but clicking with JavaScript does. So, to be sure, we click all Next
+        // buttons with JavaScript.
         Task ClickOnNextButtonAsync() =>
-            context.ClickReliablyOnUntilUrlChangeAsync(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]"));
+            context.DoWithRetriesUntilUrlChangeOrFailAsync(() =>
+            {
+                context.ExecuteScript("arguments[0].click();", context.Get(_nextButtonBy));
+                return Task.CompletedTask;
+            });
 
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
+
+        By GetShepherdTargetBy(bool assertShepherdTargetIsNotBody = true) =>
+            assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget;
 
         void SwitchToLastWindowAndSetDefaultBrowserSize()
         {
@@ -116,39 +137,12 @@ public static class TestCaseUITestContextExtensions
                     "Username", "Provide your username.", "testuser");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Password", "Provide your password.", "Password1!");
 
-                // Under Ubuntu Chrome, the click on this step will randomly not work. Working it around like this.
-                try
-                {
-                    await AssertStepAndClickShepherdTargetAsync("Logging in", "Now you can log in!");
-                }
-                catch (TimeoutException)
-                {
-                    context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
-                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
-                        "the next step.");
-
-                    await context.SignInDirectlyAsync("testuser");
-                    await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=login_logged_in");
-                }
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Logging in", "Now you can log in!");
 
                 (await context.GetCurrentUserNameAsync()).ShouldBe("testuser");
                 await context.Driver.Navigate().BackAsync();
 
-                // Under Ubuntu Chrome, the Next button on this step is randomly not clickable with the "cursor:
-                // not-allowed;" styling coming from .shepherd-button:disabled, despite the button not being disabled.
-                // Working it around like this.
-                try
-                {
-                    await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
-                }
-                catch (TimeoutException)
-                {
-                    context.Configuration.TestOutputHelper.WriteLineTimestampedAndDebug(
-                        "Clicking the Next button on the Logged in step failed; working around by going directly to " +
-                        "the next step.");
-
-                    await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
-                }
+                await AssertStepAndClickNextAsync("Logged in", "Now you are logged in!", assertShepherdTargetIsNotBody: false);
             });
 
         // Dashboard
@@ -157,7 +151,8 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=admin_dashboard_enter");
-                await AssertStepAndClickNextAsync("Admin dashboard", "Let's see the admin dashboard now!", assertShepherdTargetIsNotBody: false);
+                await AssertStepAndClickNextAsync(
+                    "Admin dashboard", "Let's see the admin dashboard now!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Admin dashboard", "Welcome to the admin dashboard!", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Side menu", "This is the side menu");
                 await AssertStepAndClickNextAsync("Top menu", "This is the top menu.");
@@ -169,9 +164,9 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_blog_post");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new blog post", "Let's create a new blog post!");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Creating a new blog post", "Let's create a new blog post!");
                 await AssertStepAndClickNextAsync("Blog posts", "Here you can see the blog posts inside the blog.");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new blog post", "Click here to create a new blog post.");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Creating a new blog post", "Click here to create a new blog post.");
             });
 
         // Blog Post editor
@@ -182,7 +177,14 @@ public static class TestCaseUITestContextExtensions
                 // The ID of the blog will be random, so we can't have a start URL here.
                 await AssertStepAndClickNextAsync(
                     "Creating a new blog post", "Here is the editor of your new blog post.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Title", "Let's give it a title!", "Sample Blog Post");
+
+                // For some reason Get()-ting the title is flaky here. Even though the Exists() always succeeds in
+                // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
+                // title editor directly to work around this.
+                AssertStep("Title", "Let's give it a title!");
+                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title").OfAnyVisibility(), "Sample Blog Post");
+                await ClickOnNextButtonAsync();
+
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
@@ -334,8 +336,7 @@ public static class TestCaseUITestContextExtensions
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("Taxonomies", "And you can set a permalink for it");
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "Let's publish the new category! ");
-                AssertStep("Taxonomies", "Your category is now published.");
-                await ClickShepherdTargetWithScriptAsync();
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Taxonomies", "Your category is now published.");
             });
 
         // Media management
@@ -439,8 +440,8 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Content type editor", "You can select the editor type here.");
                 await AssertStepAndClickNextAsync("Content type editor", "You can also select the display mode here.");
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "Okay, now save it.");
-                AssertStep("Content type editor", "The text field is now saved. You will also");
-                await ClickShepherdTargetWithScriptAsync();
+                await AssertStepAndClickShepherdTargetWithScriptAsync(
+                    "Content type editor", "The text field is now saved. You will also");
                 await AssertStepAndClickNextAsync(
                     "Content type editor", "Congratulations, you just tinkered", assertShepherdTargetIsNotBody: false);
             });
@@ -537,7 +538,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Deployment", "As you can see, you added the step to the deployment plan. ");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Once you finished adding steps, you can click on");
                 // The file will be downloaded to the default download location. It doesn't really matter.
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Here you can use \"File Download\" so the exported");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Deployment", "Here you can use \"File Download\" so the exported");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\" again.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Package Import\".");
