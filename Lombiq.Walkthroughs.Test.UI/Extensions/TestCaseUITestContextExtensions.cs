@@ -61,10 +61,10 @@ public static class TestCaseUITestContextExtensions
         // Under Ubuntu Chrome, the Next button of certain steps can randomly become not clickable. Working around this
         // with JavaScript.
         Task ClickShepherdTargetWithScriptAsync(bool assertShepherdTargetIsNotBody = true) =>
-            context.RetryIfNotStaleOrFailAsync(() =>
+            context.RetryIfNotStaleOrFailAsync(async () =>
             {
-                context.ExecuteScript("arguments[0].click();", context.Get(GetShepherdTargetBy(assertShepherdTargetIsNotBody)));
-                return Task.FromResult(context.Exists(_byShepherdTarget.Safely()));
+                await context.ClickOnWithScriptAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
+                return context.Exists(_byShepherdTarget.Safely());
             });
 
         Task ClickAndFillInShepherdTargetWithRetriesAsync(string text, bool assertShepherdTargetIsNotBody = true) =>
@@ -75,11 +75,7 @@ public static class TestCaseUITestContextExtensions
         // the styling doesn't fix this alone, but clicking with JavaScript does. So, to be sure, we click all Next
         // buttons with JavaScript.
         Task ClickOnNextButtonAsync() =>
-            context.DoWithRetriesUntilUrlChangeOrFailAsync(() =>
-            {
-                context.ExecuteScript("arguments[0].click();", context.Get(_nextButtonBy));
-                return Task.CompletedTask;
-            });
+            context.DoWithRetriesUntilUrlChangeOrFailAsync(() => context.ClickOnWithScriptAsync(_nextButtonBy));
 
         Task ClickOnBackButtonAsync() =>
             context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
