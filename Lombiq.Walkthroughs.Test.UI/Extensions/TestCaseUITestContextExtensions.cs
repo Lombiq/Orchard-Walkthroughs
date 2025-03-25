@@ -176,9 +176,20 @@ public static class TestCaseUITestContextExtensions
 
                 // For some reason Get()-ting the title is flaky here. Even though the Exists() always succeeds in
                 // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
-                // title editor directly to work around this.
+                // title editor directly to work around this, and retrying with JS if even that fails.
                 AssertStep("Title", "Let's give it a title!");
-                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title").OfAnyVisibility(), "Sample Blog Post");
+
+                var titleBy = By.Id("TitlePart_Title").OfAnyVisibility();
+
+                try
+                {
+                    await context.ClickAndFillInWithRetriesAsync(titleBy, "Sample Blog Post");
+                }
+                catch (TimeoutException)
+                {
+                    await context.ClickAndFillInWithScriptAsync(titleBy, "Sample Blog Post");
+                }
+
                 await ClickOnNextButtonAsync();
 
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
