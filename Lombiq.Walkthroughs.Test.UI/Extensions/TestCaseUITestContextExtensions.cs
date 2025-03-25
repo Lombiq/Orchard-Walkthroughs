@@ -194,6 +194,9 @@ public static class TestCaseUITestContextExtensions
 
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
+
+                // Without scrolling to the subtitle, filling the input field may fail.
+                context.ScrollTo(By.Id("BlogPost_Subtitle_Text"));
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
                 await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
