@@ -226,7 +226,7 @@ public static class TestCaseUITestContextExtensions
                 // The ID of the blog will be random, so we can't have a start URL here.
                 AssertStep("Viewing the blog post", "The blog post is published, good job!");
                 // The URL is not changing here so can't use ClickShepherdTargetAsync().
-                await context.ClickReliablyOnAsync(_byShepherdTarget);
+                await context.ClickOnWithScriptAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
                 await AssertStepAndClickNextAsync(
                     "Viewing the blog post", "Here is your published blog post", assertShepherdTargetIsNotBody: false);
