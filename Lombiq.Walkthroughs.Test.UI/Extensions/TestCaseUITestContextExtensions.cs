@@ -215,7 +215,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Tags", "You can add tags to your blog post");
                 await AssertStepAndClickNextAsync("Category", "You can also select the category of your blog post.");
                 await AssertStepAndClickNextAsync("Preview", "Before publishing your blog post");
-                await AssertStepAndClickShepherdTargetAsync("Publishing", "We are ready, let's publish the blog post");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Publishing", "We are ready, let's publish the blog post");
             });
 
         // Blog Post display
