@@ -176,20 +176,46 @@ public static class TestCaseUITestContextExtensions
 
                 // For some reason Get()-ting the title is flaky here. Even though the Exists() always succeeds in
                 // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
-                // title editor directly to work around this.
+                // title editor directly to work around this, and retrying with JS if even that fails.
                 AssertStep("Title", "Let's give it a title!");
-                await context.ClickAndFillInWithRetriesAsync(By.Id("TitlePart_Title").OfAnyVisibility(), "Sample Blog Post");
+
+                var titleBy = By.Id("TitlePart_Title").OfAnyVisibility();
+
+                try
+                {
+                    await context.ClickAndFillInWithRetriesAsync(titleBy, "Sample Blog Post");
+                }
+                catch (TimeoutException)
+                {
+                    await context.ClickAndFillInWithScriptAsync(titleBy, "Sample Blog Post");
+                }
+
                 await ClickOnNextButtonAsync();
 
                 await AssertStepAndClickNextAsync("Permalink", "You can give the blog post an URL by hand");
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
-                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
-                    "Subtitle", "You can also give a subtitle to your blog post.", "Sample subtitle");
+
+                // Same issue as with the title above.
+                AssertStep("Subtitle", "You can also give a subtitle to your blog post.");
+
+                var subTitleBy = By.Id("BlogPost_Subtitle_Text").OfAnyVisibility();
+
+                try
+                {
+                    await context.ClickAndFillInWithRetriesAsync(subTitleBy, "Sample subtitle");
+                }
+                catch (TimeoutException)
+                {
+                    await context.ClickAndFillInWithScriptAsync(subTitleBy, "Sample subtitle");
+                }
+
+                await ClickOnNextButtonAsync();
+
                 await AssertStepAndClickNextAsync("Banner image", "You can add an image to your blog post");
                 await AssertStepAndClickNextAsync("Tags", "You can add tags to your blog post");
                 await AssertStepAndClickNextAsync("Category", "You can also select the category of your blog post.");
                 await AssertStepAndClickNextAsync("Preview", "Before publishing your blog post");
-                await AssertStepAndClickShepherdTargetAsync("Publishing", "We are ready, let's publish the blog post");
+                await AssertStepAndClickShepherdTargetWithScriptAsync("Publishing", "We are ready, let's publish the blog post");
             });
 
         // Blog Post display
@@ -200,7 +226,7 @@ public static class TestCaseUITestContextExtensions
                 // The ID of the blog will be random, so we can't have a start URL here.
                 AssertStep("Viewing the blog post", "The blog post is published, good job!");
                 // The URL is not changing here so can't use ClickShepherdTargetAsync().
-                await context.ClickReliablyOnAsync(_byShepherdTarget);
+                await context.ClickOnWithScriptAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
                 await AssertStepAndClickNextAsync(
                     "Viewing the blog post", "Here is your published blog post", assertShepherdTargetIsNotBody: false);
