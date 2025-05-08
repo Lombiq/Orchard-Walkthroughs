@@ -2,21 +2,5 @@
   "private": true,
   "dependencies": {
     "shepherd.js": "14.5.0"
-  },
-  "nodejsExtensions": {
-    "assetsToCopy": [
-      {
-        "sources": [
-          "node_modules/shepherd.js/dist/css"
-        ],
-        "target": "wwwroot/shepherd.js/css"
-      },
-      {
-        "sources": [
-          "node_modules/shepherd.js/dist/esm"
-        ],
-        "target": "wwwroot/shepherd.js/js"
-      }
-    ]
   }
 }
