@@ -1,4 +1,4 @@
-jQuery($ => {
+jQuery(($) => {
     (function LoadShepherd(Shepherd) {
         function delay(ms) {
             return new Promise((resolve) => { setTimeout(() => resolve(ms), ms); });
