@@ -13,7 +13,7 @@ public static class UITestContextExtensions
     }
 
     public static Task GoToSetupPageAndSetupOrchardCoreWithWalkthroughsRecipeAsync(this UITestContext context) =>
-        context.GoToSetupPageAndSetupOrchardCoreAsync("Lombiq.Walkthroughs.Setup");
+        context.GoToSetupAndSetupOrchardCoreAsync(new(context) { RecipeId = "Lombiq.Walkthroughs.Setup" });
 
     public static Task EnableWalkthroughsFeatureAsync(this UITestContext context) =>
         context.EnableFeatureDirectlyAsync("Lombiq.Walkthroughs");
