@@ -3,5 +3,5 @@
   "dependencies": {
     "shepherd.js": "14.5.1"
   },
-  "packageManager": "pnpm@8.15.9"
+  "packageManager": "pnpm@10.18.3"
 }
