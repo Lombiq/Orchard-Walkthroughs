@@ -9,6 +9,7 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
 {
     private const string Module = $"~/{FeatureIds.Area}/";
     private const string Vendors = Module + "vendors/";
+    private const string Shepherd = Vendors + "shepherd.js/dist/";
     private const string Js = Module + "js/";
 
     private static readonly ResourceManifest _manifest = new();
@@ -19,12 +20,12 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
 
         _manifest
             .DefineStyle(Shepherd)
-            .SetUrl(Vendors + "shepherd.js/css/shepherd.css");
+            .SetUrl(Shepherd + "css/shepherd.min.css", Shepherd + "css/shepherd.css");
 
         _manifest
             .DefineScript(Shepherd)
             .SetAttribute("type", "module")
-            .SetUrl(Vendors + "shepherd.js/esm/shepherd.mjs");
+            .SetUrl(Shepherd + "esm/shepherd.mjs");
 
         _manifest
             .DefineScript(ShepherdToWindow)
