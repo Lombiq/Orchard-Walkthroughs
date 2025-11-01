@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.Attributes;
 using Lombiq.Walkthroughs.Constants;
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
@@ -5,7 +6,8 @@ using static Lombiq.Walkthroughs.Constants.ResourceNames;
 
 namespace Lombiq.Walkthroughs;
 
-public class ResourceManagementOptionsConfiguration : IConfigureOptions<ResourceManagementOptions>
+[LibManVersions]
+public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<ResourceManagementOptions>
 {
     private const string Module = $"~/{FeatureIds.Area}/";
     private const string Vendors = Module + "vendors/";
@@ -20,12 +22,14 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
 
         _manifest
             .DefineStyle(Shepherd)
-            .SetUrl(Shepherd + "css/shepherd.min.css", Shepherd + "css/shepherd.css");
+            .SetUrl(Shepherd + "css/shepherd.min.css", Shepherd + "css/shepherd.css")
+            .SetVersion(LibMan_shepherd_js);
 
         _manifest
             .DefineScript(Shepherd)
             .SetAttribute("type", "module")
-            .SetUrl(Shepherd + "esm/shepherd.mjs");
+            .SetUrl(Shepherd + "esm/shepherd.mjs")
+            .SetVersion(LibMan_shepherd_js);
 
         _manifest
             .DefineScript(ShepherdToWindow)
