@@ -1,10 +1,10 @@
 {
   "version": "3.0",
   "defaultProvider": "jsdelivr",
+  "defaultDestination": "wwwroot/vendors/[Name]",
   "libraries": [
     {
       "library": "shepherd.js@14.5.1",
-      "destination": "wwwroot/vendors/shepherd.js",
       "files": [ "dist/esm/shepherd.mjs", "dist/css/*.css" ]
     }
   ]
