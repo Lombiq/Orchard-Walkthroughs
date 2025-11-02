@@ -23,13 +23,13 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest
             .DefineStyle(Shepherd)
             .SetUrl(Shepherd + "css/shepherd.min.css", Shepherd + "css/shepherd.css")
-            .SetVersion(LibMan_shepherd_js);
+            .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
             .DefineScript(Shepherd)
             .SetAttribute("type", "module")
             .SetUrl(Shepherd + "esm/shepherd.mjs")
-            .SetVersion(LibMan_shepherd_js);
+            .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
             .DefineScript(ShepherdToWindow)
