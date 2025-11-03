@@ -2,7 +2,6 @@ using Lombiq.HelpfulLibraries.Attributes;
 using Lombiq.Walkthroughs.Constants;
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
-using static Lombiq.Walkthroughs.Constants.ResourceNames;
 
 namespace Lombiq.Walkthroughs;
 
@@ -21,18 +20,18 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest.DefineResource("$" + nameof(FeatureIds.Area), FeatureIds.Area);
 
         _manifest
-            .DefineStyle(Shepherd)
+            .DefineStyle(ResourceNames.Shepherd)
             .SetUrl(Shepherd + "css/shepherd.min.css", Shepherd + "css/shepherd.css")
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
-            .DefineScript(Shepherd)
+            .DefineScript(ResourceNames.Shepherd)
             .SetAttribute("type", "module")
             .SetUrl(Shepherd + "esm/shepherd.mjs")
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
-            .DefineScript(ShepherdToWindow)
+            .DefineScript(ResourceNames.ShepherdToWindow)
             .SetAttribute("type", "module")
             .SetUrl(Js + "shepherd-to-window.js");
 
