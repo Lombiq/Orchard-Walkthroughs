@@ -1,7 +1,9 @@
 jQuery(($) => {
     (function LoadShepherd(Shepherd) {
         function delay(ms) {
-            return new Promise((resolve) => { setTimeout(() => resolve(ms), ms); });
+            return new Promise((resolve) => {
+                setTimeout(() => resolve(ms), ms);
+            });
         }
 
         function getCookieValue(cookieName) {
@@ -3690,7 +3692,9 @@ jQuery(($) => {
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'deployment_import_package_import_choose_file');
                                 // scrollTo: true doesn't work here.
-                                setTimeout(() => { $('#adminMenu').get(0).scrollTo(0, 9999); }, 200);
+                                setTimeout(
+                                    () => { $('#adminMenu').get(0).scrollTo(0, 9999); },
+                                    200);
                             },
                         },
                     },
