@@ -1,4 +1,4 @@
 /* eslint-disable */
-import Shepherd from '/Lombiq.Walkthroughs/vendors/shepherd.js/esm/shepherd.mjs';
+import Shepherd from '/Lombiq.Walkthroughs/vendors/shepherd.js/dist/esm/shepherd.mjs';
 
 window.Shepherd = Shepherd;
