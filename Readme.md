@@ -18,13 +18,6 @@ Do you want to quickly try out this project and see it in action? Check it out i
 
 - Orchard Core Admin Walkthrough: This walkthrough covers key Orchard Core features, such as content management, user roles, and theme selection, and points users to further learning resources.
 
-## Dependencies
-
-This module has the following dependencies:
-
-- [Lombiq Node.js Extensions](https://github.com/Lombiq/NodeJs-Extensions)
-- [Lombiq.HelpfulLibraries](https://github.com/Lombiq/Helpful-Libraries)
-
 ## Contributing and support
 
 Bug reports, feature requests, comments, questions, code contributions and love letters are warmly welcome. You can send them to us via GitHub issues and pull requests. Please adhere to our open-source guidelines while doing so.
