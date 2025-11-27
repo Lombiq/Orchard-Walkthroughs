@@ -58,4 +58,13 @@
     <MSBuild Condition="!Exists('$(SourceGeneratorLocation)')" Projects="..\..\..\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" />
   </Target>
 
+  <!--  Needed for deployment.  -->
+  <Target Name="AddVendors" AfterTargets="LibraryManagerRestore">
+    <ItemGroup>
+      <Content Include="wwwroot\vendors\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
+
 </Project>
