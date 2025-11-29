@@ -1,32 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-  </PropertyGroup>
+  <Import Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Tests.UI.Targets/Lombiq.MSBuild.Tests.UI.Targets.props" />
 
   <PropertyGroup>
     <Title>Lombiq Walkthroughs for Orchard Core - UI Test Extensions</Title>
-    <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2023, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Walkthroughs for Orchard Core - UI Test Extensions: Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core. See the project website for detailed documentation.</Description>
-    <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs;Tutorial</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs/tree/dev/Lombiq.Walkthroughs.Tests.UI</PackageProjectUrl>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(NuGetBuild)' != 'true'">
-    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.Tests.UI" Version="14.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-    <None Include="Readme.md" />
-  </ItemGroup>
 
 </Project>
