@@ -22,6 +22,10 @@ public sealed class WalkthroughsButtonFilter : IAsyncResultFilter
 
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
+        var layout = await _layoutAccessor.GetLayoutAsync();
+        var contentZone = layout.Zones["Content"];
+        await contentZone.AddAsync(await _shapeFactory.CreateAsync("WalkthroughsMeta"), "0");
+
         if (context.IsAdmin())
         {
             await next();
@@ -37,9 +41,6 @@ public sealed class WalkthroughsButtonFilter : IAsyncResultFilter
             context.Result is ViewResult viewResult &&
             ((string)(viewResult.Model as dynamic)?.ContentItem?.ContentType).EqualsOrdinalIgnoreCase("Blog"))
         {
-            var layout = await _layoutAccessor.GetLayoutAsync();
-            var contentZone = layout.Zones["Content"];
-
             await contentZone.AddAsync(await _shapeFactory.CreateAsync("WalkthroughsButton"), "0");
         }
 
