@@ -21,8 +21,7 @@ public sealed class Startup : StartupBase
         services.AddResourceFilter(builder => builder.Always()
             .RegisterStylesheet(Shepherd)
             .RegisterFootScript(Shepherd)
-            .RegisterFootScript(ResourceNames.Walkthroughs)
-            .RegisterFootScript(ShepherdToWindow));
+            .RegisterFootScript(ResourceNames.Walkthroughs));
         services.Configure<MvcOptions>(options => options.Filters.Add(typeof(WalkthroughsButtonFilter)));
     }
 

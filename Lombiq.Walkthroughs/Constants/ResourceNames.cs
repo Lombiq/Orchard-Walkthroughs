@@ -6,5 +6,4 @@ public static class ResourceNames
 
     public const string Shepherd = Prefix + "shepherd.js";
     public const string Walkthroughs = nameof(Walkthroughs);
-    public const string ShepherdToWindow = "shepherd-to-window.js";
 }
