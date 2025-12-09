@@ -1,5 +1,5 @@
 jQuery(($) => {
-    (function LoadShepherd(Shepherd) {
+    function loadShepherd(Shepherd) {
         function delay(ms) {
             return new Promise((resolve) => {
                 setTimeout(() => resolve(ms), ms);
@@ -4011,5 +4011,12 @@ jQuery(($) => {
                 walkthroughSelector.start();
             });
         }
-    })(window.Shepherd);
+    }
+
+    const resourcePath = document
+        .getElementById('shepherd-module-path')
+        .getAttribute('data-url');
+
+    return import(resourcePath)
+        .then((module) => loadShepherd(module.default));
 });

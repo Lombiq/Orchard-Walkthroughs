@@ -31,11 +31,6 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
-            .DefineScript(ResourceNames.ShepherdToWindow)
-            .SetAttribute("type", "module")
-            .SetUrl(Js + "shepherd-to-window.js");
-
-        _manifest
             .DefineScript(ResourceNames.Walkthroughs)
             .SetDependencies("jQuery")
             .SetUrl(Js + "walkthroughs.js");
