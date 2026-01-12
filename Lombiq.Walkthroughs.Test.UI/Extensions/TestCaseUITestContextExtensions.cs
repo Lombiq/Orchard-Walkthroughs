@@ -241,9 +241,9 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now let's create an article!");
                 await AssertStepAndClickNextAsync(
                     "Creating a new article", "Just as the Blog Post content type", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now click on the \"Content Types\" dropdown");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Here we have the article content type.");
+                await AssertStepAndClickNextAsync("Creating a new article", "Click on the \"Design\" dropdown");
+                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now click on the \"Content Types\" menu");
+                await AssertStepAndClickNextAsync("Creating a new article", "Here we have the article content type.");
                 await AssertStepAndClickNextAsync("Creating a new article", "Here you can see all the articles.");
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Click here to create a new article.");
             });
