@@ -1208,7 +1208,7 @@ jQuery(($) => {
                         text: `<p>For now, let's go with the Link Menu Item one. This can be used to easily add menu
                             items for any URL.</p>
                             <p>Click on the <em>"Add"</em> button.</p>`,
-                        attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
+                        attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
