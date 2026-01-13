@@ -2333,23 +2333,7 @@ jQuery(($) => {
                         'content_type_editor_content',
                         'content_type_editor_content_definition',
                         () => goToRelativePage(Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', ''),
-                        'content_type_editor_content_types_button'),
-                    {
-                        title: 'Content type editor',
-                        text: `Click on the <em>"Content Types"</em> button. Note how this is now NOT the top "Content
-                            Types" button.`,
-                        attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'content_type_editor_content_types_button',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_content_types');
-                            },
-                        },
-                    },
+                        'content_type_editor_content_types'),
                     {
                         title: 'Content type editor',
                         text: 'Here you can see and edit all the content types.',
