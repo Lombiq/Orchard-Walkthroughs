@@ -46,20 +46,26 @@ jQuery(($) => {
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
-        function removeShepherdQueryParams() {
+        function setShepherdQueryParams(shepherdTour, shepherdStep) {
             const urlObject = new URL(window.location.href);
 
+            // Clear out the parameters before updating them. This ensures correct behavior even if they are somehow
+            // duplicated (e.g. if "shepherdStep" appears twice in the URL).
             urlObject.searchParams.delete('shepherdTour');
             urlObject.searchParams.delete('shepherdStep');
+            
+            urlObject.searchParams.set('shepherdTour', shepherdTour);
+            urlObject.searchParams.set('shepherdStep', shepherdStep);
+
             window.history.pushState(null, '', urlObject.toString());
         }
 
-        function addShepherdQueryParams() {
-            const urlObject = new URL(window.location.href);
+        function removeShepherdQueryParams() {
+            setShepherdQueryParams(null, null);
+        }
 
-            urlObject.searchParams.set('shepherdTour', Shepherd.activeTour.options.id);
-            urlObject.searchParams.set('shepherdStep', Shepherd.activeTour.getCurrentStep().id);
-            window.history.pushState(null, '', urlObject.toString());
+        function addShepherdQueryParams() {
+            setShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
         }
 
         function getShepherdQueryParams() {
