@@ -48,6 +48,13 @@ public static class TestCaseUITestContextExtensions
             await ClickOnNextButtonAsync();
         }
 
+        async Task AssertContentTypesStep(string title)
+        {
+            AssertStep(title, "Click on the \"Design\" dropdown");
+            await context.ClickReliablyOnAsync(_nextButtonBy);
+            await AssertStepAndClickShepherdTargetAsync(title, "Now click on the \"Content Types\" menu");
+        }
+
         void AssertStep(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
@@ -241,8 +248,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now let's create an article!");
                 await AssertStepAndClickNextAsync(
                     "Creating a new article", "Just as the Blog Post content type", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickNextAsync("Creating a new article", "Click on the \"Design\" dropdown");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now click on the \"Content Types\" menu");
+                await AssertContentTypesStep("Creating a new article");
                 await AssertStepAndClickNextAsync("Creating a new article", "Here we have the article content type.");
                 await AssertStepAndClickNextAsync("Creating a new article", "Here you can see all the articles.");
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Click here to create a new article.");
@@ -445,9 +451,7 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=content_type_editor_intro");
                 await AssertStepAndClickNextAsync(
                     "Content type editor", "We'll now take a look at how the", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Now click on the \"Content Definition\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Click on the \"Content Types\" button.");
+                await AssertContentTypesStep("Content type editor");
                 await AssertStepAndClickNextAsync("Content type editor", "Here you can see and edit all the content types.");
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "Let's edit the Blog Post content type");
                 await AssertStepAndClickNextAsync("Content type editor", "Here you can see the content type's editor.");

@@ -45,6 +45,11 @@ jQuery(($) => {
 
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
+        
+        function urlToRelative(url) {
+            const urlObject = new URL(url);
+            return urlObject.toString().substring(urlObject.origin.length);
+        }
 
         function withShepherdQueryParams(url, shepherdTour, shepherdStep) {
             const newUrl = new URL(url);
@@ -62,7 +67,7 @@ jQuery(($) => {
 
         function setShepherdQueryParams(shepherdTour, shepherdStep) {
             const urlObject = withShepherdQueryParams(window.location.href, shepherdTour, shepherdStep);
-            window.history.pushState(null, '', urlObject.toString());
+            window.history.pushState(null, '', urlToRelative(urlObject));
         }
 
         function removeShepherdQueryParams() {
@@ -198,10 +203,7 @@ jQuery(($) => {
                     text: `Now click on the <em>"Content Types"</em> menu to see what type of content items you
                             can create.`,
                     // There is no proper basic JS selector, to select the element, so we need to use a function.
-                    savedElement: $('[title="Content Types"]')
-                        .parent()
-                        .attr('href', (_, value) => `${value}&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=${encodeURIComponent(nextId)}`)
-                        .get(0),
+                    savedElement: document.querySelector('[title="Content Types"]')?.parentElement,
                     attachTo: {
                         element: function getContentTypesButton() {
                             return this.options.savedElement;
@@ -214,6 +216,8 @@ jQuery(($) => {
                     id: id2,
                     when: {
                         show() {
+                            const savedElement = this.options.savedElement;
+                            savedElement.href = withShepherdQueryParams(savedElement.href, 'orchardCoreAdminWalkthrough', nextId);
                             addShepherdQueryParams();
                             $('ul.show').removeClass('show');
                         },
