@@ -142,8 +142,8 @@ jQuery(($) => {
         }));
 
         async function waitForSelector(selector) {
-            // Wait up to 2 seconds for the element to appear.
-            for (let i = 0; i < 10; i++) {
+            // Wait for the element to appear.
+            while (true) {
                 if (document.querySelector(selector)) return;
                 // eslint-disable-next-line no-await-in-loop -- Intentionally not parallel.
                 await delay(200);
@@ -1176,7 +1176,7 @@ jQuery(($) => {
                         title: 'Managing the menu',
                         text: `You can choose between multiple types of menu items. Read the descriptions too see how
                             they are different.`,
-                        attachTo: { element: '.modal-body', on: 'top' },
+                        attachTo: { element: '.modal-body', on: 'right' },
                         canClickTarget: false,
                         buttons: [
                             {
@@ -1645,8 +1645,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
+                        text: 'Click on the <em>"Media"</em> dropdown.',
+                        attachTo: { element: '#media', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -1661,7 +1661,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'media_management_menu1',
-                        advanceOn: { selector: '#content', event: 'click' },
+                        advanceOn: { selector: '#media', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -1671,10 +1671,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Now click on the <em>"Media Library"</em> button.',
+                        text: 'Now click on the <em>"Library"</em> button.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
-                        savedElement: $('[title="Media Library"]').parent().get(0),
+                        savedElement: $('[title="Library"]').parent().get(0),
                         attachTo: {
                             element: function getContentItemsButton() {
                                 return this.options.savedElement;
@@ -1945,34 +1945,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'Click on the dropdown to edit it!',
-                        attachTo: {
-                            element: '.widget-editor-btn-toggle.widget-editor-btn-expand',
-                            on: 'top',
-                        },
-                        beforeShowPromise: waitForSelector('.widget-editor-btn-toggle.widget-editor-btn-expand'),
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'flow_part_page_flow_part_blockquote_dropdown',
-                        advanceOn: {
-                            selector: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
-                            event: 'click',
-                        },
-                        when: {
-                            show() {
-                                preventSubmit();
-                            },
-                        },
-                    },
-                    {
-                        title: 'Flow Part',
                         text: `Can you think of a good quote? My favorite is "Don't believe everything you read on the
                             internet." by Abraham Lincoln.`,
-                        attachTo: {
-                            element: '#FlowPart-0_Blockquote_Quote_Text',
-                            on: 'top',
-                        },
                         buttons: [
                             backButton,
                             nextButton,
@@ -2090,7 +2064,7 @@ jQuery(($) => {
                     {
                         title: 'Layout widgets',
                         text: 'Click on the <em>"Design"</em> dropdown.',
-                        attachTo: { element: '#themes', on: 'right' },
+                        attachTo: { element: '#design', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -2102,7 +2076,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'adding_widgets_to_the_layout_design',
-                        advanceOn: { selector: '#themes', event: 'click' },
+                        advanceOn: { selector: '#design', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -2113,7 +2087,7 @@ jQuery(($) => {
                     {
                         title: 'Layout widgets',
                         text: 'Now click on the <em>"Widgets"</em> menu item.',
-                        attachTo: { element: 'a[href*=Layers]', on: 'right' },
+                        attachTo: { element: '[data-title="Design"] a.item-label[href *= "/Layers"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2239,6 +2213,21 @@ jQuery(($) => {
                     },
                     {
                         title: 'Layout widgets',
+                        text: 'Select the display layer too!',
+                        attachTo: { element: '#LayerMetadata_LayerMetadata_Layer', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_select_layer',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Layout widgets',
                         text: 'We are ready, let\'s publish it! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
@@ -2315,8 +2304,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Content type editor',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
+                        text: 'Click on the <em>"Design"</em> dropdown.',
+                        attachTo: { element: '#design', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -2328,7 +2317,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'content_type_editor_content',
-                        advanceOn: { selector: '#content', event: 'click' },
+                        advanceOn: { selector: '#design', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();

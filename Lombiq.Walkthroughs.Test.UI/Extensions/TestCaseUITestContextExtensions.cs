@@ -369,8 +369,8 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=media_management_intro");
                 await AssertStepAndClickNextAsync(
                     "Media management", "We're now done with Taxonomies.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Media management", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Media management", "Now click on the \"Media Library\" button.");
+                await AssertStepAndClickShepherdTargetAsync("Media management", "Click on the \"Media\" dropdown.");
+                await AssertStepAndClickShepherdTargetAsync("Media management", "Now click on the \"Library\" button.");
                 await AssertStepAndClickNextAsync(
                     "Media management", "This is the media library.", assertShepherdTargetIsNotBody: false);
                 // The .shepherd-target element is hidden until a hover.
@@ -401,9 +401,8 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "Let's add a blockquote, for example!");
                 await AssertStepAndClickNextAsync(
                     "Flow Part", "Now you added the blockquote to your page.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Flow Part", "Click on the dropdown to edit it!");
-                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
-                    "Flow Part", "Can you think of a good quote?", "Sample blockquote");
+                context.Exists(By.Id("FlowPart-0_Blockquote_Quote_Text"));
+                await AssertStepAndClickNextAsync("Flow Part", "Can you think of a good quote?", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "We are ready, let's publish the page!");
                 AssertStep("Viewing the page", "The page is published!");
                 await context.ClickReliablyOnAsync(_byShepherdTarget);
@@ -429,6 +428,8 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "Now click on \"Paragraph\"");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Layout widgets", "Give it a title.", "Sample paragraph widget");
                 await AssertStepAndClickNextAsync("Layout widgets", "Give it some content.");
+                await context.SetDropdownByValueAsync(By.Id("LayerMetadata_LayerMetadata_Layer"), "Always");
+                await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "We are ready, let's publish it!");
                 await AssertStepAndClickShepherdTargetAsync(
                     "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
