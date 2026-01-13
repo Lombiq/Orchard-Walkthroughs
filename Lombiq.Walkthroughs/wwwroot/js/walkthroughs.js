@@ -46,17 +46,22 @@ jQuery(($) => {
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
-        function setShepherdQueryParams(shepherdTour, shepherdStep) {
-            const urlObject = new URL(window.location.href);
-
+        function withShepherdQueryParams(url, shepherdTour, shepherdStep) {
+            const newUrl = new URL(url);
+            
             // Clear out the parameters before updating them. This ensures correct behavior even if they are somehow
             // duplicated (e.g. if "shepherdStep" appears twice in the URL).
-            urlObject.searchParams.delete('shepherdTour');
-            urlObject.searchParams.delete('shepherdStep');
-            
-            urlObject.searchParams.set('shepherdTour', shepherdTour);
-            urlObject.searchParams.set('shepherdStep', shepherdStep);
+            newUrl.searchParams.delete('shepherdTour');
+            newUrl.searchParams.delete('shepherdStep');
 
+            if (shepherdTour) newUrl.searchParams.set('shepherdTour', shepherdTour);
+            if (shepherdStep) newUrl.searchParams.set('shepherdStep', shepherdStep);
+            
+            return newUrl;
+        }
+
+        function setShepherdQueryParams(shepherdTour, shepherdStep) {
+            const urlObject = withShepherdQueryParams(window.location.href, shepherdTour, shepherdStep);
             window.history.pushState(null, '', urlObject.toString());
         }
 
@@ -71,13 +76,15 @@ jQuery(($) => {
         function getShepherdQueryParams() {
             const urlObject = new URL(window.location.href);
 
-            const tourParam = urlObject.searchParams.get('shepherdTour');
-            const stepParam = urlObject.searchParams.get('shepherdStep');
+            const shepherdTour = urlObject.searchParams.get('shepherdTour');
+            const shepherdStep = urlObject.searchParams.get('shepherdStep');
 
-            return {
-                shepherdTour: tourParam,
-                shepherdStep: stepParam,
-            };
+            // Automatic house cleaning (de-duplication).
+            if (urlObject.searchParams.getAll('shepherdStep').length > 1) {
+                setShepherdQueryParams(shepherdTour, shepherdStep);
+            }
+
+            return { shepherdTour, shepherdStep };
         }
 
         function preventSubmit() {
@@ -136,10 +143,10 @@ jQuery(($) => {
                 }
             }
 
-            const goToRelativePageURL = new URL(goToRelativePageString + (nextPage ?? ''));
-            goToRelativePageURL.searchParams.set('shepherdTour', shepherdTour);
-            goToRelativePageURL.searchParams.set('shepherdStep', shepherdStep);
-            window.location.href = goToRelativePageURL.toString();
+            window.location.href = withShepherdQueryParams(
+                goToRelativePageString + (nextPage ?? ''),
+                shepherdTour,
+                shepherdStep);
         }
 
         ['complete', 'cancel'].forEach((event) => Shepherd.on(event, () => {
@@ -154,6 +161,65 @@ jQuery(($) => {
                 // eslint-disable-next-line no-await-in-loop -- Intentionally not parallel.
                 await delay(200);
             }
+        }
+        
+        function navigateToContentTypes(title, id1, id2, backAction, nextId) {
+            return [
+                {
+                    title: title,
+                    text: 'Click on the <em>"Design"</em> dropdown and then <em>"Content Definition"</em>.',
+                    attachTo: { element: '#design', on: 'right' },
+                    buttons: [
+                        {
+                            action: backAction,
+                            classes: 'shepherd-button-secondary',
+                            text: 'Back',
+                        },
+                        {
+                            action: function () {
+                                document.querySelector('a .icon[title="Design"]').parentElement.click();
+                                document.querySelector('a .icon[title="Content Definition"]').parentElement.click();
+                                return this.next();
+                            },
+                            classes: 'shepherd-button-primary',
+                            text: 'Next',
+                        }
+                    ],
+                    id: id1,
+                    when: {
+                        show() {
+                            addShepherdQueryParams();
+                            $('ul.show').removeClass('show');
+                        },
+                    },
+                },
+                {
+                    title: title,
+                    text: `Now click on the <em>"Content Types"</em> menu to see what type of content items you
+                            can create.`,
+                    // There is no proper basic JS selector, to select the element, so we need to use a function.
+                    savedElement: $('[title="Content Types"]')
+                        .parent()
+                        .attr('href', (_, value) => `${value}&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=${encodeURIComponent(nextId)}`)
+                        .get(0),
+                    attachTo: {
+                        element: function getContentTypesButton() {
+                            return this.options.savedElement;
+                        },
+                        on: 'right',
+                    },
+                    buttons: [
+                        backButton,
+                    ],
+                    id: id2,
+                    when: {
+                        show() {
+                            addShepherdQueryParams();
+                            $('ul.show').removeClass('show');
+                        },
+                    },
+                },
+            ];
         }
 
         // Add new walkthroughs here.
@@ -734,62 +800,12 @@ jQuery(($) => {
                         ],
                         id: 'creating_article_intro',
                     },
-                    {
-                        title: 'Creating a new article',
-                        text: 'Click on the <em>"Design"</em> dropdown and then <em>"Content Definition"</em>.',
-                        attachTo: { element: '#design', on: 'right' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_intro', 'Admin', '');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                            {
-                                action: function () {
-                                    document.querySelector('a .icon[title="Design"]').parentElement.click();
-                                    document.querySelector('a .icon[title="Content Definition"]').parentElement.click();
-                                    return this.next();
-                                },
-                                classes: 'shepherd-button-primary',
-                                text: 'Next',
-                            }
-                        ],
-                        id: 'creating_article_dashboard',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Creating a new article',
-                        text: `Now click on the <em>"Content Types"</em> menu to see what type of content items you
-                            can create.`,
-                        // There is no proper basic JS selector, to select the element, so we need to use a function.
-                        savedElement: $('[title="Content Types"]')
-                            .parent()
-                            .attr('href', (_, value) => value + '&shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_content_types_article')
-                            .get(0),
-                        attachTo: {
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'creating_article_content_types',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
+                    ...navigateToContentTypes(
+                        'Creating a new article',
+                        'creating_article_dashboard',
+                        'creating_article_content_types',
+                        () => goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_intro', 'Admin', ''),
+                        'creating_article_content_types_article'),
                     {
                         title: 'Creating a new article',
                         text: 'Here we have the article content type. You can click on the title or the <em>"Edit"</em> button to alter the content type definition.',
@@ -2308,63 +2324,12 @@ jQuery(($) => {
                         ],
                         id: 'content_type_editor_intro',
                     },
-                    {
-                        title: 'Content type editor',
-                        text: 'Click on the <em>"Design"</em> dropdown.',
-                        attachTo: { element: '#design', on: 'right' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', '');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                        ],
-                        id: 'content_type_editor_content',
-                        advanceOn: { selector: '#design', event: 'click' },
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Content type editor',
-                        text: 'Now click on the <em>"Content Definition"</em> dropdown.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a
-                        // function.
-                        savedElement: $('[title="Content Definition"]').parent().get(0),
-                        attachTo: {
-
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'content_type_editor_content_definition',
-                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
-                        // function for that, so we are adding an event listener.
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                const element = this.options.savedElement;
-                                $('[data-title="Content Definition"]').removeClass('show');
-
-                                if (element.getAttribute('listener') !== 'true') {
-                                    element.addEventListener('click', function advanceToNextStep() {
-                                        element.setAttribute('listener', 'true');
-                                        Shepherd.activeTour.next();
-                                    });
-                                }
-                            },
-                        },
-                    },
+                    ...navigateToContentTypes(
+                        'Content type editor',
+                        'content_type_editor_content',
+                        'content_type_editor_content_definition',
+                        () => goToRelativePage(Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', ''),
+                        'content_type_editor_content_types_button'),
                     {
                         title: 'Content type editor',
                         text: `Click on the <em>"Content Types"</em> button. Note how this is now NOT the top "Content
