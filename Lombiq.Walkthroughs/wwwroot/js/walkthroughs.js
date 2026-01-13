@@ -45,7 +45,7 @@ jQuery(($) => {
 
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
-        
+
         function urlToRelative(url) {
             const urlObject = new URL(url);
             return urlObject.toString().substring(urlObject.origin.length);
@@ -53,7 +53,7 @@ jQuery(($) => {
 
         function withShepherdQueryParams(url, shepherdTour, shepherdStep) {
             const newUrl = new URL(url);
-            
+
             // Clear out the parameters before updating them. This ensures correct behavior even if they are somehow
             // duplicated (e.g. if "shepherdStep" appears twice in the URL).
             newUrl.searchParams.delete('shepherdTour');
@@ -61,7 +61,7 @@ jQuery(($) => {
 
             if (shepherdTour) newUrl.searchParams.set('shepherdTour', shepherdTour);
             if (shepherdStep) newUrl.searchParams.set('shepherdStep', shepherdStep);
-            
+
             return newUrl;
         }
 
@@ -167,7 +167,7 @@ jQuery(($) => {
                 await delay(200);
             }
         }
-        
+
         function navigateToContentTypes(title, id1, id2, backAction, nextId) {
             return [
                 {
@@ -188,7 +188,7 @@ jQuery(($) => {
                             },
                             classes: 'shepherd-button-primary',
                             text: 'Next',
-                        }
+                        },
                     ],
                     id: id1,
                     when: {
@@ -812,7 +812,8 @@ jQuery(($) => {
                         'creating_article_content_types_article'),
                     {
                         title: 'Creating a new article',
-                        text: 'Here we have the article content type. You can click on the title or the <em>"Edit"</em> button to alter the content type definition.',
+                        text: 'Here we have the article content type. You can click on the title or the <em>"Edit"' +
+                            '</em> button to alter the content type definition.',
                         attachTo: { element: 'li[data-type-name="Article"]', on: 'right' },
                         buttons: [
                             backButton,
@@ -1043,7 +1044,7 @@ jQuery(($) => {
                                     .off('submit')
                                     .attr('action', (_, value) => value
                                         .replace('Admin%2FContentTypes%2FList', 'Admin%2FContents%2FContentItems%2FArticle')
-                                        .replace('creating_article_content_types_article', 'creating_article_published'))
+                                        .replace('creating_article_content_types_article', 'creating_article_published'));
                             },
                         },
                     },
@@ -1068,12 +1069,13 @@ jQuery(($) => {
                         when: {
                             show() {
                                 // Fix potentially broken redirect that sometimes happens exclusively when Shepherd is enabled.
-                                if (location.href.includes('ContentTypes/List')) {
-                                    location.href = location.href.replace(
+                                if (window.location.href.includes('ContentTypes/List')) {
+                                    window.location.href = window.location.href.replace(
                                         /ContentTypes\/List.*/,
-                                        'Contents/ContentItems/Article?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=creating_article_published');
+                                        'Contents/ContentItems/Article?shepherdTour=orchardCoreAdminWalkthrough&' +
+                                        'shepherdStep=creating_article_published');
                                 }
-                                
+
                                 if ($('.validation-summary-errors').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
