@@ -2569,7 +2569,7 @@ jQuery(($) => {
                         title: 'Content type editor',
                         text: 'The text field is now saved. You will also have to save the blog post content type.',
                         scrollTo: true,
-                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
+                        attachTo: { element: '.save', on: 'bottom' },
                         buttons: [
                             {
                                 action: function () {
@@ -2641,55 +2641,18 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <em>"Configuration"</em>. Most of the Orchard Core settings are available here.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Settings"</em>.',
+                        attachTo: { element: '#settings', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'audit_trail_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#settings', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
                                 $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Audit Trail',
-                        text: 'Click on <em>"Settings"</em>.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a function.
-                        savedElement: $('[data-title="Configuration"]')
-                            .find('[title="Settings"]')
-                            .first()
-                            .parent()
-                            .get(0),
-                        attachTo: {
-
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'audit_trail_settings',
-                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
-                        // function for that, so we are adding an event listener.
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                const element = this.options.savedElement;
-                                $('[data-title="Settings"]').removeClass('show');
-
-                                if (element.getAttribute('listener') !== 'true') {
-                                    element.addEventListener('click', function advanceToNextStep() {
-                                        element.setAttribute('listener', 'true');
-                                        Shepherd.activeTour.next();
-                                    });
-                                }
                             },
                         },
                     },
@@ -2795,9 +2758,25 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: `Now let's see how we can see the details of the recorded events! Click on the <em>"Audit
-                            Trail"</em> button.`,
-                        attachTo: { element: '#audittrail', on: 'right' },
+                        text: 'Now let\'s see how we can see the details of the recorded events! Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_configuration',
+                        advanceOn: { selector: '#tools', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click on the <em>"Audit Trail"</em> button.',
+                        attachTo: { element: '[data-title="Tools"] a.audittrail', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2844,9 +2823,9 @@ jQuery(($) => {
                     {
                         title: 'User management',
                         text: `It's too quiet if you're alone in your Orchard Core app. Time to invite your colleagues
-                            or friends, perhaps? Let's take a look at user management! Click on the <em>"Security"</em>
+                            or friends, perhaps? Let's take a look at user management! Click on the <em>"Access Control"</em>
                             dropdown.`,
-                        attachTo: { element: '#security', on: 'right' },
+                        attachTo: { element: '#accessControl', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -2861,7 +2840,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'user_management_intro',
-                        advanceOn: { selector: '#security', event: 'click' },
+                        advanceOn: { selector: '#accessControl', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -2871,9 +2850,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: `This menu contains all security and role-based access control-related settings. For now,
-                            we're only interested in user management specifically, so click on <em>"Users"</em>.`,
-                        attachTo: { element: '.users', on: 'right' },
+                        text: `This menu contains the user and role-based access control (while other security
+                            configuration can be found in Settings &gt; Security). For now, we're only interested in
+                            user management specifically, so click on <em>"Users"</em>.`,
+                        attachTo: { element: 'a.users', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2983,23 +2963,6 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: `You can disable the user, though for a new one this kind of misses the point. This
-                            option is also available for existing users. If a user is disabled then they will not be
-                            able to log in.`,
-                        attachTo: { element: '#User_IsEnabled', on: 'top' },
-                        buttons: [
-                            backButton,
-                            nextButton,
-                        ],
-                        id: 'user_management_create_user_is_enabled',
-                        when: {
-                            show() {
-                                preventSubmit();
-                            },
-                        },
-                    },
-                    {
-                        title: 'User management',
                         text: `You can enter a password or generate a strong one automatically. Don't forget to copy it
                             though if you generate it, otherwise nobody will know it!`,
                         attachTo: { element: '.password-generator-wrapper', on: 'top' },
@@ -3089,13 +3052,13 @@ jQuery(($) => {
                     {
                         title: 'Roles',
                         text: `Since you're surely curious about those roles we've seen a glimpse of, let's actually
-                            see them now! Click on the <em>"Security"</em> dropdown.`,
-                        attachTo: { element: '#security', on: 'right' },
+                            see them now! Click on the <em>"Access Control"</em> dropdown.`,
+                        attachTo: { element: '#accessControl', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'roles_intro',
-                        advanceOn: { selector: '#security', event: 'click' },
+                        advanceOn: { selector: '#accessControl', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3106,7 +3069,7 @@ jQuery(($) => {
                     {
                         title: 'Roles',
                         text: 'Now click on <em>"Roles"</em>.',
-                        attachTo: { element: '.roles', on: 'right' },
+                        attachTo: { element: 'a.roles', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -3267,14 +3230,14 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Configuration"</em>.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3284,8 +3247,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Import/Export"</em>.',
-                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        text: 'Click on <em>"Deployments"</em>.',
+                        savedElement: document.querySelector('a.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
@@ -3301,7 +3264,7 @@ jQuery(($) => {
                             show() {
                                 addShepherdQueryParams();
                                 const element = this.options.savedElement;
-                                $('[data-title="Import/Export"]').removeClass('show');
+                                $('[data-title="Deployments"]').removeClass('show');
 
                                 if (element.getAttribute('listener') !== 'true') {
                                     element.addEventListener('click', function advanceToNextStep() {
@@ -3314,12 +3277,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: `<p>We'll start with <em>"Deployment Plans"</em>. A Deployment Plan is a collection of steps
+                        text: `<p>We'll start with <em>"Plans"</em>. A Deployment Plan is a collection of steps
                             that build an export of your site. The result will be a downloadable recipe file (or it can
                             even be automatically sent to another Orchard Core instance with Remote Deployment).</p>
                             <p>You've already used recipes before, right when you've run the setup in the very
                             beginning. Recipes are simply JSON files.</p>`,
-                        attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
+                        attachTo: { element: 'a[href*="DeploymentPlan/Index"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -3394,15 +3357,14 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: `Now we have a deployment plan, but it's empty. Let's add steps! Click on the <em>"Manage
-                            Steps"</em> button.`,
-                        attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
+                        text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps! Click on the <em>"Add Step"</em> button.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
                                     goToRelativePage(
                                         Shepherd.activeTour.options.id,
-                                        'deployment_add_deployment_plan',
+                                        'deployment_deployment_plan_publishing',
                                         'Admin',
                                         'Admin/DeploymentPlan/Index');
                                 },
@@ -3411,37 +3373,6 @@ jQuery(($) => {
                             },
                         ],
                         id: 'deployment_deployment_plan_published',
-                        when: {
-                            show() {
-                                if ($('.validation-summary-errors').length) {
-                                    deleteWalkthroughCookies();
-                                    Shepherd.activeTour.back();
-                                    return;
-                                }
-
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'deployment_add_step');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Deployment',
-                        text: 'Click on the <em>"Add Step"</em> button.',
-                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(
-                                        Shepherd.activeTour.options.id,
-                                        'deployment_deployment_plan_published',
-                                        'Admin',
-                                        'Admin/DeploymentPlan/Index');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                        ],
-                        id: 'deployment_add_step',
                         advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
                     },
                     {
@@ -3599,14 +3530,14 @@ jQuery(($) => {
                     {
                         title: 'Deployment',
                         text: `We've now seen how to export content. But you surely want to see how to import it! We'll
-                            do exactly that. Click on <em>"Configuration"</em>.`,
-                        attachTo: { element: '#configuration', on: 'right' },
+                            do exactly that. Click on <em>"Tools"</em>.`,
+                        attachTo: { element: '#tools', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_import_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3616,8 +3547,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Import/Export"</em> again.',
-                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        text: 'Click on <em>"Deployments"</em> again.',
+                        savedElement: document.querySelector('a.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
@@ -3729,12 +3660,12 @@ jQuery(($) => {
                     {
                         title: 'Themes and modules',
                         text: 'Click on <em>"Design"</em>.',
-                        attachTo: { element: '#themes', on: 'right' },
+                        attachTo: { element: '#design', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'features_and_themes_design',
-                        advanceOn: { selector: '#themes', event: 'click' },
+                        advanceOn: { selector: '#design', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3798,13 +3729,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Click on <em>"Configuration"</em>.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'features_and_themes_features_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();

@@ -481,7 +481,6 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=audit_trail_intro");
                 await AssertStepAndClickNextAsync(
                     "Audit Trail", "The Audit Trail module provides an immutable", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Configuration\".");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Settings\".");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Audit Trail\".");
                 await AssertStepAndClickNextAsync("Audit Trail", "Here you can see and turn on or off all the events");
@@ -490,6 +489,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
                 await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
+                await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on the \"Audit Trail\" button.");
                 await AssertStepAndClickNextAsync("Audit Trail", "Here you can see all the recorded events.");
             });
 
@@ -500,7 +500,7 @@ public static class TestCaseUITestContextExtensions
             {
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=user_management_intro");
                 await AssertStepAndClickShepherdTargetAsync("User management", "It's too quiet if you're alone in your Orchard");
-                await AssertStepAndClickShepherdTargetAsync("User management", "This menu contains all security and role-based");
+                await AssertStepAndClickShepherdTargetAsync("User management", "This menu contains the user and role-based access");
                 await AssertStepAndClickNextAsync("User management", "Here you can see all the users, including");
                 await AssertStepAndClickShepherdTargetAsync("User management", "You can edit existing users and add add new");
                 AssertStep("User management", "Think of someone you like so much you want them in your Orchard Core app");
@@ -510,7 +510,6 @@ public static class TestCaseUITestContextExtensions
                 await ClickAndFillInShepherdTargetWithRetriesAsync("sample.user@example.com");
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("User management", "You can enter a phone number too, but it's optional.");
-                await AssertStepAndClickNextAsync("User management", "You can disable the user, though for a new one this");
                 AssertStep("User management", "You can enter a password or generate a strong one automatically.");
                 await context.ClickReliablyOnAsync(By.ClassName("password-generator-button"));
                 await ClickOnNextButtonAsync();
@@ -546,9 +545,9 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=deployment_intro");
                 await AssertStepAndClickNextAsync(
                     "Deployment", "Let's take a look at exporting and importing,", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Configuration\".");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\".");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "We'll start with \"Deployment Plans\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Tools\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Deployments\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "We'll start with \"Plans\".");
                 await AssertStepAndClickNextAsync("Deployment", "Here you would see the deployment plans, but we currently have");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Let's create a deployment plan! Click here.");
                 AssertStep("Deployment", "Give it a name.");
@@ -556,7 +555,6 @@ public static class TestCaseUITestContextExtensions
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now click on the \"Create\" button.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now we have a deployment plan, but it's empty.");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on the \"Add Step\" button.");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can see all the steps that you can use.");
                 await AssertStepAndClickNextAsync("Deployment", "Let's filter for \"Update Content Definitions\"!");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "\"Update Content Definitions\" exports the chosen");
@@ -567,7 +565,7 @@ public static class TestCaseUITestContextExtensions
                 // The file will be downloaded to the default download location. It doesn't really matter.
                 await AssertStepAndClickShepherdTargetWithScriptAsync("Deployment", "Here you can use \"File Download\" so the exported");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\" again.");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Deployments\" again.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Package Import\".");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can import your exported deployment plan");
                 // This will cause a validation error since we didn't select a file, but it's easier this way and an actual
@@ -592,7 +590,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see and change the themes.");
                 await AssertStepAndClickNextAsync(
                     "Themes and modules", "We'll continue with modules", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Configuration\".");
+                await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Tools\".");
                 await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Features\".");
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see all the features");
             });
