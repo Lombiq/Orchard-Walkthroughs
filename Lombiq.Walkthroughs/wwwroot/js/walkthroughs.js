@@ -106,6 +106,14 @@ jQuery(($) => {
                 .filter((element) => element.textContent.includes(text))[0];
         }
 
+        function showForPublish(stepValue, ignoreQueryStepValue) {
+            $('form').off('submit');
+            addShepherdQueryParams();
+
+            // The return URL would redirect us to the wrong step. So we are ignoring it.
+            setWalkthroughCookies('orchardCoreAdminWalkthrough', stepValue, ignoreQueryStepValue);
+        }
+
         const backButton = {
             action: function () {
                 return this.back();
@@ -714,11 +722,7 @@ jQuery(($) => {
                         id: 'creating_blog_post_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                // The return URL would redirect us to the "creating_blog_post_create_button" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published', 'creating_blog_post_create_button');
+                                showForPublish('creating_blog_post_published', 'creating_blog_post_create_button');
                             },
                         },
                     },
@@ -1034,17 +1038,7 @@ jQuery(($) => {
                         id: 'creating_article_publishing',
                         when: {
                             show() {
-                                addShepherdQueryParams();
-
-                                // The return URL would redirect us to the "creating_article_content_types_article" step, so
-                                // we are ignoring the query parameter.
-                                $('button[name="submit.Publish"]').off('click');
-                                setWalkthroughCookies(this.tour.options.id, 'creating_article_published', 'creating_article_content_types_article');
-                                $('form[action*="ContentTypes/Article/Create"]')
-                                    .off('submit')
-                                    .attr('action', (_, value) => value
-                                        .replace('Admin%2FContentTypes%2FList', 'Admin%2FContents%2FContentItems%2FArticle')
-                                        .replace('creating_article_content_types_article', 'creating_article_published'));
+                                showForPublish('creating_article_published', 'creating_article_content_types_article');
                             },
                         },
                     },
@@ -1302,9 +1296,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published');
+                                showForPublish('adding_article_to_menu_published');
                             },
                         },
                     },
@@ -1334,8 +1326,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_publishing2',
                         when: {
                             show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published2');
+                                showForPublish('adding_article_to_menu_published2');
                             },
                         },
                     },
@@ -1614,9 +1605,7 @@ jQuery(($) => {
                         id: 'taxonomies_category_publishing',
                         when: {
                             show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_category_published');
-                                $('form').off('submit');
+                                showForPublish('taxonomies_category_published');
                             },
                         },
                     },
@@ -1650,8 +1639,7 @@ jQuery(($) => {
                                     return;
                                 }
 
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'media_management_intro');
+                                showForPublish('media_management_intro');
                             },
                         },
                     },
@@ -1996,12 +1984,7 @@ jQuery(($) => {
                         id: 'flow_part_page_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-
-                                // The return URL would redirect us to the "flow_part_content_items_new_page" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'flow_part_page_published', 'flow_part_content_items_new');
+                                showForPublish('flow_part_page_published', 'flow_part_content_items_new');
                             },
                         },
                     },
@@ -2264,9 +2247,7 @@ jQuery(($) => {
                         id: 'adding_widgets_to_the_layout_paragraph_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
+                                showForPublish('adding_widgets_to_the_layout_paragraph_published');
                             },
                         },
                     },

@@ -19,6 +19,10 @@ public static class TestCaseUITestContextExtensions
 
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
+        // There are some false positives of this error, because of page navigation.
+        context.Configuration.BrowserLogFilters[nameof(TestWalkthroughsBehaviorAsync)] = entry =>
+            entry.Text?.Trim().StartsWithOrdinalIgnoreCase("The element for this Shepherd step was not found") != true;
+
         async Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             await AssertStepAsync(header, text, assertShepherdTargetIsNotBody);
@@ -602,5 +606,7 @@ public static class TestCaseUITestContextExtensions
             "Outro",
             async () => await AssertStepAsync(
                 "Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false));
+
+        context.Configuration.BrowserLogFilters.Remove(nameof(TestWalkthroughsBehaviorAsync));
     }
 }
