@@ -18,5 +18,6 @@ using static Lombiq.Walkthroughs.Constants.FeatureIds;
     [
         "OrchardCore.Contents",
         "OrchardCore.ResourceManagement",
+        "OrchardCore.DataLocalization", // Can be removed after https://github.com/OrchardCMS/OrchardCore/issues/18800 is resolved.
     ]
 )]
