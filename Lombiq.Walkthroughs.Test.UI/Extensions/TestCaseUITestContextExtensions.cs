@@ -15,7 +15,7 @@ public static class TestCaseUITestContextExtensions
     private static readonly By _byShepherdTarget = By.ClassName(_shepherdTargetClass).OfAnyVisibility();
     private static readonly By _byShepherdTargetNotBody = By.CssSelector("*:not(body)." + _shepherdTargetClass).OfAnyVisibility();
     // Just a selector on .shepherd-button-primary is not enough to find the button for some reason.
-    private static readonly By _nextButtonBy = By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]");
+    private static readonly By _nextButtonBy = By.XPath("//button[contains(@class, 'shepherd-button-primary') and not(@id)]");
 
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
@@ -304,7 +304,7 @@ public static class TestCaseUITestContextExtensions
                 // highlighted in the browser. Its buttons can't be clicked with ClickReliablyAsync() so we need to do this.
                 AssertStep("Managing the menu", "You can choose between multiple types of menu items.");
                 var originalUri = context.GetCurrentUri();
-                context.Get(By.XPath($"//button[contains(@class, 'shepherd-button-primary') and not(@id)]")).Click();
+                context.Get(By.XPath("//button[contains(@class, 'shepherd-button-primary') and not(@id)]")).Click();
                 context.DoWithRetriesOrFail(() => context.GetCurrentUri() != originalUri);
                 await AssertStepAndClickShepherdTargetAsync("Managing the menu", "For now, let's go with the Link Menu Item one.");
             });
