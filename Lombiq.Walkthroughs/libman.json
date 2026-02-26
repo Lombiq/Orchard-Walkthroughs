@@ -5,7 +5,7 @@
   "libraries": [
     {
       "library": "shepherd.js@15.0.0",
-      "files": [ "dist/esm/shepherd.mjs", "dist/css/*.css" ]
+      "files": [ "dist/js/shepherd.mjs", "dist/css/*.css" ]
     }
   ]
 }
