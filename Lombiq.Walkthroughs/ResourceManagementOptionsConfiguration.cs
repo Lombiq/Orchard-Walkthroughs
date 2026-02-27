@@ -27,7 +27,7 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest
             .DefineScript(ResourceNames.Shepherd)
             .SetAttribute("type", "module")
-            .SetUrl(Shepherd + "esm/shepherd.mjs")
+            .SetUrl(Shepherd + "js/shepherd.mjs")
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
