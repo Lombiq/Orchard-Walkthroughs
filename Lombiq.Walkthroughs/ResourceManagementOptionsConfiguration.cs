@@ -15,6 +15,8 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
 
     private static readonly ResourceManifest _manifest = new();
 
+    public const string ShepherModulePath = Shepherd + "js/shepherd.mjs";
+
     static ResourceManagementOptionsConfiguration()
     {
         _manifest.DefineResource("$" + nameof(FeatureIds.Area), FeatureIds.Area);
@@ -27,7 +29,7 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest
             .DefineScript(ResourceNames.Shepherd)
             .SetAttribute("type", "module")
-            .SetUrl(Shepherd + "js/shepherd.mjs")
+            .SetUrl(ShepherModulePath)
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
