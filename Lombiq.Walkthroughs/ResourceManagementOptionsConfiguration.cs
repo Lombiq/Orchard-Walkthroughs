@@ -13,9 +13,9 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
     private const string Shepherd = Vendors + "shepherd.js/dist/";
     private const string Js = Module + "js/";
 
-    private static readonly ResourceManifest _manifest = new();
-
     public const string ShepherModulePath = Shepherd + "js/shepherd.mjs";
+
+    private static readonly ResourceManifest _manifest = new();
 
     static ResourceManagementOptionsConfiguration()
     {
