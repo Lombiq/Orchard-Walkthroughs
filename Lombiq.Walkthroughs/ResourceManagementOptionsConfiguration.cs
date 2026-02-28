@@ -13,7 +13,7 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
     private const string Shepherd = Vendors + "shepherd.js/dist/";
     private const string Js = Module + "js/";
 
-    public const string ShepherModulePath = Shepherd + "js/shepherd.mjs";
+    public const string ShepherdModulePath = Shepherd + "js/shepherd.mjs";
 
     private static readonly ResourceManifest _manifest = new();
 
@@ -29,7 +29,7 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest
             .DefineScript(ResourceNames.Shepherd)
             .SetAttribute("type", "module")
-            .SetUrl(ShepherModulePath)
+            .SetUrl(ShepherdModulePath)
             .SetVersion(LibManVersions.ShepherdJs);
 
         _manifest
