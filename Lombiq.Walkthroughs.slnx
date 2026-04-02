@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/workflows/create-jira-issues-for-community-activities.yml" />
+    <File Path=".github/workflows/publish-nuget.yml" />
+    <File Path=".github/workflows/validate-pull-request.yml" />
+    <File Path=".gitignore" />
+    <File Path="License.md" />
+    <File Path="Readme.md" />
+  </Folder>
+  <Project Path="Lombiq.Walkthroughs.Test.UI/Lombiq.Walkthroughs.Tests.UI.csproj" />
+  <Project Path="Lombiq.Walkthroughs/Lombiq.Walkthroughs.csproj" />
+</Solution>
