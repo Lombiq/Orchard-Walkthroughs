@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Title>Lombiq Walkthroughs for Orchard Core - UI Test Extensions</Title>
     <CopyrightYear>2023</CopyrightYear>
-    <DescriptionBody>Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core. See the project website for detailed documentation.</DescriptionBody>
+    <DescriptionBody>Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs;Tutorial</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs/tree/dev/Lombiq.Walkthroughs.Tests.UI</PackageProjectUrl>

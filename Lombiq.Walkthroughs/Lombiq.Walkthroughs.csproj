@@ -10,7 +10,7 @@
   <PropertyGroup>
     <Title>Lombiq Walkthroughs for Orchard Core</Title>
     <CopyrightYear>2023</CopyrightYear>
-    <DescriptionBody>Orchard Core module to teach you the fundamentals of using the CMS features with step-by-step guides. See the project website for detailed documentation.</DescriptionBody>
+    <DescriptionBody>Orchard Core module to teach you the fundamentals of using the CMS features with step-by-step guides.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs;Tutorial</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
   </PropertyGroup>
