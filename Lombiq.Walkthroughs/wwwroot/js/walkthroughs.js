@@ -3531,7 +3531,7 @@ jQuery(($) => {
                     {
                         title: 'Deployment',
                         text: 'Click on <em>"Deployments"</em> again.',
-                        savedElement: document.querySelector('a.item-label > [title="Deployments"]')?.parentElement,
+                        savedElement: document.querySelector('.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
