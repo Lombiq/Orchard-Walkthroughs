@@ -190,8 +190,8 @@ jQuery(($) => {
                         },
                         {
                             action: function () {
-                                document.querySelector('a .icon[title="Design"]').parentElement.click();
-                                document.querySelector('a .icon[title="Content Definition"]').parentElement.click();
+                                document.querySelector('#left-nav .icon[title="Design"]').parentElement.click();
+                                document.querySelector('#left-nav .icon[title="Content Definition"]').parentElement.click();
                                 return this.next();
                             },
                             classes: 'shepherd-button-primary',
@@ -3231,7 +3231,7 @@ jQuery(($) => {
                     {
                         title: 'Deployment',
                         text: 'Click on <em>"Deployments"</em>.',
-                        savedElement: document.querySelector('a.item-label > [title="Deployments"]')?.parentElement,
+                        savedElement: document.querySelector('.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
