@@ -18,10 +18,12 @@
 
   <ItemGroup Condition="'$(NuGetBuild)' != 'true'">
     <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
+    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI.AdminTheme\Lombiq.Tests.UI.AdminTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.Tests.UI" Version="14.2.2-alpha.12.osoe-925" />
+    <PackageReference Include="Lombiq.Tests.UI" Version="14.2.2-alpha.14.osoe-925" />
+    <PackageReference Include="Lombiq.Tests.UI.AdminTheme" Version="14.2.2-alpha.14.osoe-925" />
   </ItemGroup>
 
   <ItemGroup>
