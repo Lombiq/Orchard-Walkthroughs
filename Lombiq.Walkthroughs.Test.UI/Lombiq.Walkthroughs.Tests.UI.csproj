@@ -17,4 +17,6 @@
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk/Sdk/Import.targets" />
   <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk" Version="1.0.1-alpha.7.osoe-1208" />
+    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI.AdminTheme\Lombiq.Tests.UI.AdminTheme.csproj" />
+    <PackageReference Include="Lombiq.Tests.UI.AdminTheme" Version="14.2.2-alpha.14.osoe-925" />
 </Project>
