@@ -1,20 +1,19 @@
 <Project>
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Module.Sdk/Sdk/Import.props" />
-  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.7.osoe-1208" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.10.osoe-1208" />
 
   <PropertyGroup>
     <Title>Lombiq Walkthroughs for Orchard Core</Title>
     <CopyrightYear>2023</CopyrightYear>
-    <DescriptionBody>Orchard Core module to teach you the fundamentals of using the CMS features with step-by-step guides. See the project website for detailed documentation.</DescriptionBody>
+    <DescriptionBody>Orchard Core module to teach you the fundamentals of using the CMS features with step-by-step guides.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs;Tutorial</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
   </PropertyGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Module.Sdk/Sdk/Import.targets" />
-  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.7.osoe-1208" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.10.osoe-1208" />
 </Project>
