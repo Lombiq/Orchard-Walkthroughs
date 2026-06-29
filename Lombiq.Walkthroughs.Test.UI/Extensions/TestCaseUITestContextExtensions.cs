@@ -563,8 +563,6 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now we have a deployment plan, but it's empty.");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can see all the steps that you can use.");
                 await AssertStepAndClickNextAsync("Deployment", "Let's filter for \"Update Content Definitions\"!");
-                // Hide the overlay so Selenium can scroll down and reach the target button.
-                context.ExecuteScript("document.querySelector('.shepherd-modal-overlay-container').style.display = 'none'");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "\"Update Content Definitions\" exports the chosen");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can select which content types and parts you want");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "If you're finished, click on the \"Create\" button.");

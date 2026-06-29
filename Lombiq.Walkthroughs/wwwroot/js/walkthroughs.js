@@ -3398,7 +3398,7 @@ jQuery(($) => {
                                 action: function () {
                                     const searchBox = $('#search-box');
                                     searchBox.val('Update Content Definitions');
-                                    searchBox.trigger('keyup');
+                                    searchBox.trigger('input');
                                     return this.next();
                                 },
                                 classes: 'shepherd-button-primary',
