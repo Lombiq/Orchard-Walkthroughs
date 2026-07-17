@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.Tests.UI.AdminTheme" Version="14.2.2-alpha.21.osoe-925" />
+    <PackageReference Include="Lombiq.Tests.UI.AdminTheme" Version="$(PackageVersionLombiqTestsUI)" />
   </ItemGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk/Sdk/Import.targets" />
