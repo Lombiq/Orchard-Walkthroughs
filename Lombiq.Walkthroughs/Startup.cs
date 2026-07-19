@@ -22,7 +22,7 @@ public sealed class Startup : StartupBase
             .RegisterStylesheet(Shepherd)
             .RegisterFootScript(Shepherd)
             .RegisterFootScript(ResourceNames.Walkthroughs));
-        services.Configure<MvcOptions>(options => options.Filters.Add(typeof(WalkthroughsButtonFilter)));
+        services.Configure<MvcOptions>(options => options.Filters.Add<WalkthroughsButtonFilter>());
     }
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>

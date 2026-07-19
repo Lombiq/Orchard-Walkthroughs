@@ -1,32 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
+
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk" Version="2.0.0" />
 
   <PropertyGroup>
     <Title>Lombiq Walkthroughs for Orchard Core - UI Test Extensions</Title>
-    <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2023, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Walkthroughs for Orchard Core - UI Test Extensions: Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core. See the project website for detailed documentation.</Description>
-    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <CopyrightYear>2023</CopyrightYear>
+    <DescriptionBody>Extensions to aid in UI testing Lombiq Walkthroughs for Orchard Core.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;Walkthroughs;Tutorial</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-Walkthroughs</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-Walkthroughs/tree/dev/Lombiq.Walkthroughs.Tests.UI</PackageProjectUrl>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(NuGetBuild)' != 'true'">
-    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
+    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI.AdminTheme\Lombiq.Tests.UI.AdminTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.Tests.UI" Version="14.2.2-alpha.15.lmbq-558" />
+    <PackageReference Include="Lombiq.Tests.UI.AdminTheme" Version="$(PackageVersionLombiqTestsUI)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-    <None Include="Readme.md" />
-  </ItemGroup>
-
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.OrchardCore.Tests.UI.Sdk" Version="2.0.0" />
 </Project>

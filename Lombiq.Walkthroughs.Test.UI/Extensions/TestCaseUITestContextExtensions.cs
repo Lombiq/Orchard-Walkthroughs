@@ -19,22 +19,26 @@ public static class TestCaseUITestContextExtensions
 
     public static async Task TestWalkthroughsBehaviorAsync(this UITestContext context)
     {
-        Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
+        // There are some false positives of this error, because of page navigation.
+        context.Configuration.BrowserLogFilters[nameof(TestWalkthroughsBehaviorAsync)] = entry =>
+            entry.Text?.Trim().StartsWithOrdinalIgnoreCase("The element for this Shepherd step was not found") != true;
+
+        async Task AssertStepAndClickNextAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickOnNextButtonAsync();
+            await AssertStepAsync(header, text, assertShepherdTargetIsNotBody);
+            await ClickOnNextButtonAsync();
         }
 
-        Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
+        async Task AssertStepAndClickShepherdTargetAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickShepherdTargetAsync(assertShepherdTargetIsNotBody);
+            await AssertStepAsync(header, text, assertShepherdTargetIsNotBody);
+            await ClickShepherdTargetAsync(assertShepherdTargetIsNotBody);
         }
 
-        Task AssertStepAndClickShepherdTargetWithScriptAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
+        async Task AssertStepAndClickShepherdTargetWithScriptAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetIsNotBody);
-            return ClickShepherdTargetWithScriptAsync(assertShepherdTargetIsNotBody);
+            await AssertStepAsync(header, text, assertShepherdTargetIsNotBody);
+            await ClickShepherdTargetWithScriptAsync(assertShepherdTargetIsNotBody);
         }
 
         async Task AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
@@ -43,16 +47,24 @@ public static class TestCaseUITestContextExtensions
             string targetText,
             bool assertShepherdTargetIsNotBody = true)
         {
-            AssertStep(header, text, assertShepherdTargetIsNotBody);
+            await AssertStepAsync(header, text, assertShepherdTargetIsNotBody);
             await ClickAndFillInShepherdTargetWithRetriesAsync(targetText, assertShepherdTargetIsNotBody);
             await ClickOnNextButtonAsync();
         }
 
-        void AssertStep(string header, string text, bool assertShepherdTargetIsNotBody = true)
+        async Task AssertContentTypesStep(string title)
+        {
+            await AssertStepAsync(title, "Click on the \"Design\" dropdown");
+            await context.ClickReliablyOnAsync(_nextButtonBy);
+            await AssertStepAndClickShepherdTargetAsync(title, "Now click on the \"Content Types\" menu");
+        }
+
+        Task AssertStepAsync(string header, string text, bool assertShepherdTargetIsNotBody = true)
         {
             context.Get(By.CssSelector(".shepherd-header")).Text.ShouldContain(header);
             context.Get(By.CssSelector(".shepherd-text")).Text.ShouldContain(text);
             context.Exists(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
+            return context.AssertLogsAsync();
         }
 
         Task ClickShepherdTargetAsync(bool assertShepherdTargetIsNotBody = true) =>
@@ -115,7 +127,7 @@ public static class TestCaseUITestContextExtensions
 
                 // Also testing the back button.
                 await AssertStepAndClickNextAsync("Setup recipe", "The setup recipe in", assertShepherdTargetIsNotBody: false);
-                AssertStep("Site setup", "To get to this point", assertShepherdTargetIsNotBody: false);
+                await AssertStepAsync("Site setup", "To get to this point", assertShepherdTargetIsNotBody: false);
                 await ClickOnBackButtonAsync();
                 await AssertStepAndClickNextAsync("Setup recipe", "The setup recipe in", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickNextAsync("Site setup", "To get to this point", assertShepherdTargetIsNotBody: false);
@@ -177,7 +189,7 @@ public static class TestCaseUITestContextExtensions
                 // For some reason Get()-ting the title is flaky here. Even though the Exists() always succeeds in
                 // AssertStep(), running Get() with the same shepherd-target selector frequently fails. Referencing the
                 // title editor directly to work around this, and retrying with JS if even that fails.
-                AssertStep("Title", "Let's give it a title!");
+                await AssertStepAsync("Title", "Let's give it a title!");
 
                 var titleBy = By.Id("TitlePart_Title").OfAnyVisibility();
 
@@ -196,7 +208,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Markdown editor", "This is the editor where you can write");
 
                 // Same issue as with the title above.
-                AssertStep("Subtitle", "You can also give a subtitle to your blog post.");
+                await AssertStepAsync("Subtitle", "You can also give a subtitle to your blog post.");
 
                 var subTitleBy = By.Id("BlogPost_Subtitle_Text").OfAnyVisibility();
 
@@ -224,7 +236,7 @@ public static class TestCaseUITestContextExtensions
             async () =>
             {
                 // The ID of the blog will be random, so we can't have a start URL here.
-                AssertStep("Viewing the blog post", "The blog post is published, good job!");
+                await AssertStepAsync("Viewing the blog post", "The blog post is published, good job!");
                 // The URL is not changing here so can't use ClickShepherdTargetAsync().
                 await context.ClickOnWithScriptAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
@@ -241,9 +253,8 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now let's create an article!");
                 await AssertStepAndClickNextAsync(
                     "Creating a new article", "Just as the Blog Post content type", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Now click on the \"Content Types\" dropdown");
-                await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Here we have the article content type.");
+                await AssertContentTypesStep("Creating a new article");
+                await AssertStepAndClickNextAsync("Creating a new article", "Here we have the article content type.");
                 await AssertStepAndClickNextAsync("Creating a new article", "Here you can see all the articles.");
                 await AssertStepAndClickShepherdTargetAsync("Creating a new article", "Click here to create a new article.");
             });
@@ -265,12 +276,13 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Subtitle", "You can set the subtitle of your article too.");
                 await AssertStepAndClickNextAsync("Banner image", "You can add a banner image to your article too.");
                 await AssertStepAndClickNextAsync("Preview", "Before publishing your article,");
-                AssertStep("Publishing", "We are ready, let's publish the article!");
+                await AssertStepAsync("Publishing", "We are ready, let's publish the article!");
                 // The button is largely out of the viewport and thus while clicking it seemingly works, it doesn't
                 // actually register (but for some reason only when using the project from NuGet). So, making sure it's
                 // scrolled into view.
                 context.ScrollTo(_byShepherdTarget);
                 await ClickShepherdTargetAsync();
+                await context.AssertLogsAsync();
             });
 
         // Article display
@@ -281,7 +293,7 @@ public static class TestCaseUITestContextExtensions
                 // The URL for this section depends on the article created in the previous one, so this can't be started on its
                 // own.
                 // The URL is not changing here so can't use ClickShepherdTargetAsync().
-                AssertStep("Viewing the article", "The article is now published.");
+                await AssertStepAsync("Viewing the article", "The article is now published.");
                 await context.ClickReliablyOnAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
                 await AssertStepAndClickNextAsync(
@@ -302,7 +314,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Managing the menu", "Let's add a menu item for the new article we created!");
                 // The overlay on the overlay of the menu item type selector is strange, including that its text can't be
                 // highlighted in the browser. Its buttons can't be clicked with ClickReliablyAsync() so we need to do this.
-                AssertStep("Managing the menu", "You can choose between multiple types of menu items.");
+                await AssertStepAsync("Managing the menu", "You can choose between multiple types of menu items.");
                 var originalUri = context.GetCurrentUri();
                 context.Get(By.XPath("//button[contains(@class, 'shepherd-button-primary') and not(@id)]")).Click();
                 context.DoWithRetriesOrFail(() => context.GetCurrentUri() != originalUri);
@@ -352,7 +364,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "Let's see how we can edit taxonomies!");
                 await AssertStepAndClickShepherdTargetAsync("Taxonomies", "You can add a new category by clicking here.");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Taxonomies", "You can name your category.", "Sample category");
-                AssertStep("Taxonomies", "You can select an icon for the category.");
+                await AssertStepAsync("Taxonomies", "You can select an icon for the category.");
                 await context.ClickReliablyOnAsync(By.Id("Category_Icon"));
                 await context.ClickReliablyOnAsync(By.ClassName("iconpicker-item"));
                 await ClickOnNextButtonAsync();
@@ -369,8 +381,8 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=media_management_intro");
                 await AssertStepAndClickNextAsync(
                     "Media management", "We're now done with Taxonomies.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Media management", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Media management", "Now click on the \"Media Library\" button.");
+                await AssertStepAndClickShepherdTargetAsync("Media management", "Click on the \"Media\" dropdown.");
+                await AssertStepAndClickShepherdTargetAsync("Media management", "Now click on the \"Library\" button.");
                 await AssertStepAndClickNextAsync(
                     "Media management", "This is the media library.", assertShepherdTargetIsNotBody: false);
                 // The .shepherd-target element is hidden until a hover.
@@ -401,11 +413,10 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "Let's add a blockquote, for example!");
                 await AssertStepAndClickNextAsync(
                     "Flow Part", "Now you added the blockquote to your page.", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Flow Part", "Click on the dropdown to edit it!");
-                await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
-                    "Flow Part", "Can you think of a good quote?", "Sample blockquote");
+                context.Exists(By.Id("FlowPart-0_Blockquote_Quote_Text"));
+                await AssertStepAndClickNextAsync("Flow Part", "Can you think of a good quote?", assertShepherdTargetIsNotBody: false);
                 await AssertStepAndClickShepherdTargetAsync("Flow Part", "We are ready, let's publish the page!");
-                AssertStep("Viewing the page", "The page is published!");
+                await AssertStepAsync("Viewing the page", "The page is published!");
                 await context.ClickReliablyOnAsync(_byShepherdTarget);
                 SwitchToLastWindowAndSetDefaultBrowserSize();
                 await AssertStepAndClickNextAsync(
@@ -429,6 +440,8 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "Now click on \"Paragraph\"");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync("Layout widgets", "Give it a title.", "Sample paragraph widget");
                 await AssertStepAndClickNextAsync("Layout widgets", "Give it some content.");
+                await context.SetDropdownByValueAsync(By.Id("LayerMetadata_LayerMetadata_Layer"), "Always");
+                await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Layout widgets", "We are ready, let's publish it!");
                 await AssertStepAndClickShepherdTargetAsync(
                     "Layout widgets", "Your paragraph widget is now published.", assertShepherdTargetIsNotBody: false);
@@ -444,16 +457,14 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToRelativeUrlAsync("/?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=content_type_editor_intro");
                 await AssertStepAndClickNextAsync(
                     "Content type editor", "We'll now take a look at how the", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Click on the \"Content\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Now click on the \"Content Definition\" dropdown.");
-                await AssertStepAndClickShepherdTargetAsync("Content type editor", "Click on the \"Content Types\" button.");
+                await AssertContentTypesStep("Content type editor");
                 await AssertStepAndClickNextAsync("Content type editor", "Here you can see and edit all the content types.");
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "Let's edit the Blog Post content type");
                 await AssertStepAndClickNextAsync("Content type editor", "Here you can see the content type's editor.");
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "You can add a new field by clicking here.");
                 await AssertStepAndClickAndFillInShepherdTargetAndClickNextAsync(
                     "Content type editor", "Let's suppose that you're", "Sample field");
-                AssertStep("Content type editor", "Select Text Field.");
+                await AssertStepAsync("Content type editor", "Select Text Field.");
                 await context.ClickReliablyOnAsync(By.CssSelector($".{_shepherdTargetClass} input"));
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Content type editor", "Okay, now save it.");
@@ -476,7 +487,6 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=audit_trail_intro");
                 await AssertStepAndClickNextAsync(
                     "Audit Trail", "The Audit Trail module provides an immutable", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Configuration\".");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Settings\".");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on \"Audit Trail\".");
                 await AssertStepAndClickNextAsync("Audit Trail", "Here you can see and turn on or off all the events");
@@ -485,6 +495,7 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click here to see the content types whose events");
                 await AssertStepAndClickNextAsync("Audit Trail", "These are the content whose events are currently recorded.");
                 await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Now let's see how we can see the details of the");
+                await AssertStepAndClickShepherdTargetAsync("Audit Trail", "Click on the \"Audit Trail\" button.");
                 await AssertStepAndClickNextAsync("Audit Trail", "Here you can see all the recorded events.");
             });
 
@@ -495,18 +506,17 @@ public static class TestCaseUITestContextExtensions
             {
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=user_management_intro");
                 await AssertStepAndClickShepherdTargetAsync("User management", "It's too quiet if you're alone in your Orchard");
-                await AssertStepAndClickShepherdTargetAsync("User management", "This menu contains all security and role-based");
+                await AssertStepAndClickShepherdTargetAsync("User management", "This menu contains the user and role-based access");
                 await AssertStepAndClickNextAsync("User management", "Here you can see all the users, including");
                 await AssertStepAndClickShepherdTargetAsync("User management", "You can edit existing users and add add new");
-                AssertStep("User management", "Think of someone you like so much you want them in your Orchard Core app");
+                await AssertStepAsync("User management", "Think of someone you like so much you want them in your Orchard Core app");
                 await ClickAndFillInShepherdTargetWithRetriesAsync("sample.user");
                 await ClickOnNextButtonAsync();
-                AssertStep("User management", "Add their e-mail address.");
+                await AssertStepAsync("User management", "Add their e-mail address.");
                 await ClickAndFillInShepherdTargetWithRetriesAsync("sample.user@example.com");
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("User management", "You can enter a phone number too, but it's optional.");
-                await AssertStepAndClickNextAsync("User management", "You can disable the user, though for a new one this");
-                AssertStep("User management", "You can enter a password or generate a strong one automatically.");
+                await AssertStepAsync("User management", "You can enter a password or generate a strong one automatically.");
                 await context.ClickReliablyOnAsync(By.ClassName("password-generator-button"));
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickNextAsync("User management", "Finally, you can select one or more roles for the user.");
@@ -541,17 +551,16 @@ public static class TestCaseUITestContextExtensions
                 ////await context.GoToAdminRelativeUrlAsync("?shepherdTour=orchardCoreAdminWalkthrough&shepherdStep=deployment_intro");
                 await AssertStepAndClickNextAsync(
                     "Deployment", "Let's take a look at exporting and importing,", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Configuration\".");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\".");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "We'll start with \"Deployment Plans\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Tools\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Deployments\".");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "We'll start with \"Plans\".");
                 await AssertStepAndClickNextAsync("Deployment", "Here you would see the deployment plans, but we currently have");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Let's create a deployment plan! Click here.");
-                AssertStep("Deployment", "Give it a name.");
+                await AssertStepAsync("Deployment", "Give it a name.");
                 await ClickAndFillInShepherdTargetWithRetriesAsync("Sample deployment plan");
                 await ClickOnNextButtonAsync();
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now click on the \"Create\" button.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Now we have a deployment plan, but it's empty.");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on the \"Add Step\" button.");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can see all the steps that you can use.");
                 await AssertStepAndClickNextAsync("Deployment", "Let's filter for \"Update Content Definitions\"!");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "\"Update Content Definitions\" exports the chosen");
@@ -562,7 +571,7 @@ public static class TestCaseUITestContextExtensions
                 // The file will be downloaded to the default download location. It doesn't really matter.
                 await AssertStepAndClickShepherdTargetWithScriptAsync("Deployment", "Here you can use \"File Download\" so the exported");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
-                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Import/Export\" again.");
+                await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Deployments\" again.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Package Import\".");
                 await AssertStepAndClickNextAsync("Deployment", "Here you can import your exported deployment plan");
                 // This will cause a validation error since we didn't select a file, but it's easier this way and an actual
@@ -587,15 +596,17 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see and change the themes.");
                 await AssertStepAndClickNextAsync(
                     "Themes and modules", "We'll continue with modules", assertShepherdTargetIsNotBody: false);
-                await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Configuration\".");
+                await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Tools\".");
                 await AssertStepAndClickShepherdTargetAsync("Themes and modules", "Click on \"Features\".");
                 await AssertStepAndClickNextAsync("Themes and modules", "Here you can see all the features");
             });
 
         // Outro
-        context.ExecuteLogged(
+        await context.ExecuteLogged(
             "Outro",
-            () => AssertStep(
+            async () => await AssertStepAsync(
                 "Walkthrough completed", "Congratulations! You completed the walkthrough.", assertShepherdTargetIsNotBody: false));
+
+        context.Configuration.BrowserLogFilters.Remove(nameof(TestWalkthroughsBehaviorAsync));
     }
 }

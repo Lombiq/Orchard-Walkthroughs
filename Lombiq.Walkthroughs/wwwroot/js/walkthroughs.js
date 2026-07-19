@@ -46,32 +46,50 @@ jQuery(($) => {
             return { walkthroughCookieValue, walkthroughStepCookieValue, ignoreQueryStepCookieValue };
         }
 
-        function removeShepherdQueryParams() {
-            const urlObject = new URL(window.location.href);
+        function urlToRelative(url) {
+            const urlObject = new URL(url);
+            return urlObject.toString().substring(urlObject.origin.length);
+        }
 
-            urlObject.searchParams.delete('shepherdTour');
-            urlObject.searchParams.delete('shepherdStep');
-            window.history.pushState(null, '', urlObject.toString());
+        function withShepherdQueryParams(url, shepherdTour, shepherdStep) {
+            const newUrl = new URL(url);
+
+            // Clear out the parameters before updating them. This ensures correct behavior even if they are somehow
+            // duplicated (e.g. if "shepherdStep" appears twice in the URL).
+            newUrl.searchParams.delete('shepherdTour');
+            newUrl.searchParams.delete('shepherdStep');
+
+            if (shepherdTour) newUrl.searchParams.set('shepherdTour', shepherdTour);
+            if (shepherdStep) newUrl.searchParams.set('shepherdStep', shepherdStep);
+
+            return newUrl;
+        }
+
+        function setShepherdQueryParams(shepherdTour, shepherdStep) {
+            const urlObject = withShepherdQueryParams(window.location.href, shepherdTour, shepherdStep);
+            window.history.pushState(null, '', urlToRelative(urlObject));
+        }
+
+        function removeShepherdQueryParams() {
+            setShepherdQueryParams(null, null);
         }
 
         function addShepherdQueryParams() {
-            const urlObject = new URL(window.location.href);
-
-            urlObject.searchParams.set('shepherdTour', Shepherd.activeTour.options.id);
-            urlObject.searchParams.set('shepherdStep', Shepherd.activeTour.getCurrentStep().id);
-            window.history.pushState(null, '', urlObject.toString());
+            setShepherdQueryParams(Shepherd.activeTour.options.id, Shepherd.activeTour.getCurrentStep().id);
         }
 
         function getShepherdQueryParams() {
             const urlObject = new URL(window.location.href);
 
-            const tourParam = urlObject.searchParams.get('shepherdTour');
-            const stepParam = urlObject.searchParams.get('shepherdStep');
+            const shepherdTour = urlObject.searchParams.get('shepherdTour');
+            const shepherdStep = urlObject.searchParams.get('shepherdStep');
 
-            return {
-                shepherdTour: tourParam,
-                shepherdStep: stepParam,
-            };
+            // Automatic house cleaning (de-duplication).
+            if (urlObject.searchParams.getAll('shepherdStep').length > 1) {
+                setShepherdQueryParams(shepherdTour, shepherdStep);
+            }
+
+            return { shepherdTour, shepherdStep };
         }
 
         function preventSubmit() {
@@ -86,6 +104,14 @@ jQuery(($) => {
             return Array
                 .from(document.querySelectorAll(query))
                 .filter((element) => element.textContent.includes(text))[0];
+        }
+
+        function showForPublish(stepValue, ignoreQueryStepValue) {
+            $('form').off('submit');
+            addShepherdQueryParams();
+
+            // The return URL would redirect us to the wrong step. So we are ignoring it.
+            setWalkthroughCookies('orchardCoreAdminWalkthrough', stepValue, ignoreQueryStepValue);
         }
 
         const backButton = {
@@ -130,16 +156,83 @@ jQuery(($) => {
                 }
             }
 
-            const goToRelativePageURL = new URL(goToRelativePageString + (nextPage ?? ''));
-            goToRelativePageURL.searchParams.set('shepherdTour', shepherdTour);
-            goToRelativePageURL.searchParams.set('shepherdStep', shepherdStep);
-            window.location.href = goToRelativePageURL.toString();
+            window.location.href = withShepherdQueryParams(
+                goToRelativePageString + (nextPage ?? ''),
+                shepherdTour,
+                shepherdStep);
         }
 
         ['complete', 'cancel'].forEach((event) => Shepherd.on(event, () => {
             removeShepherdQueryParams();
             deleteWalkthroughCookies();
         }));
+
+        async function waitForSelector(selector) {
+            // Wait for the element to appear.
+            while (true) {
+                if (document.querySelector(selector)) return;
+                // eslint-disable-next-line no-await-in-loop -- Intentionally not parallel.
+                await delay(200);
+            }
+        }
+
+        function navigateToContentTypes(title, id1, id2, backAction, nextId) {
+            return [
+                {
+                    title: title,
+                    text: 'Click on the <em>"Design"</em> dropdown and then <em>"Content Definition"</em>.',
+                    attachTo: { element: '#design', on: 'right' },
+                    buttons: [
+                        {
+                            action: backAction,
+                            classes: 'shepherd-button-secondary',
+                            text: 'Back',
+                        },
+                        {
+                            action: function () {
+                                document.querySelector('#left-nav .icon[title="Design"]').parentElement.click();
+                                document.querySelector('#left-nav .icon[title="Content Definition"]').parentElement.click();
+                                return this.next();
+                            },
+                            classes: 'shepherd-button-primary',
+                            text: 'Next',
+                        },
+                    ],
+                    id: id1,
+                    when: {
+                        show() {
+                            addShepherdQueryParams();
+                            $('ul.show').removeClass('show');
+                        },
+                    },
+                },
+                {
+                    title: title,
+                    text: `Now click on the <em>"Content Types"</em> menu to see what type of content items you
+                            can create.`,
+                    // There is no proper basic JS selector, to select the element, so we need to use a function.
+                    savedElement: document.querySelector('[title="Content Types"]')?.parentElement,
+                    attachTo: {
+                        element: function getContentTypesButton() {
+                            return this.options.savedElement;
+                        },
+                        on: 'right',
+                    },
+                    buttons: [
+                        backButton,
+                    ],
+                    id: id2,
+                    when: {
+                        show() {
+                            const savedElement = this.options.savedElement;
+                            savedElement.href = withShepherdQueryParams(savedElement.href, 'orchardCoreAdminWalkthrough', nextId);
+                            addShepherdQueryParams();
+                            $('ul.show').removeClass('show');
+                        },
+                    },
+                },
+            ];
+        }
 
         // Add new walkthroughs here.
         const walkthroughs = {
@@ -629,11 +722,7 @@ jQuery(($) => {
                         id: 'creating_blog_post_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                // The return URL would redirect us to the "creating_blog_post_create_button" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'creating_blog_post_published', 'creating_blog_post_create_button');
+                                showForPublish('creating_blog_post_published', 'creating_blog_post_create_button');
                             },
                         },
                     },
@@ -719,69 +808,23 @@ jQuery(($) => {
                         ],
                         id: 'creating_article_intro',
                     },
+                    ...navigateToContentTypes(
+                        'Creating a new article',
+                        'creating_article_dashboard',
+                        'creating_article_content_types',
+                        () => goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_intro', 'Admin', ''),
+                        'creating_article_content_types_article'),
                     {
                         title: 'Creating a new article',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(Shepherd.activeTour.options.id, 'creating_article_intro', 'Admin', '');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                        ],
-                        id: 'creating_article_dashboard',
-                        advanceOn: { selector: '#content', event: 'click' },
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Creating a new article',
-                        text: `Now click on the <em>"Content Types"</em> dropdown to see what type of content items you
-                            can create.`,
-                        // There is no proper basic JS selector, to select the element, so we need to use a function.
-                        savedElement: $('[title="Content Types"]').parent().get(0),
-                        attachTo: {
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
+                        text: 'Here we have the article content type. You can click on the title or the <em>"Edit"' +
+                            '</em> button to alter the content type definition.',
+                        attachTo: { element: 'li[data-type-name="Article"]', on: 'right' },
                         buttons: [
                             backButton,
-                        ],
-                        id: 'creating_article_content_types',
-                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
-                        // function for that, so we are adding an event listener.
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                const element = this.options.savedElement;
-                                $('ul.show').removeClass('show');
-
-                                if (element.getAttribute('listener') !== 'true') {
-                                    element.addEventListener('click', function advanceToNextStep() {
-                                        element.setAttribute('listener', 'true');
-                                        Shepherd.activeTour.next();
-                                    });
-                                }
-                            },
-                        },
-                    },
-                    {
-                        title: 'Creating a new article',
-                        text: 'Here we have the article content type. Click on it.',
-                        attachTo: { element: 'a[href*= "Article"]', on: 'right' },
-                        buttons: [
-                            backButton,
+                            nextButton,
                         ],
                         id: 'creating_article_content_types_article',
+                        beforeShowPromise: waitForSelector('li[data-type-name="Article"]'),
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -792,7 +835,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: 'Here you can see all the articles. As you can see, there is already one.',
-                        attachTo: { element: '.list-group.with-checkbox', on: 'top' },
+                        attachTo: { element: '.btn[role="btn-list-Article"]', on: 'top' },
                         // Making the list unclickable, so the user can't go somewhere else.
                         canClickTarget: false,
                         buttons: [
@@ -816,7 +859,7 @@ jQuery(($) => {
                     {
                         title: 'Creating a new article',
                         text: 'Click here to create a new article.',
-                        attachTo: { element: '.btn.btn-secondary[href*="Article/Create"]', on: 'top' },
+                        attachTo: { element: '#btn-create-Article', on: 'top' },
                         buttons: [
                             backButton,
                         ],
@@ -995,12 +1038,7 @@ jQuery(($) => {
                         id: 'creating_article_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-
-                                // The return URL would redirect us to the "creating_article_create_button" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'creating_article_published', 'creating_article_create_button');
+                                showForPublish('creating_article_published', 'creating_article_content_types_article');
                             },
                         },
                     },
@@ -1024,6 +1062,14 @@ jQuery(($) => {
                         id: 'creating_article_published',
                         when: {
                             show() {
+                                // Fix potentially broken redirect that sometimes happens exclusively when Shepherd is enabled.
+                                if (window.location.href.includes('ContentTypes/List')) {
+                                    window.location.href = window.location.href.replace(
+                                        /ContentTypes\/List.*/,
+                                        'Contents/ContentItems/Article?shepherdTour=orchardCoreAdminWalkthrough&' +
+                                        'shepherdStep=creating_article_published');
+                                }
+
                                 if ($('.validation-summary-errors').length) {
                                     deleteWalkthroughCookies();
                                     Shepherd.activeTour.back();
@@ -1152,7 +1198,7 @@ jQuery(($) => {
                         title: 'Managing the menu',
                         text: `You can choose between multiple types of menu items. Read the descriptions too see how
                             they are different.`,
-                        attachTo: { element: '.modal-body', on: 'top' },
+                        attachTo: { element: '.modal-body', on: 'right' },
                         canClickTarget: false,
                         buttons: [
                             {
@@ -1184,7 +1230,7 @@ jQuery(($) => {
                         text: `<p>For now, let's go with the Link Menu Item one. This can be used to easily add menu
                             items for any URL.</p>
                             <p>Click on the <em>"Add"</em> button.</p>`,
-                        attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'bottom' },
+                        attachTo: { element: 'a[href*="Create/LinkMenuItem"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -1250,9 +1296,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published');
+                                showForPublish('adding_article_to_menu_published');
                             },
                         },
                     },
@@ -1282,8 +1326,7 @@ jQuery(($) => {
                         id: 'adding_article_to_menu_publishing2',
                         when: {
                             show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_article_to_menu_published2');
+                                showForPublish('adding_article_to_menu_published2');
                             },
                         },
                     },
@@ -1562,9 +1605,7 @@ jQuery(($) => {
                         id: 'taxonomies_category_publishing',
                         when: {
                             show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'taxonomies_category_published');
-                                $('form').off('submit');
+                                showForPublish('taxonomies_category_published');
                             },
                         },
                     },
@@ -1598,8 +1639,7 @@ jQuery(($) => {
                                     return;
                                 }
 
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'media_management_intro');
+                                showForPublish('media_management_intro');
                             },
                         },
                     },
@@ -1621,8 +1661,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
+                        text: 'Click on the <em>"Media"</em> dropdown.',
+                        attachTo: { element: '#media', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -1637,7 +1677,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'media_management_menu1',
-                        advanceOn: { selector: '#content', event: 'click' },
+                        advanceOn: { selector: '#media', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -1647,10 +1687,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'Media management',
-                        text: 'Now click on the <em>"Media Library"</em> button.',
+                        text: 'Now click on the <em>"Library"</em> button.',
                         // There is no proper basic JS selector, to select the element, so we need to use a
                         // function.
-                        savedElement: $('[title="Media Library"]').parent().get(0),
+                        savedElement: $('[title="Library"]').parent().get(0),
                         attachTo: {
                             element: function getContentItemsButton() {
                                 return this.options.savedElement;
@@ -1921,41 +1961,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Flow Part',
-                        text: 'Click on the dropdown to edit it!',
-                        attachTo: {
-                            element: '.widget-editor-btn-toggle.widget-editor-btn-expand',
-                            on: 'top',
-                        },
-                        beforeShowPromise: async () => {
-                            // Wait up to 2 seconds for the element to appear.
-                            for (let i = 0; i < 10; i++) {
-                                if (document.querySelector('.widget-editor-btn-toggle.widget-editor-btn-expand')) return;
-                                // eslint-disable-next-line no-await-in-loop -- Intentionally not parallel.
-                                await delay(200);
-                            }
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'flow_part_page_flow_part_blockquote_dropdown',
-                        advanceOn: {
-                            selector: '.btn.btn-outline-secondary.btn-sm.widget-editor-btn-toggle.widget-editor-btn-expand',
-                            event: 'click',
-                        },
-                        when: {
-                            show() {
-                                preventSubmit();
-                            },
-                        },
-                    },
-                    {
-                        title: 'Flow Part',
                         text: `Can you think of a good quote? My favorite is "Don't believe everything you read on the
                             internet." by Abraham Lincoln.`,
-                        attachTo: {
-                            element: '#FlowPart-0_Blockquote_Quote_Text',
-                            on: 'top',
-                        },
                         buttons: [
                             backButton,
                             nextButton,
@@ -1977,12 +1984,7 @@ jQuery(($) => {
                         id: 'flow_part_page_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-
-                                // The return URL would redirect us to the "flow_part_content_items_new_page" step, so
-                                // we are ignoring the query parameter.
-                                setWalkthroughCookies(this.tour.options.id, 'flow_part_page_published', 'flow_part_content_items_new');
+                                showForPublish('flow_part_page_published', 'flow_part_content_items_new');
                             },
                         },
                     },
@@ -2073,7 +2075,7 @@ jQuery(($) => {
                     {
                         title: 'Layout widgets',
                         text: 'Click on the <em>"Design"</em> dropdown.',
-                        attachTo: { element: '#themes', on: 'right' },
+                        attachTo: { element: '#design', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -2085,7 +2087,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'adding_widgets_to_the_layout_design',
-                        advanceOn: { selector: '#themes', event: 'click' },
+                        advanceOn: { selector: '#design', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -2096,7 +2098,7 @@ jQuery(($) => {
                     {
                         title: 'Layout widgets',
                         text: 'Now click on the <em>"Widgets"</em> menu item.',
-                        attachTo: { element: 'a[href*=Layers]', on: 'right' },
+                        attachTo: { element: '[data-title="Design"] a.item-label[href *= "/Layers"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2222,6 +2224,21 @@ jQuery(($) => {
                     },
                     {
                         title: 'Layout widgets',
+                        text: 'Select the display layer too!',
+                        attachTo: { element: '#LayerMetadata_LayerMetadata_Layer', on: 'top' },
+                        buttons: [
+                            backButton,
+                            nextButton,
+                        ],
+                        id: 'adding_widgets_to_the_layout_select_layer',
+                        when: {
+                            show() {
+                                preventSubmit();
+                            },
+                        },
+                    },
+                    {
+                        title: 'Layout widgets',
                         text: 'We are ready, let\'s publish it! Click on the publish button.',
                         attachTo: { element: 'button[name="submit.Publish"]', on: 'top' },
                         buttons: [
@@ -2230,9 +2247,7 @@ jQuery(($) => {
                         id: 'adding_widgets_to_the_layout_paragraph_publishing',
                         when: {
                             show() {
-                                $('form').off('submit');
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'adding_widgets_to_the_layout_paragraph_published');
+                                showForPublish('adding_widgets_to_the_layout_paragraph_published');
                             },
                         },
                     },
@@ -2296,79 +2311,12 @@ jQuery(($) => {
                         ],
                         id: 'content_type_editor_intro',
                     },
-                    {
-                        title: 'Content type editor',
-                        text: 'Click on the <em>"Content"</em> dropdown.',
-                        attachTo: { element: '#content', on: 'right' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(
-                                        Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', '');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                        ],
-                        id: 'content_type_editor_content',
-                        advanceOn: { selector: '#content', event: 'click' },
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Content type editor',
-                        text: 'Now click on the <em>"Content Definition"</em> dropdown.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a
-                        // function.
-                        savedElement: $('[title="Content Definition"]').parent().get(0),
-                        attachTo: {
-
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'content_type_editor_content_definition',
-                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
-                        // function for that, so we are adding an event listener.
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                const element = this.options.savedElement;
-                                $('[data-title="Content Definition"]').removeClass('show');
-
-                                if (element.getAttribute('listener') !== 'true') {
-                                    element.addEventListener('click', function advanceToNextStep() {
-                                        element.setAttribute('listener', 'true');
-                                        Shepherd.activeTour.next();
-                                    });
-                                }
-                            },
-                        },
-                    },
-                    {
-                        title: 'Content type editor',
-                        text: `Click on the <em>"Content Types"</em> button. Note how this is now NOT the top "Content
-                            Types" button.`,
-                        attachTo: { element: 'a[href*= "ContentTypes"]', on: 'right' },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'content_type_editor_content_types_button',
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'content_type_editor_content_types');
-                            },
-                        },
-                    },
+                    ...navigateToContentTypes(
+                        'Content type editor',
+                        'content_type_editor_content',
+                        'content_type_editor_content_definition',
+                        () => goToRelativePage(Shepherd.activeTour.options.id, 'content_type_editor_intro', 'Admin', ''),
+                        'content_type_editor_content_types'),
                     {
                         title: 'Content type editor',
                         text: 'Here you can see and edit all the content types.',
@@ -2604,7 +2552,7 @@ jQuery(($) => {
                         title: 'Content type editor',
                         text: 'The text field is now saved. You will also have to save the blog post content type.',
                         scrollTo: true,
-                        attachTo: { element: 'button.btn.btn-primary.save[type="Submit"]', on: 'bottom' },
+                        attachTo: { element: '.save', on: 'bottom' },
                         buttons: [
                             {
                                 action: function () {
@@ -2676,55 +2624,18 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: 'Click on <em>"Configuration"</em>. Most of the Orchard Core settings are available here.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Settings"</em>.',
+                        attachTo: { element: '#settings', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'audit_trail_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#settings', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
                                 $('ul.show').removeClass('show');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Audit Trail',
-                        text: 'Click on <em>"Settings"</em>.',
-                        // There is no proper basic JS selector, to select the element, so we need to use a function.
-                        savedElement: $('[data-title="Configuration"]')
-                            .find('[title="Settings"]')
-                            .first()
-                            .parent()
-                            .get(0),
-                        attachTo: {
-
-                            element: function getContentTypesButton() {
-                                return this.options.savedElement;
-                            },
-                            on: 'right',
-                        },
-                        buttons: [
-                            backButton,
-                        ],
-                        id: 'audit_trail_settings',
-                        // We should "advanceOn" the same button as "attachTo", but shepherd.js doesn't accept a
-                        // function for that, so we are adding an event listener.
-                        when: {
-                            show() {
-                                addShepherdQueryParams();
-                                const element = this.options.savedElement;
-                                $('[data-title="Settings"]').removeClass('show');
-
-                                if (element.getAttribute('listener') !== 'true') {
-                                    element.addEventListener('click', function advanceToNextStep() {
-                                        element.setAttribute('listener', 'true');
-                                        Shepherd.activeTour.next();
-                                    });
-                                }
                             },
                         },
                     },
@@ -2830,9 +2741,25 @@ jQuery(($) => {
                     },
                     {
                         title: 'Audit Trail',
-                        text: `Now let's see how we can see the details of the recorded events! Click on the <em>"Audit
-                            Trail"</em> button.`,
-                        attachTo: { element: '#audittrail', on: 'right' },
+                        text: 'Now let\'s see how we can see the details of the recorded events! Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
+                        scrollTo: true,
+                        buttons: [
+                            backButton,
+                        ],
+                        id: 'audit_trail_configuration',
+                        advanceOn: { selector: '#tools', event: 'click' },
+                        when: {
+                            show() {
+                                addShepherdQueryParams();
+                                $('ul.show').removeClass('show');
+                            },
+                        },
+                    },
+                    {
+                        title: 'Audit Trail',
+                        text: 'Click on the <em>"Audit Trail"</em> button.',
+                        attachTo: { element: '[data-title="Tools"] a.audittrail', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -2879,9 +2806,9 @@ jQuery(($) => {
                     {
                         title: 'User management',
                         text: `It's too quiet if you're alone in your Orchard Core app. Time to invite your colleagues
-                            or friends, perhaps? Let's take a look at user management! Click on the <em>"Security"</em>
+                            or friends, perhaps? Let's take a look at user management! Click on the <em>"Access Control"</em>
                             dropdown.`,
-                        attachTo: { element: '#security', on: 'right' },
+                        attachTo: { element: '#accessControl', on: 'right' },
                         buttons: [
                             {
                                 action: function () {
@@ -2896,7 +2823,7 @@ jQuery(($) => {
                             },
                         ],
                         id: 'user_management_intro',
-                        advanceOn: { selector: '#security', event: 'click' },
+                        advanceOn: { selector: '#accessControl', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -2906,9 +2833,10 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: `This menu contains all security and role-based access control-related settings. For now,
-                            we're only interested in user management specifically, so click on <em>"Users"</em>.`,
-                        attachTo: { element: '.users', on: 'right' },
+                        text: `This menu contains the user and role-based access control (while other security
+                            configuration can be found in Settings &gt; Security). For now, we're only interested in
+                            user management specifically, so click on <em>"Users"</em>.`,
+                        attachTo: { element: 'a.users', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -3018,23 +2946,6 @@ jQuery(($) => {
                     },
                     {
                         title: 'User management',
-                        text: `You can disable the user, though for a new one this kind of misses the point. This
-                            option is also available for existing users. If a user is disabled then they will not be
-                            able to log in.`,
-                        attachTo: { element: '#User_IsEnabled', on: 'top' },
-                        buttons: [
-                            backButton,
-                            nextButton,
-                        ],
-                        id: 'user_management_create_user_is_enabled',
-                        when: {
-                            show() {
-                                preventSubmit();
-                            },
-                        },
-                    },
-                    {
-                        title: 'User management',
                         text: `You can enter a password or generate a strong one automatically. Don't forget to copy it
                             though if you generate it, otherwise nobody will know it!`,
                         attachTo: { element: '.password-generator-wrapper', on: 'top' },
@@ -3124,13 +3035,13 @@ jQuery(($) => {
                     {
                         title: 'Roles',
                         text: `Since you're surely curious about those roles we've seen a glimpse of, let's actually
-                            see them now! Click on the <em>"Security"</em> dropdown.`,
-                        attachTo: { element: '#security', on: 'right' },
+                            see them now! Click on the <em>"Access Control"</em> dropdown.`,
+                        attachTo: { element: '#accessControl', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'roles_intro',
-                        advanceOn: { selector: '#security', event: 'click' },
+                        advanceOn: { selector: '#accessControl', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3141,7 +3052,7 @@ jQuery(($) => {
                     {
                         title: 'Roles',
                         text: 'Now click on <em>"Roles"</em>.',
-                        attachTo: { element: '.roles', on: 'right' },
+                        attachTo: { element: 'a.roles', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -3302,14 +3213,14 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Configuration"</em>.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3319,8 +3230,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Import/Export"</em>.',
-                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        text: 'Click on <em>"Deployments"</em>.',
+                        savedElement: document.querySelector('.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
@@ -3336,7 +3247,7 @@ jQuery(($) => {
                             show() {
                                 addShepherdQueryParams();
                                 const element = this.options.savedElement;
-                                $('[data-title="Import/Export"]').removeClass('show');
+                                $('[data-title="Deployments"]').removeClass('show');
 
                                 if (element.getAttribute('listener') !== 'true') {
                                     element.addEventListener('click', function advanceToNextStep() {
@@ -3349,12 +3260,12 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: `<p>We'll start with <em>"Deployment Plans"</em>. A Deployment Plan is a collection of steps
+                        text: `<p>We'll start with <em>"Plans"</em>. A Deployment Plan is a collection of steps
                             that build an export of your site. The result will be a downloadable recipe file (or it can
                             even be automatically sent to another Orchard Core instance with Remote Deployment).</p>
                             <p>You've already used recipes before, right when you've run the setup in the very
                             beginning. Recipes are simply JSON files.</p>`,
-                        attachTo: { element: 'a[href*="DeploymentPlan"]', on: 'right' },
+                        attachTo: { element: 'a[href*="DeploymentPlan/Index"]', on: 'right' },
                         buttons: [
                             backButton,
                         ],
@@ -3429,15 +3340,14 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: `Now we have a deployment plan, but it's empty. Let's add steps! Click on the <em>"Manage
-                            Steps"</em> button.`,
-                        attachTo: { element: '.btn.btn-info.btn-sm', on: 'top' },
+                        text: 'Now we have a deployment plan, but it\'s empty. Let\'s add steps! Click on the <em>"Add Step"</em> button.',
+                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
                         buttons: [
                             {
                                 action: function () {
                                     goToRelativePage(
                                         Shepherd.activeTour.options.id,
-                                        'deployment_add_deployment_plan',
+                                        'deployment_deployment_plan_publishing',
                                         'Admin',
                                         'Admin/DeploymentPlan/Index');
                                 },
@@ -3446,37 +3356,6 @@ jQuery(($) => {
                             },
                         ],
                         id: 'deployment_deployment_plan_published',
-                        when: {
-                            show() {
-                                if ($('.validation-summary-errors').length) {
-                                    deleteWalkthroughCookies();
-                                    Shepherd.activeTour.back();
-                                    return;
-                                }
-
-                                addShepherdQueryParams();
-                                setWalkthroughCookies(this.tour.options.id, 'deployment_add_step');
-                            },
-                        },
-                    },
-                    {
-                        title: 'Deployment',
-                        text: 'Click on the <em>"Add Step"</em> button.',
-                        attachTo: { element: '.btn.btn-primary.btn-sm', on: 'top' },
-                        buttons: [
-                            {
-                                action: function () {
-                                    goToRelativePage(
-                                        Shepherd.activeTour.options.id,
-                                        'deployment_deployment_plan_published',
-                                        'Admin',
-                                        'Admin/DeploymentPlan/Index');
-                                },
-                                classes: 'shepherd-button-secondary',
-                                text: 'Back',
-                            },
-                        ],
-                        id: 'deployment_add_step',
                         advanceOn: { selector: '.btn.btn-primary.btn-sm', event: 'click' },
                     },
                     {
@@ -3519,7 +3398,7 @@ jQuery(($) => {
                                 action: function () {
                                     const searchBox = $('#search-box');
                                     searchBox.val('Update Content Definitions');
-                                    searchBox.trigger('keyup');
+                                    searchBox.trigger('input');
                                     return this.next();
                                 },
                                 classes: 'shepherd-button-primary',
@@ -3634,14 +3513,14 @@ jQuery(($) => {
                     {
                         title: 'Deployment',
                         text: `We've now seen how to export content. But you surely want to see how to import it! We'll
-                            do exactly that. Click on <em>"Configuration"</em>.`,
-                        attachTo: { element: '#configuration', on: 'right' },
+                            do exactly that. Click on <em>"Tools"</em>.`,
+                        attachTo: { element: '#tools', on: 'right' },
                         scrollTo: true,
                         buttons: [
                             backButton,
                         ],
                         id: 'deployment_import_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3651,8 +3530,8 @@ jQuery(($) => {
                     },
                     {
                         title: 'Deployment',
-                        text: 'Click on <em>"Import/Export"</em> again.',
-                        savedElement: $('[title="Import/Export"]').parent().get(0),
+                        text: 'Click on <em>"Deployments"</em> again.',
+                        savedElement: document.querySelector('.item-label > [title="Deployments"]')?.parentElement,
                         attachTo: {
 
                             element: function getContentTypesButton() {
@@ -3764,12 +3643,12 @@ jQuery(($) => {
                     {
                         title: 'Themes and modules',
                         text: 'Click on <em>"Design"</em>.',
-                        attachTo: { element: '#themes', on: 'right' },
+                        attachTo: { element: '#design', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'features_and_themes_design',
-                        advanceOn: { selector: '#themes', event: 'click' },
+                        advanceOn: { selector: '#design', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
@@ -3833,13 +3712,13 @@ jQuery(($) => {
                     },
                     {
                         title: 'Themes and modules',
-                        text: 'Click on <em>"Configuration"</em>.',
-                        attachTo: { element: '#configuration', on: 'right' },
+                        text: 'Click on <em>"Tools"</em>.',
+                        attachTo: { element: '#tools', on: 'right' },
                         buttons: [
                             backButton,
                         ],
                         id: 'features_and_themes_features_configuration',
-                        advanceOn: { selector: '#configuration', event: 'click' },
+                        advanceOn: { selector: '#tools', event: 'click' },
                         when: {
                             show() {
                                 addShepherdQueryParams();
