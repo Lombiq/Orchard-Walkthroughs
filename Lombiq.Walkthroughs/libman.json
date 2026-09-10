@@ -4,7 +4,7 @@
   "defaultDestination": "wwwroot/vendors/[Name]",
   "libraries": [
     {
-      "library": "shepherd.js@15.2.3",
+      "library": "shepherd.js@15.3.0",
       "files": [ "dist/js/shepherd.mjs", "dist/css/*.css" ]
     }
   ]
