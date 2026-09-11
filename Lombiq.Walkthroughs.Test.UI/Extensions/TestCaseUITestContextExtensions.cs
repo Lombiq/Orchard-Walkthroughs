@@ -68,7 +68,7 @@ public static class TestCaseUITestContextExtensions
         }
 
         Task ClickShepherdTargetAsync(bool assertShepherdTargetIsNotBody = true) =>
-            context.ClickReliablyOnUntilUrlChangeAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
+            context.ClickReliablyOnAndWaitUntilUrlChangeAsync(GetShepherdTargetBy(assertShepherdTargetIsNotBody));
 
         // Under Ubuntu Chrome, the Next button of certain steps can randomly become not clickable. Working around this
         // with JavaScript.
@@ -90,7 +90,7 @@ public static class TestCaseUITestContextExtensions
             context.DoWithRetriesUntilUrlChangeOrFailAsync(() => context.ClickOnWithScriptAsync(_nextButtonBy));
 
         Task ClickOnBackButtonAsync() =>
-            context.ClickReliablyOnUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
+            context.ClickReliablyOnAndWaitUntilUrlChangeAsync(By.CssSelector(".shepherd-button-secondary"));
 
         By GetShepherdTargetBy(bool assertShepherdTargetIsNotBody = true) =>
             assertShepherdTargetIsNotBody ? _byShepherdTargetNotBody : _byShepherdTarget;
