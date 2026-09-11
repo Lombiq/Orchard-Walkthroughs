@@ -570,6 +570,14 @@ public static class TestCaseUITestContextExtensions
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Once you finished adding steps, you can click on");
                 // The file will be downloaded to the default download location. It doesn't really matter.
                 await AssertStepAndClickShepherdTargetWithScriptAsync("Deployment", "Here you can use \"File Download\" so the exported");
+
+                // The admin modal captures the click, so instead of opening the menu, it dismisses the dialog. To get
+                // around this, we click on the thing twice.
+                if (context.Exists(By.XPath("//h4[contains(@class, 'card-title') and contains(., 'File Download')]").Safely()))
+                {
+                    await context.ClickReliablyOnAsync(GetShepherdTargetBy());
+                }
+
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "We've now seen how to export content.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Deployments\" again.");
                 await AssertStepAndClickShepherdTargetAsync("Deployment", "Click on \"Package Import\".");
