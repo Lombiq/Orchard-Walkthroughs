@@ -3569,10 +3569,11 @@ jQuery(($) => {
                         beforeShowPromise: async function waitForAdminMenu() {
                             // Let the menu's click handler start its expansion, then wait until its layout is final.
                             // Scrolling after showing the step can move the link while the user is clicking it.
+                            const timeoutAt = Date.now() + 5000;
                             do {
                                 // eslint-disable-next-line no-await-in-loop -- The animation must finish sequentially.
                                 await delay(50);
-                            } while (document.querySelector('#adminMenu .collapsing'));
+                            } while (document.querySelector('#adminMenu .collapsing') && Date.now() < timeoutAt);
 
                             document.querySelector('a[href*="DeploymentPlan/Import/Index"]')
                                 .scrollIntoView({ block: 'nearest', behavior: 'instant' });
