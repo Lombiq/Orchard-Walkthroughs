@@ -3566,14 +3566,20 @@ jQuery(($) => {
                             backButton,
                         ],
                         id: 'deployment_import_package_import',
+                        async beforeShowPromise() {
+                            // Let the menu's click handler start its expansion, then wait until its layout is final.
+                            // Scrolling after showing the step can move the link while the user is clicking it.
+                            do {
+                                await new Promise((resolve) => requestAnimationFrame(resolve));
+                            } while (document.querySelector('#adminMenu .collapsing'));
+
+                            document.querySelector('a[href*="DeploymentPlan/Import/Index"]')
+                                .scrollIntoView({ block: 'nearest', behavior: 'instant' });
+                        },
                         when: {
                             show() {
                                 addShepherdQueryParams();
                                 setWalkthroughCookies(this.tour.options.id, 'deployment_import_package_import_choose_file');
-                                // scrollTo: true doesn't work here.
-                                setTimeout(
-                                    () => { $('#adminMenu').get(0).scrollTo(0, 9999); },
-                                    200);
                             },
                         },
                     },
