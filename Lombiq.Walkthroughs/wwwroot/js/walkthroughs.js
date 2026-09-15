@@ -3566,11 +3566,12 @@ jQuery(($) => {
                             backButton,
                         ],
                         id: 'deployment_import_package_import',
-                        async beforeShowPromise() {
+                        beforeShowPromise: async function waitForAdminMenu() {
                             // Let the menu's click handler start its expansion, then wait until its layout is final.
                             // Scrolling after showing the step can move the link while the user is clicking it.
                             do {
-                                await new Promise((resolve) => requestAnimationFrame(resolve));
+                                // eslint-disable-next-line no-await-in-loop -- The animation must finish sequentially.
+                                await delay(50);
                             } while (document.querySelector('#adminMenu .collapsing'));
 
                             document.querySelector('a[href*="DeploymentPlan/Import/Index"]')
